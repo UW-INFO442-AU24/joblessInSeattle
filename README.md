@@ -1,5 +1,5 @@
 <h1 align="center"><strong>DayMax</strong></h1>
-<h2 align="center"><strong>Get the max out of your day!</strong></h2>
+<h2 align="center"><strong>Get the Max Out of Your Day!</strong></h2>
 <p align="center">Group 7 - Jobless in Seattle</p>
 
 ## Our Mission
