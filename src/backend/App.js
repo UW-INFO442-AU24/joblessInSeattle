@@ -1,10 +1,11 @@
 import React from "react";
+import Dashboard from '../frontend/Dashboard.js';
 
 
 const App = ({ auth }) => {
     return (
         <div>
-        {/* Your App content */}
+            <Dashboard></Dashboard>
         </div>
     );
 };
