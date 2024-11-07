@@ -1,6 +1,6 @@
-export function App(props) {
+function ResourcesPage() {
     return (
         <div>
         </div>
     )
-  }
+}
