@@ -7,10 +7,11 @@ import Button from 'react-bootstrap/Button';
 export default function sleepTracker() {
 
     return (
-        <Col>
 
+        <Col className='m-4'>
+            <h1>Sleep</h1>
             {/* Log sleep (start/end) */}
-            <Row>
+            <Row className='m-4'>
                 <Card>
                     <Card.Body>
                         <Card.Title>Going to Bed?</Card.Title>
@@ -21,7 +22,7 @@ export default function sleepTracker() {
             </Row>
                 
             {/* Sleep stat with graph - Day, Week, Month, 6 months, Year? */}
-            <Row>
+            <Row className='m-4'>
                 <Card>
                     <Card.Body>
                     <Card.Title>Your Sleep</Card.Title>
@@ -35,7 +36,7 @@ export default function sleepTracker() {
             </Row>
 
             {/* Goal setting for sleep hours? */}
-            <Row>
+            <Row className='m-4'>
                 <Card>
                     <Card.Body>
                         <Card.Title>Sleep Goals</Card.Title>
@@ -44,7 +45,7 @@ export default function sleepTracker() {
             </Row>
 
             {/* Overall trends or buddy's level of sleep relative to yours? */}
-            <Row>
+            <Row className='m-4'>
                 <Card>
                     <Card.Body>
                         <Card.Title>Buddy's Sleep</Card.Title>
