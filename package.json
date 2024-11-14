@@ -11,9 +11,11 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "cookie-parser": "^1.4.7",
+    "crypto": "^1.0.1",
     "express": "^4.21.1",
     "express-session": "^1.18.1",
     "firebase": "^10.14.1",
+    "fs": "^0.0.1-security",
     "mongoose": "^8.7.2",
     "morgan": "^1.10.0",
     "msal-node-wrapper": "https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main",
@@ -21,8 +23,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
-    "stream-browserify": "^3.0.0",
-    "url": "^0.11.4",
+    "stream": "^0.0.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -55,8 +56,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "assert": "^2.1.0",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.1",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "react-app-rewired": "^2.2.1",
     "react-router-dom": "^6.27.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "tailwindcss": "^3.4.14",
+    "url": "^0.11.4",
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4"
   }
