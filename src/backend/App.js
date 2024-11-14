@@ -18,18 +18,30 @@ const App = ({ auth }) => {
 
 export default App;
 import React from "react";
+=======
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+>>>>>>> c9a5877 (added react routing to app.js, changed dashboard laylout)
 //import Dashboard from '../frontend/Dashboard.js';
 //<Dashboard></Dashboard>
-import WaterTracker from "../frontend/WaterTracker";
+//import WaterTracker from "../frontend/WaterTracker";
 //<WaterTracker></WaterTracker>
 
+//import components
+import Dashboard from "../frontend/Dashboard"
+import WaterTracker from "../frontend/WaterTracker"
 
-const App = ({ auth }) => {
+function App() {
     return (
-        <div>
-            <WaterTracker></WaterTracker>
-        </div>
-    );
+            <div className="App">
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={ <Dashboard/> } />
+                        <Route path="watertracker" element={ <WaterTracker/> } />
+                        {/* <Route path="contact" element={ <Contact/> } /> */}
+                    </Routes>
+               </BrowserRouter>
+            </div>
+    )
 };
 
 export default App;
