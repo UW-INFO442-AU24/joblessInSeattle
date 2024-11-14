@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { Link } from "react-router-dom";
+import { NavBar } from "../frontend/Navbar.js";
 
 export default function Dashboard() {
   return (
@@ -58,11 +59,12 @@ export default function Dashboard() {
                 </Card>
             </Row>
         </Col>
+
+        <footer>
+          <NavBar/>
+        </footer>
+
     </div>
-
-    // <footer>
-
-    // </footer>
 
   //   <Row xs={2} md={2} className="g-4">
   //     {Array.from(['Water', 'Sleep', 'Medications', 'My Buddy']).map((category) => (
@@ -81,6 +83,4 @@ export default function Dashboard() {
   //     ))}
   //   </Row>
   );
-
-  // Array for cards -> Card img and pull data from database for card
 }
