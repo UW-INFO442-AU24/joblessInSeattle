@@ -26,7 +26,7 @@ export default function Dashboard() {
             <Row className='m-4'>
                 <Card>
                   <Card.Body>
-                    <Card.Title>Sleep</Card.Title>
+                    <Card.Title><Link to="/sleeptracker">Sleep</Link></Card.Title>
                       <Card.Text>
                           placeholder for amount of sleep today.
                       </Card.Text>
@@ -59,6 +59,10 @@ export default function Dashboard() {
             </Row>
         </Col>
     </div>
+
+    // <footer>
+
+    // </footer>
 
   //   <Row xs={2} md={2} className="g-4">
   //     {Array.from(['Water', 'Sleep', 'Medications', 'My Buddy']).map((category) => (
