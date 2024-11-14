@@ -1,14 +1,17 @@
 import React from "react";
-import Dashboard from '../frontend/Dashboard.js';
+import {Routes, Route} from 'react-router-dom'
+import SleepTracker from "../frontend/sleepTracker.js";
+import { NavBar } from "../frontend/Navbar.js";
+import Dashboard from '../frontend/Dashboard.js'
 
-//import components
-import Dashboard from "../frontend/Dashboard"
-import WaterTracker from "../frontend/WaterTracker"
-
-function App() {
+const App = ({ auth }) => {
     return (
         <div>
             <SleepTracker></SleepTracker>
+            <NavBar/>
+            {/* <Routes>
+                <Route path="home" element={<Dashboard />} />
+            </Routes> */}
         </div>
     );
 };
