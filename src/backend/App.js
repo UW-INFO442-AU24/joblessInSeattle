@@ -8,14 +8,16 @@ import SleepTracker from "../frontend/sleepTracker"
 
 function App() {
     return (
-            <div className="App">
-                    <Routes>
-                        <Route path="/" element={ <Dashboard/> } />
-                        <Route path="watertracker" element={ <WaterTracker/> } />
-                        <Route path="sleeptracker" element={ <SleepTracker/> } />
-                    </Routes>
-            </div>
-    )
+        <div className="App">
+                <Routes>
+                    <Route path="/" element={ <Dashboard/> } />
+                    <Route path="watertracker" element={ <WaterTracker/> } />
+                    <Route path="sleeptracker" element={ <SleepTracker/> } />
+                </Routes>
+        </div>
+)
 };
 
 export default App;
+
+//THIS IS THE VERSION I WANT

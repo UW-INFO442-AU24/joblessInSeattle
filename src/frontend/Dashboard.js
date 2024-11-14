@@ -65,22 +65,7 @@ export default function Dashboard() {
         </footer>
 
     </div>
-
-  //   <Row xs={2} md={2} className="g-4">
-  //     {Array.from(['Water', 'Sleep', 'Medications', 'My Buddy']).map((category) => (
-  //       <Col key={category}>
-  //         <Card>
-  //           <Card.Body>
-  //             <Card.Title><Link to="/watertracker">{category}</Link></Card.Title>
-  //             <Card.Text>
-  //               This is a longer card with supporting text below as a natural
-  //               lead-in to additional content. This content is a little bit
-  //               longer.
-  //             </Card.Text>
-  //           </Card.Body>
-  //         </Card>
-  //       </Col>
-  //     ))}
-  //   </Row>
   );
 }
+
+//THIS IS THE VERSION I WANT
