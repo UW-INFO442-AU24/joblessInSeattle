@@ -1,11 +1,10 @@
 import React from "react";
-import Dashboard from '../frontend/Dashboard.js';
-
+import SleepTracker from "../frontend/sleepTracker";
 
 const App = ({ auth }) => {
     return (
         <div>
-            <Dashboard></Dashboard>
+            <SleepTracker></SleepTracker>
         </div>
     );
 };

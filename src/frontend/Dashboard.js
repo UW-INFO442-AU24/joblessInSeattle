@@ -23,4 +23,6 @@ export default function Dashboard() {
       ))}
     </Row>
   );
+
+  // Array for cards -> Card img and pull data from database for card
 }
