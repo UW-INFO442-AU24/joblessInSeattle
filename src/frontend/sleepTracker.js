@@ -20,6 +20,8 @@ export default function sleepTracker() {
                             <Button variant='primary' className='my-2'>Bed time :D</Button>
                             <Button variant='success' className='my-2'>Wakey wakey</Button>
                         </ButtonGroup>
+                        <Card.Text>Manually log time</Card.Text>
+                        <Button variant='secondary'>blah</Button>
                     </Card.Body>
                 </Card>
             </Row>
