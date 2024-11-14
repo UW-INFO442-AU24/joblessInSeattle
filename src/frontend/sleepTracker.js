@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { ButtonGroup } from 'react-bootstrap';
+import { ButtonGroup } from 'react-bootstrap';
 
 export default function sleepTracker() {
 
@@ -22,6 +23,10 @@ export default function sleepTracker() {
                         </ButtonGroup>
                         <Card.Text>Manually log time</Card.Text>
                         <Button variant='secondary'>blah</Button>
+                        <ButtonGroup vertical>
+                            <Button variant='primary' className='my-2'>Bed time :D</Button>
+                            <Button variant='success' className='my-2'>Wakey wakey</Button>
+                        </ButtonGroup>
                     </Card.Body>
                 </Card>
             </Row>
@@ -30,6 +35,11 @@ export default function sleepTracker() {
             <Row className='m-4'>
                 <Card>
                     <Card.Body>
+                        <Card.Title>Your Sleep</Card.Title>
+                        <Card.Text>
+                            Bar chart for single day and line chart for the others?
+                            MUI X has bar and line chart components that can be used
+                        </Card.Text>
                         <Card.Title>Your Sleep</Card.Title>
                         <Card.Text>
                             Bar chart for single day and line chart for the others?
@@ -47,6 +57,9 @@ export default function sleepTracker() {
                         <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
                         <Card.Text>You've reached it X% of times</Card.Text>
                         <Card.Text>Icon somewhere to edit goal</Card.Text>
+                        <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
+                        <Card.Text>You've reached it X% of times</Card.Text>
+                        <Card.Text>Icon somewhere to edit goal</Card.Text>
                     </Card.Body>
                 </Card>
             </Row>
@@ -56,6 +69,8 @@ export default function sleepTracker() {
                 <Card>
                     <Card.Body>
                         <Card.Title>Buddy's Sleep</Card.Title>
+                        <Card.Text>Buddy's health in relation to your sleep</Card.Text>
+                        <Card.Text>Maybe some sort of status bar or something</Card.Text>
                         <Card.Text>Buddy's health in relation to your sleep</Card.Text>
                         <Card.Text>Maybe some sort of status bar or something</Card.Text>
                     </Card.Body>
