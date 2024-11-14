@@ -1,14 +1,14 @@
 import React from "react";
-import Dashboard from '../frontend/Dashboard.js';
+//import Dashboard from '../frontend/Dashboard.js';
 //<Dashboard></Dashboard>
-//import WaterTracker from "../frontend/WaterTracker";
+import WaterTracker from "../frontend/WaterTracker";
 //<WaterTracker></WaterTracker>
 
 
 const App = ({ auth }) => {
     return (
         <div>
-            <Dashboard></Dashboard>
+            <WaterTracker></WaterTracker>
         </div>
     );
 };
