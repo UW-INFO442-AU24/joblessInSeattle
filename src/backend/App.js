@@ -8,7 +8,7 @@ import WaterTracker from "../frontend/WaterTracker"
 function App() {
     return (
         <div>
-            <Dashboard></Dashboard>
+            <SleepTracker></SleepTracker>
         </div>
     );
 };
