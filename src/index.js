@@ -17,7 +17,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //   messagingSenderId: "1076553295004",
 //   appId: "1:1076553295004:web:7d726d496f81062e277959"
 // };
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBjYRvRQyyjJORIqi-wFtsZOD45sPesaOo",
+//   authDomain: "daymax-86edc.firebaseapp.com",
+//   projectId: "daymax-86edc",
+//   storageBucket: "daymax-86edc.appspot.com",
+//   messagingSenderId: "1076553295004",
+//   appId: "1:1076553295004:web:7d726d496f81062e277959"
+// };
 
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth(app);
 // // Initialize Firebase
 // const app = initializeApp(firebaseConfig);
 // const auth = getAuth(app);
