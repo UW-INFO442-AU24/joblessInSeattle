@@ -1,4 +1,5 @@
-import React, { useState }from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 const HealthJounral = () => {
 
@@ -14,15 +15,24 @@ const HealthJounral = () => {
         setDiaryInfo((prevEntry) => ({...prevEntry, [entry]: value}));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         const newEntry = {
             text: diaryInfo.entry,
             date: new Date().toLocaleDateString() // this will collect the date autpmatically
         }
 
-        setDiaryInfo((prevState) => ({...prevState.totalEntries, newEntry}))
-        console.log("form submitted");
+        try {
+            await axios.post("http://localhost:5000/api/entries", newEntry);
+
+            setDiaryInfo((prevState) => ({...prevState.totalEntries, newEntry}))
+            console.log("form submitted");
+
+            console.log("Entry saved successfully");
+        } catch (err) {
+            console.error("Error saving entry: ", err);
+        }
     };
 
     return (
@@ -41,3 +51,5 @@ const HealthJounral = () => {
         </form>
     );
 }
+
+export default HealthJounral;
