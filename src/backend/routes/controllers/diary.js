@@ -10,11 +10,10 @@ router.get('/', async (req, res) => {
         const entries = await Diary.find().sort({ date: -1 });
         // return the user entries as JSON
         res.status(200).json(entries);
-      }
-      catch(error) {
+    } catch(error) {
         console.log("Error fetching diary entries:: ", error);
         res.status(500).json({ status: "error", message: 'Failed to get diary entries', error: error });
-      }
+    }
 });
 
 // POST to /diary

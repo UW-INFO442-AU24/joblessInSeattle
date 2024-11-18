@@ -5,11 +5,11 @@ var router = express.Router();
 // GET for /buddy
 router.get('/', async (req, res) => {
     try {
-        // stuff
-      }
-      catch(error) {
+        // get buddy emotion based on health input
+        const emotion = "";
+      } catch(error) {
         console.log("Error: ", error);
-        res.status(500).json({status: "error", error: error});
+        res.status(500).json({ status: "error", message: "Failed to get buddy's health status and emotions", error: error });
       }
 });
 
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     }
     catch(error) {
       console.log("error: ", error);
-      res.status(500).json({status: "error", error: error});
+      res.status(500).json({ status: "error", message: "Failed to update buddy's health status and emotions", error: error });
     }
 });
   

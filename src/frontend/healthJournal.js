@@ -17,16 +17,22 @@ const HealthJounral = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const utcDate = new Date().toISOString(); // standard time (consistency)
+        const localDate = new Date(utcDate).toLocaleDateString(); // local time for user
 
         const newEntry = {
             text: diaryInfo.entry,
-            date: new Date().toLocaleDateString() // this will collect the date autpmatically
+            date: localDate // this will collect the date autpmatically
         }
 
         try {
             await axios.post("http://localhost:5000/api/entries", newEntry);
 
-            setDiaryInfo((prevState) => ({...prevState.totalEntries, newEntry}))
+            setDiaryInfo((prevState) => ({
+                ...prevState, 
+                totalEntries: [...prevState.totalEntries, newEntry], 
+                entry: ""
+            }))
             console.log("form submitted");
 
             console.log("Entry saved successfully");
