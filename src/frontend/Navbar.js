@@ -1,22 +1,10 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-
-
-function NavBarItem(props) {
-  const navItemName = props.navItemName;
-  const navItemImg = props.navItemImg;
-  const navItemImgAlt = props.navItemImgAlt;
-
-  return (
-    <Link to={navItemName} className="nav-item nav-link">
-      <img src={navItemImg} alt={navItemImgAlt} />
-    </Link>
-  );
-}
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
 
 export function NavBar(props) {
   const NAV_DATA = [
-    { name: "Home", image: '/assets/icons8-home-48.png', alt: "Home Page" },
+    { name: "Dashboard", image: '/assets/icons8-home-48.png', alt: "Dashboard Page" },
     {
       name: "Diary",
       image: '/assets/icons8-journal-50.png',
@@ -31,18 +19,21 @@ export function NavBar(props) {
   ];
   const navArray = NAV_DATA.map((navObj) => {
     const navElem = (
-      <NavBarItem
-        key={navObj.name}
-        navItemName={navObj.name}
-        navItemImg={navObj.image}
-        navItemImgAlt={navObj.alt}
-      />
+        <Container>
+            <Navbar.Brand href={navObj.name}>
+                <img
+                src={navObj.image}
+                width="30"
+                height="30"
+                className="d-inline-block align-top"
+                alt={navObj.alt}
+                />
+            </Navbar.Brand>
+        </Container>
     );
     return navElem;
   });
   return (
-    <div>
-      <nav className="navbar justify-content-around">{navArray}</nav>
-    </div>
+    <Navbar className="bg-body-tertiary" fixed='bottom'>{navArray}</Navbar>
   );
 }
