@@ -3,6 +3,8 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import { NavBar } from "../frontend/Navbar.js";
+import { LineChart } from '@mui/x-charts/LineChart';
 
 export default function WaterTracker() {
   return (   
@@ -26,10 +28,19 @@ export default function WaterTracker() {
                 <Card>
                     <Card.Body>
                     <Card.Title>This Week</Card.Title>
-                    <Card.Text>
-                        this is a placeholder for a graph that shows how much water has been drank throughout
-                        the week.
-                    </Card.Text>
+                    <LineChart
+                        xAxis={[{ 
+                            scaleType: 'time',
+                            data: [new Date('2024-11-11'), new Date('2024-11-12'), new Date('2024-11-13'), new Date('2024-11-14'), new Date('2024-11-15'), new Date('2024-11-16'), new Date('2024-11-17')] 
+                        }]}
+                        series={[
+                            {
+                            data: [60, 52, 86, 75, 59, 68, 64]
+                            },
+                        ]}
+                        width={200}
+                        height={200}
+                    />
                     </Card.Body>
                 </Card>
             </Row>
@@ -55,6 +66,7 @@ export default function WaterTracker() {
                 </Card>
             </Row>
         </Col>
+        <NavBar></NavBar>
     </div>
   );
 }
