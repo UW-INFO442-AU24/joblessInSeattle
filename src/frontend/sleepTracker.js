@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { ButtonGroup } from 'react-bootstrap';
 import { NavBar } from "../frontend/Navbar.js";
+import { LineChart } from '@mui/x-charts/LineChart';
 
 export default function sleepTracker() {
 
@@ -40,10 +41,19 @@ export default function sleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Your Sleep</Card.Title>
-                            <Card.Text>
-                                Bar chart for single day and line chart for the others?
-                                MUI X has bar and line chart components that can be used
-                            </Card.Text>
+                            <LineChart
+                                xAxis={[{ 
+                                    scaleType: 'time',
+                                    data: [new Date('2024-11-11'), new Date('2024-11-12'), new Date('2024-11-13'), new Date('2024-11-14'), new Date('2024-11-15'), new Date('2024-11-16'), new Date('2024-11-17')] 
+                                }]}
+                                series={[
+                                    {
+                                    data: [6.3, 8.3, 7.1, 7.9, 7.8, 6.9, 7.4]
+                                    },
+                                ]}
+                                width={200}
+                                height={200}
+                            />
                         </Card.Body>
                     </Card>
                 </Row>
