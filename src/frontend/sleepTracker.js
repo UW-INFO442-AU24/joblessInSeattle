@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -7,8 +7,23 @@ import Form from 'react-bootstrap/Form';
 import { ButtonGroup } from 'react-bootstrap';
 import { NavBar } from "../frontend/Navbar.js";
 import { LineChart } from '@mui/x-charts/LineChart';
+import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 
-export default function sleepTracker() {
+function TimeInputs(props) {
+
+    const [time, setTime] = useState(dayjs('2024-11-01T15:30'));
+    const label = props.label
+
+    return (
+        <MobileTimePicker className='my-2' label={label} value={time} onChange={(newTime) => setTime(newTime)}/>
+    );
+
+}
+
+export default function SleepTracker() {
 
     return (
 
@@ -26,9 +41,11 @@ export default function sleepTracker() {
                             </ButtonGroup>
                             <Form>
                                 <Form.Group className="mb-3" controlId="sleepUserInput">
-                                    <Form.Label>Manually input sleep (format: 12:00 am or 12:00 pm)</Form.Label>
-                                    <Form.Control type="text" placeholder="Sleep time" className='my-2'/>
-                                    <Form.Control type="text" placeholder="Wake up time" className='my-2'/>
+                                    <Form.Label>Manually input sleep</Form.Label>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimeInputs label='Bed time'/>
+                                        <TimeInputs label='Wake-up time'/>
+                                    </LocalizationProvider>
                                 </Form.Group>
                                 <Button variant='secondary'>Log</Button>
                             </Form>
