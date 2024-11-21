@@ -17,7 +17,6 @@ function Counter() {
             <Button variant='primary' onClick={decrement}>-</Button>
             <span id="counter" class="mx-3">{count} fl oz</span>
             <Button variant='primary' onClick={increment}>+</Button>
-            <Button as="input" type="submit" value="Submit" className='mt-2'/>
         </div>
     );
 }
@@ -33,10 +32,7 @@ export default function WaterTracker() {
                     <Card.Body>
                         <Card.Title>Water Consumed Today</Card.Title>
                         <Counter />
-                        {/* <Button variant='primary'>-</Button>
-                        <span id="counter" class="mx-3">0 fl oz</span>
-                        <Button variant='primary'>+</Button>
-                        <Button as="input" type="submit" value="Submit" className='mt-2'/> */}
+                        <Button as="input" type="submit" value="Submit" className='mt-2'/>
                     </Card.Body>
                 </Card>
             </Row>
