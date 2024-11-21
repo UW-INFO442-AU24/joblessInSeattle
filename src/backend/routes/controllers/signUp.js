@@ -1,11 +1,11 @@
 import express from "express";
 import admin from "firebase-admin";
-import User from "../../models.js"; 
+import { User } from "../../models.js"; 
 
 var router = express.Router();
 
-// initialize Firebase Admin, connects the backend to Firebase
-admin.initializeApp();
+// // initialize Firebase Admin, connects the backend to Firebase
+// admin.initializeApp();
 
 router.post('/', async (req, res) => {
     const { name, email, password } = req.body;
