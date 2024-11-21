@@ -87,13 +87,3 @@ const buddySchema = new mongoose.Schema({
     date: Date
 });
 export const Buddy = mongoose.model('Buddy', buddySchema);
-
-
-// module.exports = {
-//     User,
-//     Symptoms,
-//     DailyStats,
-//     HealthResources,
-//     Diary,
-//     Buddy
-// };
