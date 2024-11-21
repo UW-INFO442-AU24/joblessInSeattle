@@ -5,7 +5,8 @@ var router = express.Router();
 // GET for /water
 router.get('/', async (req, res) => {
     try {
-        // stuff
+        console.log("it connected");
+        res.status(200).json({ message: "Success!!" });
       }
       catch(error) {
         console.log("Error: ", error);
