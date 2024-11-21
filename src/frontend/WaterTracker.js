@@ -17,6 +17,7 @@ export default function WaterTracker() {
                         <Button variant='primary'>-</Button>
                         <span id="counter" class="mx-3">0 fl oz</span>
                         <Button variant='primary'>+</Button>
+                        <Button as="input" type="submit" value="Submit" className='mt-2'/>
                     </Card.Body>
                 </Card>
             </Row>

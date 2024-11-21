@@ -13,9 +13,9 @@ export default function Dashboard() {
 
             {/* WATER TRACKER */}
             <Row className='m-4'>
-                <Card>
-                  <Card.Body>
-                    <Card.Title><Link to="/watertracker">Water</Link></Card.Title>
+                <Card class="card">
+                  <Card.Body><Link to="/watertracker" class="stretched-link"></Link>
+                    <Card.Title>Water</Card.Title>
                       <Card.Text>
                           16/64 fl oz.
                       </Card.Text>
@@ -25,9 +25,9 @@ export default function Dashboard() {
                 
             {/* SLEEP TRACKER */}
             <Row className='m-4'>
-                <Card>
-                  <Card.Body>
-                    <Card.Title><Link to="/sleeptracker">Sleep</Link></Card.Title>
+                <Card class="card">
+                  <Card.Body><Link to="/sleeptracker" class="stretched-link"></Link>
+                    <Card.Title>Sleep</Card.Title>
                       <Card.Text>
                           placeholder for amount of sleep today.
                       </Card.Text>
@@ -37,7 +37,7 @@ export default function Dashboard() {
 
             {/* MEDICATIONS */}
             <Row className='m-4'>
-                <Card>
+                <Card class="card">
                   <Card.Body>
                     <Card.Title>Medications</Card.Title>
                       <Card.Text>
@@ -49,7 +49,7 @@ export default function Dashboard() {
 
             {/* MY BUDDY */}
             <Row className='m-4'>
-                <Card>
+                <Card class="card">
                   <Card.Body>
                     <Card.Title>My Buddy</Card.Title>
                       <Card.Text>
