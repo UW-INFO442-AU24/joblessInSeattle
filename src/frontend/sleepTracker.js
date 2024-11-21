@@ -82,7 +82,7 @@ export default function SleepTracker() {
                             <Card.Title>Sleep Goals</Card.Title>
                             <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
                             <Card.Text>You've reached it X% of times</Card.Text>
-                            <Card.Text>Icon somewhere to edit goal</Card.Text>
+                            <Button variant='secondary'>Edit Goal</Button>
                         </Card.Body>
                     </Card>
                 </Row>
