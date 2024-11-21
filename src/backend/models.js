@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 const uri = "mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/";
 // ?retryWrites=true&w=majority&appName=DayMaxCluster
 const clientOptions = { 
@@ -30,7 +31,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
 });
-const User = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema);
 
 // Symptoms table
 const symptomsSchema = new mongoose.Schema({
@@ -41,7 +42,7 @@ const symptomsSchema = new mongoose.Schema({
     },
     date: Date
     });
-const Symptoms = mongoose.model('Symptoms', symptomsSchema);
+export const Symptoms = mongoose.model('Symptoms', symptomsSchema);
 
 // User's Daily Statistics table
 const dailyStatsSchema = new mongoose.Schema({
@@ -56,13 +57,13 @@ const dailyStatsSchema = new mongoose.Schema({
     heart_rate: { type: Number, required: true },
     meds: { type: String }
 });
-const DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
+export const DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
 
 // Health Resources table
 const healthResourcesSchema = new mongoose.Schema({
     url: String
 });
-const HealthResources = mongoose.model('HealthResources', healthResourcesSchema);
+export const HealthResources = mongoose.model('HealthResources', healthResourcesSchema);
 
 // Health Diary table
 const diarySchema = new mongoose.Schema({
@@ -74,7 +75,7 @@ const diarySchema = new mongoose.Schema({
     entry: { type: String, required: true },
     date: Date
 });
-const Diary = mongoose.model('Diary', diarySchema);
+export const Diary = mongoose.model('Diary', diarySchema);
 
 // Health Buddy table
 const buddySchema = new mongoose.Schema({
@@ -85,13 +86,14 @@ const buddySchema = new mongoose.Schema({
     },
     date: Date
 });
-const Buddy = mongoose.model('Buddy', buddySchema);
+export const Buddy = mongoose.model('Buddy', buddySchema);
 
-module.exports = {
-    User,
-    Symptoms,
-    DailyStats,
-    HealthResources,
-    Diary,
-    Buddy
-};
+
+// module.exports = {
+//     User,
+//     Symptoms,
+//     DailyStats,
+//     HealthResources,
+//     Diary,
+//     Buddy
+// };

@@ -1,5 +1,5 @@
 import express from 'express';
-import { DailyStats } from '../../models';
+import { DailyStats } from '../../models.js';
 var router = express.Router();
 
 // GET for /healthCard

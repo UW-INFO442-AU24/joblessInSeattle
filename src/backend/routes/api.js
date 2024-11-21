@@ -2,7 +2,7 @@ import express from 'express';
 
 import usersRouter from './controllers/users.js';
 import buddyRouter from './controllers/buddy.js';
-import healthCard from './controllers/healthCard.js';
+import healthCard from './controllers/healthStats.js';
 import diaryRouter from './controllers/diary.js';
 import sleepRouter from './controllers/sleep.js';
 import waterRouter from './controllers/water.js';
