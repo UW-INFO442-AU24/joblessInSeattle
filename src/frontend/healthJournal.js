@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const HealthJounral = () => {
+const HealthJournal = () => {
 
     const [diaryInfo, setDiaryInfo] = useState({
         totalEntries: [],
@@ -58,4 +58,4 @@ const HealthJounral = () => {
     );
 }
 
-export default HealthJounral;
+export default HealthJournal;
