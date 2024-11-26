@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const HealthJounral = () => {
+const HealthJournal = () => {
+    const [apiResponse, setApiResponse] = useState(null);
+    const [error, setError] = useState("");
 
     const [diaryInfo, setDiaryInfo] = useState({
         totalEntries: [],
@@ -10,9 +12,9 @@ const HealthJounral = () => {
 
     const handleInputChange = (e) => {
         // the entry obj and the value of the entry
-        const { entry, value } = e.target;
+        const { name, value } = e.target;
         // sets the diary entry as an arr; takes the new entry and adds it to the existing arr
-        setDiaryInfo((prevEntry) => ({...prevEntry, [entry]: value}));
+        setDiaryInfo((prevEntry) => ({...prevEntry, [name]: value}));
     }
 
     const handleSubmit = async (e) => {
@@ -23,7 +25,7 @@ const HealthJounral = () => {
         const newEntry = {
             text: diaryInfo.entry,
             date: localDate // this will collect the date autpmatically
-        }
+        };
 
         try {
             await axios.post("http://localhost:5000/api/entries", newEntry);
@@ -32,30 +34,50 @@ const HealthJounral = () => {
                 ...prevState, 
                 totalEntries: [...prevState.totalEntries, newEntry], 
                 entry: ""
-            }))
-            console.log("form submitted");
+            }));
 
+            console.log("form submitted");
             console.log("Entry saved successfully");
         } catch (err) {
             console.error("Error saving entry: ", err);
         }
     };
 
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/healthStats')
+        .then((res) => {
+            if(!res.ok) {
+                throw new Error("Network response was not okay");
+            }
+            return res.json();
+        })
+        .then((data) => {
+            setApiResponse(data);
+        })
+        .catch((error) => {
+            console.log(error.message);
+            setError(error.message);
+        });
+    }, []);
+
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="entry">How are you feeling today?</label>
-                <textarea
-                    id="entry"
-                    name="entry"
-                    value={diaryInfo.entry}
-                    onChange={handleInputChange}
-                    placeholder="I am feeling refreshed because..."
-                />
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+        <div>
+            {/* add error display and loading display */}
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="entry">How are you feeling today?</label>
+                    <textarea
+                        id="entry"
+                        name="entry"
+                        value={diaryInfo.entry}
+                        onChange={handleInputChange}
+                        placeholder="I am feeling refreshed because..."
+                    />
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     );
 }
 
-export default HealthJounral;
+export default HealthJournal;

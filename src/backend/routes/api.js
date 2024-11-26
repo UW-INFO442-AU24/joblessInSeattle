@@ -2,7 +2,7 @@ import express from 'express';
 
 import usersRouter from './controllers/users.js';
 import buddyRouter from './controllers/buddy.js';
-import healthCard from './controllers/healthStats.js';
+import healthStatsRouter from './controllers/healthStats.js';
 import diaryRouter from './controllers/diary.js';
 import sleepRouter from './controllers/sleep.js';
 import waterRouter from './controllers/water.js';
@@ -14,7 +14,7 @@ var router = express.Router();
 
 router.use('/users', usersRouter);
 router.use('/buddy', buddyRouter);
-router.use('/healthCard', healthCard);
+router.use('/healthStats', healthStatsRouter);
 router.use('/diary', diaryRouter);
 router.use('/sleep', sleepRouter);
 router.use('/water', waterRouter);

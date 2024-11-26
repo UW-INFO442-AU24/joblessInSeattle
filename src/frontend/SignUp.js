@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
@@ -7,6 +7,7 @@ const Signup = () => {
     const navigate = useNavigate();
     const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
+    const [apiResponse, setApiResponse] = useState("");
 
     // setting and saving the user login info for the first time
     const [userInfo, setUserInfo] = useState({
@@ -65,7 +66,6 @@ const Signup = () => {
             setLoading(false);
             return;
         }
-
         // sign up attempt
         try {
             // FIrebase auth
@@ -116,6 +116,21 @@ const Signup = () => {
         }
     }
 
+    useEffect(() => {
+        fetch('http://localhost:3001/api/signup')
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return res.json();
+        })
+        .then((data) => {
+            setApiResponse(data);
+        })
+        .catch((error) => {
+            setErr(error.message);
+        })
+    }, []);
 
     return(
         <div>

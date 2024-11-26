@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -24,6 +24,9 @@ function TimeInputs(props) {
 }
 
 export default function SleepTracker() {
+
+    const [apiResponse, setApiResponse] = useState(null);
+    const [error, setError] = useState(null);
 
     const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(false);
@@ -64,9 +67,27 @@ export default function SleepTracker() {
 
     }
 
-    return (
+    // api call and collect data to feed to the backend
+    useEffect(() => {
+        // Make the API call to the backend
+        fetch('http://localhost:3001/api/sleep')
+        .then((response) => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setApiResponse(data); // Update state with the API response
+        })
+        .catch((error) => {
+            setError(error.message); // Handle errors
+        });
+    }, []);
 
+    return (
         <div>
+            {/* error loading for api and loading display */}
             <Col className='m-4'>
                 <h1>Sleep</h1>
                 {/* Log sleep (start/end) */}

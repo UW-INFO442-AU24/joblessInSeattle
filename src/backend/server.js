@@ -4,8 +4,8 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 
-import sessions from 'express-session';
-import WebAppAuthProvider from 'msal-node-wrapper';
+// import sessions from 'express-session';
+// import WebAppAuthProvider from 'msal-node-wrapper';
 import apiRouter from './routes/api.js';
 
 // Manually resolve __dirname in ES modules
