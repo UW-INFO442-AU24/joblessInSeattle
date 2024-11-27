@@ -6,6 +6,7 @@ import Dashboard from "./frontend/Dashboard.js"
 import WaterTracker from "./frontend/WaterTracker.js"
 import SleepTracker from "./frontend/sleepTracker.js"
 import HealthJournal from "./frontend/healthJournal.js";
+import MyBuddy from "./frontend/myBuddy.js";
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                     <Route path="watertracker" element={ <WaterTracker/> } />
                     <Route path="sleeptracker" element={ <SleepTracker/> } />
                     <Route path="healthjournal" element={ <HealthJournal/> } />
+                    <Route path="buddy" element={ <MyBuddy/> } />
                 </Routes>
         </div>
     )

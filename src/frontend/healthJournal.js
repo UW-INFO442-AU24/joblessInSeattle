@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import { NavBar } from "../frontend/Navbar.js";
 
 const HealthJournal = () => {
     const [apiResponse, setApiResponse] = useState(null);
@@ -62,20 +66,23 @@ const HealthJournal = () => {
 
     return (
         <div>
-            {/* add error display and loading display */}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="entry">How are you feeling today?</label>
-                    <textarea
-                        id="entry"
-                        name="entry"
-                        value={diaryInfo.entry}
+            <Col className='m-4'>
+                <h1>Health Journal</h1>
+                {/* add error display and loading display */}
+                <Form onSubmit={handleSubmit} className="my-2">
+                    <Form.Label htmlFor="entry">How are you doing today? Write a journal entry to document how you feel emotionally, mentally, and/or physically</Form.Label>
+                    <Form.Control
+                        as="textarea" 
+                        rows={20}
+                        placeholder="I feel refreshed because..."
+                        aria-label="Text box to input diary entry about your day"
                         onChange={handleInputChange}
-                        placeholder="I am feeling refreshed because..."
+                        className="my-2"
                     />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+                    <Button variant="primary" className="my-2" onSubmit={handleSubmit}>Submit</Button>
+                </Form>
+            </Col>
+            <NavBar></NavBar>
         </div>
     );
 }
