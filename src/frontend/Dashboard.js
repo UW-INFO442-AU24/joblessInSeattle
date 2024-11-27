@@ -51,7 +51,7 @@ export default function Dashboard() {
             <Row className='m-4'>
                 <Card>
                   <Card.Body>
-                    <Card.Title>My Buddy</Card.Title>
+                    <Card.Title><Link to="/buddy">My Buddy</Link></Card.Title>
                       <Card.Text>
                         :D
                       </Card.Text>
