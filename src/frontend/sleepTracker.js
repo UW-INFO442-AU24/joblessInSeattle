@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { ButtonGroup } from 'react-bootstrap';
+import { ButtonGroup, Form, Button, Row, Col, Card } from 'react-bootstrap';
 import { NavBar } from "../frontend/Navbar.js";
-import { LineChart } from '@mui/x-charts/LineChart';
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
+import { LinePlot, ResponsiveChartContainer }from '@mui/x-charts';
+import { MobileTimePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+
 
 function TimeInputs(props) {
 
@@ -93,11 +88,11 @@ export default function SleepTracker() {
                 </Row>
                     
                 {/* Sleep stat with graph - Day, Week, Month, 6 months, Year? */}
-                <Row className='m-4'>
+                <Row className='m-4' style={{height: '100px'}}>
                     <Card>
                         <Card.Body>
                             <Card.Title>Your Sleep</Card.Title>
-                            <LineChart
+                            <ResponsiveChartContainer
                                 xAxis={[{ 
                                     scaleType: 'time',
                                     data: [new Date('2024-11-11'), new Date('2024-11-12'), new Date('2024-11-13'), new Date('2024-11-14'), new Date('2024-11-15'), new Date('2024-11-16'), new Date('2024-11-17')] 
@@ -107,9 +102,9 @@ export default function SleepTracker() {
                                     data: [6.3, 8.3, 7.1, 7.9, 7.8, 6.9, 7.4]
                                     },
                                 ]}
-                                width={200}
-                                height={200}
-                            />
+                            >
+                                <LinePlot />
+                            </ResponsiveChartContainer>
                         </Card.Body>
                     </Card>
                 </Row>
