@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { ButtonGroup } from 'react-bootstrap';
-import { NavBar } from "../frontend/Navbar.js";
-import { LineChart } from '@mui/x-charts/LineChart';
-import { MobileTimePicker } from '@mui/x-date-pickers/MobileTimePicker';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ButtonGroup, Card, Col, Row, Button, Form } from 'react-bootstrap';
+import { NavBar } from "./Navbar.js";
+import { LineChart } from '@mui/x-charts';
+import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/index.js';
 import dayjs from 'dayjs';
 
 function TimeInputs(props) {

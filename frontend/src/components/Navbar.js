@@ -1,32 +1,32 @@
 import React from "react";
-// import { Container } from 'react-bootstrap';
-import { Navbar } from 'react-bootstrap';
+import { Container, Navbar } from 'react-bootstrap';
 
 export function NavBar(props) {
   const NAV_DATA = [
     { 
-        name: "Dashboard",  
+        name: "/",  
         image: '/assets/icons8-home-48.png', 
         alt: "Dashboard Page" 
     },
     {
-        name: "Diary",
+        name: "healthjournal",
         image: '/assets/icons8-journal-50.png',
         alt: "Diary entries",
     },
     {
-        name: "Buddy",
+        name: "buddy",
         image: '/assets/icons8-wolf-32.png',
         alt: "Buddy",
     },
     { 
-        name: "Settings", 
+        name: "settings", 
         image: '/assets/icons8-settings-50.png', 
         alt: "Settings" 
     },
   ];
   const navArray = NAV_DATA.map((navObj) => {
     const navElem = (
+      <Container>
         <Navbar.Brand href={navObj.name} key={navObj.name}>
             <img
                 src={navObj.image}
@@ -36,6 +36,7 @@ export function NavBar(props) {
                 alt={navObj.alt}
             />
         </Navbar.Brand>
+      </Container>
     );
     return navElem;
   });

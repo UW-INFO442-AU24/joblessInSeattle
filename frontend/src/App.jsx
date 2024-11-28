@@ -1,5 +1,12 @@
-import React from 'react';
-import { NavBar } from './components/Navbar';
+import React from "react";
+import { Routes, Route } from 'react-router-dom'
+
+//import components
+import Dashboard from "./components/Dashboard.js"
+import WaterTracker from "./components/WaterTracker.js"
+import SleepTracker from "./components/sleepTracker.js"
+import HealthJournal from "./components/healthJournal.js";
+import MyBuddy from "./components/myBuddy.js";
 
 const App = () => {
   // return (
@@ -19,13 +26,15 @@ const App = () => {
   //   </div>
   // );
     return (
-        <main>
-            <NavBar />
-            <section className='hero-section text-center'>
-            <h1 className='font-semibold text-6xl'>Welcome to DayMax</h1>
-            </section>
-            {/* more structuring logic/page setup here */}
-        </main>
+        <div className="App">
+                <Routes>
+                    <Route path="/" element={ <Dashboard/> } />
+                    <Route path="watertracker" element={ <WaterTracker/> } />
+                    <Route path="sleeptracker" element={ <SleepTracker/> } />
+                    <Route path="healthjournal" element={ <HealthJournal/> } />
+                    <Route path="buddy" element={ <MyBuddy/> } />
+                </Routes>
+        </div>
     );
 };
 

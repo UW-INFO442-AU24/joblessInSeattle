@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import { NavBar } from "../frontend/Navbar.js";
-import { LineChart } from '@mui/x-charts/LineChart';
+import { Card, Col, Row, Button } from 'react-bootstrap';
+import { NavBar } from "./Navbar.js";
+import { LineChart } from '@mui/x-charts';
 
 export default function WaterTracker() {
     const [apiResponse, setApiResponse] = useState(null);
