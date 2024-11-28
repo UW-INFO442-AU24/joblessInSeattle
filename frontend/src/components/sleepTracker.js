@@ -6,6 +6,8 @@ import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/index.js';
 import dayjs from 'dayjs';
 
+// help i need to gitignore the node_modules in frontend
+
 function TimeInputs(props) {
 
     const [time, setTime] = useState(dayjs('2024-11-01T15:30'));
