@@ -1,0 +1,15 @@
+{
+  "name": "joblessinseattle",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\"><strong>DayMax</strong></h1>\r <h2 align=\"center\"><strong>Get the Max Out of Your Day!</strong></h2>\r <p align=\"center\">Group 7 - Jobless in Seattle</p>",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
