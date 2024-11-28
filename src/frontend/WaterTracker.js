@@ -12,11 +12,18 @@ function Counter() {
     const increment = () => setCount(count + 8);
     const decrement = () => setCount(count - 8);
 
+    const reset = () => setCount(0);
+
     return (
         <div>
-            <Button variant='primary' onClick={decrement}>-</Button>
-            <span id="counter" class="mx-3">{count} fl oz</span>
-            <Button variant='primary' onClick={increment}>+</Button>
+            {/* <div class="btn-group"> */}
+                <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
+                <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span> 
+                <Button variant='primary' onClick={increment}>+</Button>
+            {/* </div> */}
+            <div>
+                <Button variant='primary' className="mt-3" onClick={reset}>Submit</Button>
+            </div>
         </div>
     );
 }
@@ -32,7 +39,7 @@ export default function WaterTracker() {
                     <Card.Body>
                         <Card.Title>Water Consumed Today</Card.Title>
                         <Counter />
-                        <Button as="input" type="submit" value="Submit" className='mt-2'/>
+                        {/* <Button as="input" type="submit" value="Submit" className='mt-2'/> */}
                     </Card.Body>
                 </Card>
             </Row>
