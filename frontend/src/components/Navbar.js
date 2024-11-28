@@ -1,7 +1,6 @@
 import React from "react";
 // import { Container } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
-import { Link } from "react-router-dom";
 
 export function NavBar(props) {
   const NAV_DATA = [
@@ -28,7 +27,7 @@ export function NavBar(props) {
   ];
   const navArray = NAV_DATA.map((navObj) => {
     const navElem = (
-        <Navbar.Brand as={Link} to={`/${navObj.name}`} key={navObj.name}>
+        <Navbar.Brand href={navObj.name} key={navObj.name}>
             <img
                 src={navObj.image}
                 width="30"
