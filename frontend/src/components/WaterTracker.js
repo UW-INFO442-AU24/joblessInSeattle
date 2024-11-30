@@ -3,6 +3,29 @@ import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 
+function Counter() {
+   const [count, setCount] = useState(0);
+   const increment = () => setCount(count + 8);
+   const decrement = () => setCount(count - 8);
+
+
+   const reset = () => setCount(0);
+
+
+   return (
+       <div>
+           {/* <div class="btn-group"> */}
+               <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
+               <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
+               <Button variant='primary' onClick={increment}>+</Button>
+           {/* </div> */}
+           <div>
+               <Button variant='primary' className="mt-3" onClick={reset}>Submit</Button>
+           </div>
+       </div>
+   );
+}
+
 export default function WaterTracker() {
     const [apiResponse, setApiResponse] = useState(null);
     const [error, setError] = useState(null);
@@ -34,13 +57,12 @@ export default function WaterTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Water Consumed Today</Card.Title>
-                            <Button variant='primary'>-</Button>
-                            <span id="counter" class="mx-3">0 fl oz</span>
-                            <Button variant='primary'>+</Button>
-                            <Button as="input" type="submit" value="Submit" className='mt-2'/>
+                            <Counter />
+                            {/* <Button as="input" type="submit" value="Submit" className='mt-2'/> */}
                         </Card.Body>
                     </Card>
                 </Row>
+
                     
                 {/* WATER DRANK THIS WEEK */}
                 <Row className='m-4'>
