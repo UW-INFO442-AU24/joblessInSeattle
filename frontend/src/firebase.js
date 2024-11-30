@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,5 +16,16 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+<<<<<<< HEAD:frontend/src/firebase.js
 export const auth = getAuth(app);
 export default app;
+=======
+const auth = getAuth(app);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+      <App auth={auth} />
+  </React.StrictMode>
+);
+>>>>>>> c9a587780c4bbb025616329f808ec714343fb68f:src/backend/index.js

@@ -1,8 +1,29 @@
 {
   "name": "joblessinseattle",
+<<<<<<< HEAD
   "version": "1.0.0",
   "description": "<h1 align=\"center\"><strong>DayMax</strong></h1>\r <h2 align=\"center\"><strong>Get the Max Out of Your Day!</strong></h2>\r <p align=\"center\">Group 7 - Jobless in Seattle</p>",
   "main": "index.js",
+=======
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "bootstrap": "^5.3.3",
+    "firebase": "^10.14.1",
+    "mongoose": "^8.7.2",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+>>>>>>> c9a587780c4bbb025616329f808ec714343fb68f
   "scripts": {
     "start": "concurrently \"npm run start --prefix frontend\" \"npm run start --prefix backend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
