@@ -29,10 +29,11 @@ const App = () => {
         <div className="App">
                 <Routes>
                     <Route path="/" element={ <Dashboard/> } />
-                    <Route path="watertracker" element={ <WaterTracker/> } />
-                    <Route path="sleeptracker" element={ <SleepTracker/> } />
-                    <Route path="healthjournal" element={ <HealthJournal/> } />
-                    <Route path="buddy" element={ <MyBuddy/> } />
+                    <Route path="/dashboard" element={ <Dashboard/> } />
+                    <Route path="/watertracker" element={ <WaterTracker/> } />
+                    <Route path="/sleeptracker" element={ <SleepTracker/> } />
+                    <Route path="/healthjournal" element={ <HealthJournal/> } />
+                    <Route path="/buddy" element={ <MyBuddy/> } />
                 </Routes>
         </div>
     );
