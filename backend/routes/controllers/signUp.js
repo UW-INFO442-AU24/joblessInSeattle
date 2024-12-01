@@ -1,6 +1,6 @@
 import express from "express";
 import admin from "firebase-admin";
-import { User } from "../../models.js"; 
+import models from "../../models.js"; 
 
 var router = express.Router();
 

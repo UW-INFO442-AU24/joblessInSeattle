@@ -3,10 +3,12 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 
 // import sessions from 'express-session';
 // import WebAppAuthProvider from 'msal-node-wrapper';
 import apiRouter from './routes/api.js';
+import models from './models.js';
 
 // Manually resolve __dirname in ES modules
 import { fileURLToPath } from 'url';
@@ -24,9 +26,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json())
 
 // Serve static files (React build output)
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+// middleware to add mongoose models to req
+app.use((req, res, next) => {
+    req.models = models
+    next()
+})
 
 // API route for backend logic
 app.use('/api', apiRouter);

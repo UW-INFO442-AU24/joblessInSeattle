@@ -1,29 +1,34 @@
 import mongoose from 'mongoose';
 
-const uri = "mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/";
-// ?retryWrites=true&w=majority&appName=DayMaxCluster
-const clientOptions = { 
-    serverApi: { 
-        version: '1', 
-        strict: true, 
-        deprecationErrors: true 
-    }
-};
+// const uri = "mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/";
+// // ?retryWrites=true&w=majority&appName=DayMaxCluster
+// const clientOptions = { 
+//     serverApi: { 
+//         version: '1', 
+//         strict: true, 
+//         deprecationErrors: true 
+//     }
+// };
 
-async function run() {
-    try {
-        // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
-        await mongoose.connect(uri, clientOptions);
-        // sends ping request to the MongoDB server to check if server responsive. 
-        // ping: 1 command = verification that server is up and connection working
-        await mongoose.connection.db.admin().command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // Ensures that client closes when finish/error
-        await mongoose.disconnect();
-    }
-}
-run().catch(console.dir);
+// async function run() {
+//     try {
+//         // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
+//         await mongoose.connect(uri, clientOptions);
+//         // sends ping request to the MongoDB server to check if server responsive. 
+//         // ping: 1 command = verification that server is up and connection working
+//         await mongoose.connection.db.admin().command({ ping: 1 });
+//         console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//     } finally {
+//         // Ensures that client closes when finish/error
+//         await mongoose.disconnect();
+//     }
+// }
+// run().catch(console.dir);
+
+let models = {};
+console.log("connecting to MongoDB...")
+await mongoose.connect("mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/")
+console.log("success");
 
 // User table
 const userSchema = new mongoose.Schema({
@@ -31,7 +36,8 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
 });
-export const User = mongoose.model('User', userSchema);
+models.User = mongoose.model('User', userSchema);
+console.log("user schema successful!")
 
 // Symptoms table
 const symptomsSchema = new mongoose.Schema({
@@ -42,7 +48,8 @@ const symptomsSchema = new mongoose.Schema({
     },
     date: Date
     });
-export const Symptoms = mongoose.model('Symptoms', symptomsSchema);
+models.Symptoms = mongoose.model('Symptoms', symptomsSchema);
+console.log("symptoms schema successful!")
 
 // User's Daily Statistics table
 const dailyStatsSchema = new mongoose.Schema({
@@ -57,13 +64,23 @@ const dailyStatsSchema = new mongoose.Schema({
     heart_rate: { type: Number, required: true },
     meds: { type: String }
 });
-export const DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
+models.DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
+console.log("dailystats schema successful!")
+
+//Water Tracker table
+const waterSchema = new mongoose.Schema({
+    date: Date,
+    water: Number
+});
+models.WaterStats = mongoose.model("WaterStats", waterSchema);
+console.log("water stat schema successful!")
 
 // Health Resources table
 const healthResourcesSchema = new mongoose.Schema({
     url: String
 });
-export const HealthResources = mongoose.model('HealthResources', healthResourcesSchema);
+models.HealthResources = mongoose.model('HealthResources', healthResourcesSchema);
+console.log("health resources schema successful!")
 
 // Health Diary table
 const diarySchema = new mongoose.Schema({
@@ -75,7 +92,8 @@ const diarySchema = new mongoose.Schema({
     entry: { type: String, required: true },
     date: Date
 });
-export const Diary = mongoose.model('Diary', diarySchema);
+models.Diary = mongoose.model('Diary', diarySchema);
+console.log("diary schema successful!")
 
 // Health Buddy table
 const buddySchema = new mongoose.Schema({
@@ -86,4 +104,9 @@ const buddySchema = new mongoose.Schema({
     },
     date: Date
 });
-export const Buddy = mongoose.model('Buddy', buddySchema);
+models.Buddy = mongoose.model('Buddy', buddySchema);
+console.log("health buddy schema successful!")
+
+console.log("All Mongoose models created!")
+
+export default models;

@@ -1,10 +1,12 @@
 import express from 'express';
-import { Diary } from '../../models.js';
+// import { Diary } from '../../models.js';
+import models from '../../models.js';
 
 var router = express.Router();
 
 // GET for /diary
 router.get('/', async (req, res) => {
+    const Diary = models.Diary;
     try {
         // fetch all the data and sort by most recent date
         const entries = await Diary.find().sort({ date: -1 });

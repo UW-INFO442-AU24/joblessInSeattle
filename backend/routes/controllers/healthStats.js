@@ -1,9 +1,11 @@
 import express from 'express';
-import { DailyStats } from '../../models.js';
+// import { DailyStats } from '../../models.js';
+import models from '../../models.js'
 var router = express.Router();
 
 // GET for /healthCard
 router.get('/', async (req, res) => {
+    const DailyStats = models.DailyStats;
     try {
         // fetching the data from the dailystats table, sorted by date
         const healthData = await DailyStats.find().sort({ date: -1 });
