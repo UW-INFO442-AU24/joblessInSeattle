@@ -46,7 +46,6 @@ function Counter() {
 }
 
 export default function WaterTracker() {
-
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
     };
@@ -54,7 +53,7 @@ export default function WaterTracker() {
     return (   
         <div>
             <Col className='m-4'>
-                {/* WATER TRACKER TODAY */}
+                {/* MEDICATION TRACKER TODAY */}
                 <div className='d-flex flex-row'>
                     <div>
                         <button className="btn border-0" onClick={goBack}>
@@ -64,7 +63,7 @@ export default function WaterTracker() {
                         </button>
                     </div>
                     <div>
-                        <h1>Water Tracker</h1>
+                        <h1>Medications</h1>
                     </div>
                 </div>
                 
