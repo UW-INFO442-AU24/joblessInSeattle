@@ -27,7 +27,7 @@ import mongoose from 'mongoose';
 
 let models = {};
 console.log("connecting to MongoDB...")
-await mongoose.connect("mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/")
+await mongoose.connect("mongodb+srv://leo:5dADxBjC11gbcQo7@daymaxcluster.b1fuq.mongodb.net/DayMax")
 console.log("success");
 
 // User table
