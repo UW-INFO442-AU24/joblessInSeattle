@@ -3,21 +3,6 @@ import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { fetchJSON } from "./utils.js";
-// import axios from "axios";
-// import fetch from 'fetch';
-
-//import saveWaterInfo from './backend/javascripts/water.js'
-
-// async function saveWaterInfo() {
-//     //TODO: do an ajax call to save whatever info you want about the user from the user table
-//     let waterIntake = document.getElementById('waterTracker');
-//     console.log(waterIntake);
-
-//     let responseJson = await fetch(`api/water`, {
-//         method: "POST",
-//         body: {water: waterIntake}
-//     })
-// };
 
 // water tracker
 function Counter() {
@@ -45,12 +30,14 @@ function Counter() {
 
    return (
        <div>
-               <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
-               {/* <span id="waterCounter" class="mx-3 pt-2">{count}</span> */}
-               <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
-               <Button variant='primary' onClick={increment}>+</Button>
+            <div>
+                <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
+                <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
+                <Button variant='primary' onClick={increment}>+</Button>
+            </div>
+               
            <div>
-               <Button variant='primary' className="mt-3" disabled={count<=0 ? true : false} onClick={saveWaterInfo}>
+               <Button variant='info' className="mt-3" disabled={count<=0 ? true : false} onClick={saveWaterInfo}>
                     Submit
                 </Button>
            </div>
@@ -59,26 +46,6 @@ function Counter() {
 }
 
 export default function WaterTracker() {
-    // const [apiResponse, setApiResponse] = useState(null);
-    // const [error, setError] = useState(null);
-
-    // // Fetch data from the API when the component mounts
-    // useEffect(() => {
-    //     // Make the API call to the backend
-    //     fetch('http://localhost:3001/api/water')
-    //     .then((response) => {
-    //         if (!response.ok) {
-    //             throw new Error('Network response was not ok');
-    //         }
-    //         return response.json();
-    //     })
-    //     .then((data) => {
-    //         setApiResponse(data); // Update state with the API response
-    //     })
-    //     .catch((error) => {
-    //         setError(error.message); // Handle errors
-    //     });
-    // }, []); // Empty dependency array means this effect runs once on start
 
     return (   
         <div>
@@ -88,9 +55,18 @@ export default function WaterTracker() {
                 <Row className='m-4'>
                     <Card>
                         <Card.Body>
-                            <Card.Title>Water Consumed Today</Card.Title>
+                        {/* <Card.Body class="text-center"> */}
+                            <Card.Title>Water Intake Input</Card.Title>
                             <Counter />
-                            {/* <Button as="input" type="submit" value="Submit" className='mt-2'/> */}
+                        </Card.Body>
+                    </Card>
+                </Row>
+
+                <Row className='m-4'>
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Water Consumed Today</Card.Title>
+                            {/* call funciton to load water info? */}
                         </Card.Body>
                     </Card>
                 </Row>
