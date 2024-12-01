@@ -11,12 +11,21 @@ export default function Dashboard() {
 
             {/* WATER TRACKER */}
             <Row className='m-4'>
-                <Card>
-                  <Card.Body>
-                    <Card.Title><Link to="/watertracker">Water</Link></Card.Title>
-                      <Card.Text>
-                          16/64 fl oz.
-                      </Card.Text>
+                <Card className='bg-info text-white'>
+                  <Card.Body><Link to="/watertracker" class="stretched-link"></Link>
+                    <div class='d-flex flex-row justify-content-between'>
+                      <div>
+                        <Card.Title>Water</Card.Title>
+                          <Card.Text>
+                              16/64 fl oz.
+                          </Card.Text>
+                      </div>
+                      <div class="pt-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                      </div>
+                    </div>
                   </Card.Body>
                 </Card>
             </Row>
@@ -24,11 +33,20 @@ export default function Dashboard() {
             {/* SLEEP TRACKER */}
             <Row className='m-4'>
                 <Card>
-                  <Card.Body>
-                    <Card.Title><Link to="/sleeptracker">Sleep</Link></Card.Title>
-                      <Card.Text>
-                          placeholder for amount of sleep today.
-                      </Card.Text>
+                  <Card.Body><Link to="/sleeptracker" class="stretched-link"></Link>
+                    <div class='d-flex flex-row justify-content-between'>
+                        <div>
+                          <Card.Title>Sleep</Card.Title>
+                          <Card.Text>
+                              placeholder for amount of sleep today.
+                          </Card.Text>
+                        </div>
+                        <div class="pt-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </div>
+                    </div>
                   </Card.Body>
                 </Card>
             </Row>
@@ -37,10 +55,19 @@ export default function Dashboard() {
             <Row className='m-4'>
                 <Card>
                   <Card.Body>
-                    <Card.Title>Medications</Card.Title>
-                      <Card.Text>
-                          allergy pills!
-                      </Card.Text>
+                    <div class='d-flex flex-row justify-content-between'>
+                      <div>
+                        <Card.Title>Medications</Card.Title>
+                        <Card.Text>
+                            allergy pills!
+                        </Card.Text>
+                      </div>
+                      <div class="pt-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                      </div>
+                    </div>
                   </Card.Body>
                 </Card>
             </Row>
@@ -49,10 +76,19 @@ export default function Dashboard() {
             <Row className='m-4'>
                 <Card>
                   <Card.Body>
-                    <Card.Title>My Buddy</Card.Title>
-                      <Card.Text>
-                        :D
-                      </Card.Text>
+                    <div class='d-flex flex-row justify-content-between'>
+                      <div>
+                        <Card.Title>My Buddy</Card.Title>
+                        <Card.Text>
+                          :D
+                        </Card.Text>
+                      </div>
+                      <div class="pt-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                              <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                      </div>
+                    </div>
                   </Card.Body>
                 </Card>
             </Row>

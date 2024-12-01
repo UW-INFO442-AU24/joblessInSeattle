@@ -37,7 +37,7 @@ function Counter() {
             </div>
                
            <div>
-               <Button variant='info' className="mt-3" disabled={count<=0 ? true : false} onClick={saveWaterInfo}>
+               <Button variant='primary' className="mt-3" disabled={count<=0 ? true : false} onClick={saveWaterInfo}>
                     Submit
                 </Button>
            </div>
