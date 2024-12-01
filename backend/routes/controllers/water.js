@@ -26,7 +26,6 @@ router.post('/', async (req, res) => {
       });
       console.log("this is before the save");
       await newWater.save()
-      console.log(req.body)
       console.log(req.body.water)
       console.log("this is after the save")
       res.json({"status" : "success"})

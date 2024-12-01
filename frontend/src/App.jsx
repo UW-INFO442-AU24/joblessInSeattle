@@ -35,6 +35,7 @@ const App = () => {
                     <Route path="/healthjournal" element={ <HealthJournal/> } />
                     <Route path="/buddy" element={ <MyBuddy/> } />
                 </Routes>
+                <div id="errorInfo" style={{opacity: 0, transition: 'opacity 0.5s ease', color: 'red',}}/>
         </div>
     );
 };

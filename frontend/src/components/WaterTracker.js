@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
+import { fetchJSON } from "./utils.js";
 // import axios from "axios";
 // import fetch from 'fetch';
 
@@ -27,14 +28,15 @@ function Counter() {
    const reset = () => setCount(0);
 
    const saveWaterInfo = async () => {
+        let waterIntake = {count}.count;
         try {
-            let waterIntake = {count}.count;
             console.log(waterIntake)
-            await fetch("http://localhost:3001/api/water", {
-            method: "POST",
-            body: waterIntake
-        }) 
-        reset();
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/water", {
+                method: "POST",
+                body: { water: waterIntake }
+            })
+            reset();
 
         } catch (error) {
             console.error("Error saving count:", error);
