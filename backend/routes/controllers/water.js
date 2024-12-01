@@ -21,11 +21,12 @@ router.post('/', async (req, res) => {
     //const WaterStats = models.WaterStats;
     try {
       const newWater = new req.models.WaterStats({
-        //date: Date.now(),
+        date: Date.now(),
         water : req.body.water,
       });
       console.log("this is before the save");
       await newWater.save()
+      console.log(req.body)
       console.log(req.body.water)
       console.log("this is after the save")
       res.json({"status" : "success"})

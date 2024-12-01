@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
-import axios from "axios";
+// import axios from "axios";
 // import fetch from 'fetch';
 
 //import saveWaterInfo from './backend/javascripts/water.js'
@@ -30,11 +30,10 @@ function Counter() {
         try {
             let waterIntake = {count}.count;
             console.log(waterIntake)
-            let response = await fetch("http://localhost:3001/api/water", {
+            await fetch("http://localhost:3001/api/water", {
             method: "POST",
-            body: {waterIntake}
+            body: waterIntake
         }) 
-
         reset();
 
         } catch (error) {
