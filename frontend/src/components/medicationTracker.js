@@ -27,7 +27,7 @@ function MedicationLine () {
     return(
         <div className='d-flex flex-row justify-content-between border-bottom'>
             <div className='px-2'>
-                {/* left side of card */}
+                {/* left side of card -- NEED TO UPDATE WHEN DB STUFF IS IN */}
                 <div className='d-flex flex-row justify-content-between mt-1'>
                     <p className='fw-bold mb-0'>Zyrtec</p>
                     <p className='m-0'>1x</p>
@@ -60,20 +60,68 @@ function AddNewMedication () {
         }
     };
 
-    const showInputs = <div><input>Hey!</input></div>
+    /* FUNCTION to add "add medication" content after pressing add medication button */
+    function medInputs() {
+        var medicationDiv = document.getElementById('medication-input');
+        var addMedButton = document.getElementById('addMedicationBtn');
+
+        addMedButton.style.display = 'none';  // This hides the button
+
+        
+    
+        medicationDiv.innerHTML = `<div id='medInputForm' class='py-2'>
+            <div class='d-flex flex-row justify-content-between py-1'>
+                <label for='medicationNameInput'>Medication Name</label>
+                <input type='text' id='medicationNameInput'/>
+            </div>
+
+            <div class='d-flex flex-row justify-content-between py-1'>
+                <label for='medFrequencyInput'>Daily Frequency</label>
+                <input type='number' id='medFrequencyInput' min="0" max="100" step="1"/>
+            </div>
+            
+            <div class='d-flex flex-column justify-content-between py-1'>
+                <label for='medDescriptionInput'>Description</label>
+                <textarea id='medDescriptionInput' rows="4" cols="50" wrap="soft"></textarea>
+            </div>
+
+            <div class='d-flex justify-content-left mt-2'>
+                <button id='submitBtn' class="btn btn-success">Submit</button>
+            </div>
+        </div>`;
+        // Attach the submit event handler
+        var submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", submitMedication);
+    }
+
+    function submitMedication () {
+        var medicationName = document.getElementById('medicationNameInput');
+        var medDescription = document.getElementById('medDescriptionInput');
+        var medFrequency = document.getElementById('medFrequencyInput');
+        var medicationDiv = document.getElementById('medication-input');
+        var addMedButton = document.getElementById('addMedicationBtn');
+
+        medicationDiv.innerHTML = "";
+        addMedButton.style.display = 'block';
+        console.log("submitted (not really)")
+    }
+    
 
     return(
         <div>
-            {/* onClick={showInputs} */}
-            <Button variant='primary' className="mt-3" >
-                Add Medication
+            <Button className="mt-3 btn-success" id='addMedicationBtn' onClick={medInputs}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+                ‎ Add Medication
             </Button>
             <div id="medication-input"></div>
         </div>
     )
 }
 
-export default function WaterTracker() {
+export default function MedicationPage() {
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
     };
