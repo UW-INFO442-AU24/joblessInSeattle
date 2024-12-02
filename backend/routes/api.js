@@ -9,6 +9,7 @@ import waterRouter from './controllers/water.js';
 import medicationRouter from './controllers/medication.js';
 import loginRouter from './controllers/login.js';
 import signupRouter from './controllers/signUp.js';
+import resources from './controllers/resources.js';
 
 var router = express.Router();
 
@@ -21,5 +22,6 @@ router.use('/water', waterRouter);
 router.use('/medication', medicationRouter);
 router.use('/login', loginRouter);
 router.use('/signup', signupRouter);
+router.use('/resources', resources);
 
 export default router;
