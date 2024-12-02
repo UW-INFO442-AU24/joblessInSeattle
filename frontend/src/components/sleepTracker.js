@@ -5,6 +5,7 @@ import { LineChart } from '@mui/x-charts';
 import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/index.js';
 import dayjs from 'dayjs';
+import { fetchJSON } from "./utils.js";
 
 // help i need to gitignore the node_modules in frontend
 
