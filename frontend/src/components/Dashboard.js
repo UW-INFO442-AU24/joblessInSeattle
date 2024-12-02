@@ -11,7 +11,7 @@ export default function Dashboard() {
 
             {/* WATER TRACKER */}
             <Row className='m-4'>
-                <Card className='bg-info text-white'>
+                <Card className='bg-primary bg-opacity-75 text-white'>
                   <Card.Body><Link to="/watertracker" class="stretched-link"></Link>
                     <div class='d-flex flex-row justify-content-between'>
                       <div>
@@ -32,7 +32,7 @@ export default function Dashboard() {
                 
             {/* SLEEP TRACKER */}
             <Row className='m-4'>
-                <Card>
+                <Card className='bg-info bg-opacity-50 text-black-50'>
                   <Card.Body><Link to="/sleeptracker" class="stretched-link"></Link>
                     <div class='d-flex flex-row justify-content-between'>
                         <div>
@@ -53,8 +53,8 @@ export default function Dashboard() {
 
             {/* MEDICATIONS */}
             <Row className='m-4'>
-                <Card>
-                  <Card.Body>
+                <Card className='bg-success bg-opacity-75 text-white'>
+                  <Card.Body><Link to="/medications" class="stretched-link"></Link>
                     <div class='d-flex flex-row justify-content-between'>
                       <div>
                         <Card.Title>Medications</Card.Title>
@@ -74,8 +74,8 @@ export default function Dashboard() {
 
             {/* MY BUDDY */}
             <Row className='m-4'>
-                <Card>
-                  <Card.Body>
+                <Card className='bg-warning bg-opacity-75 text-black-50'>
+                  <Card.Body><Link to="/buddy" class="stretched-link"></Link>
                     <div class='d-flex flex-row justify-content-between'>
                       <div>
                         <Card.Title>My Buddy</Card.Title>
