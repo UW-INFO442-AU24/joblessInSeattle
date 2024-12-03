@@ -2,16 +2,16 @@ import React from "react";
 import { Routes, Route } from 'react-router-dom'
 
 //import components
-import Dashboard from "./components/Dashboard.js"
-import WaterTracker from "./components/waterTracker.js"
-import SleepTracker from "./components/sleepTracker.js"
-import HealthJournal from "./components/healthJournal.js";
-import MyBuddy from "./components/myBuddy.js";
-import MedicationTracker from "./components/medicationTracker.js";
-import ResourcesPage from "./components/ResourcesPage.js";
-import Login from "./components/login.js";
-import Signup from "./components/SignUp.js";
-import ErrorPage from "./components/ErrorPage.js"
+import Dashboard from "./components/Dashboard"
+import WaterTracker from "./components/waterTracker"
+import SleepTracker from "./components/sleepTracker"
+import HealthJournal from "./components/HealthJournal";
+import MyBuddy from "./components/myBuddy";
+import MedicationTracker from "./components/medicationTracker";
+import ResourcesPage from "./components/ResourcesPage";
+import Login from "./components/login";
+import Signup from "./components/SignUp";
+import ErrorPage from "./components/ErrorPage"
 
 const App = () => {
     return (
