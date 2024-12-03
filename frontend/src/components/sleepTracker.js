@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, Form } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { fetchJSON } from "./utils.js";
-
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -52,6 +51,59 @@ export default function SleepTracker() {
     const [min, setMin] = useState(0);
     const [valid, setValid] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [sleepGoal, setSleepGoal] = useState([]);
+    const [sleepInput, setSleepInput] = useState([]);
+
+    function UserSleepGoal({ sleepGoal }) {
+        if (sleepGoal) {
+            let hourGoal = sleepGoal.sleepGoalHour;
+            let minGoal = sleepGoal.sleepGoalMin; 
+
+            return (
+                <Card.Text>Current Goal: {hourGoal} hr {minGoal} min</Card.Text>
+            );
+        }
+    }
+    
+    function UsersSleepInput({ sleepInput }) {
+        if (sleepInput) {
+            let timeBed = sleepInput.bedTime;
+            let timeWake = sleepInput.wakeTime;
+
+            return (
+                <div> 
+                    <Card.Text>Last Bed Time: {timeBed} </Card.Text>
+                    <Card.Text>Last Wake Time: {timeWake} </Card.Text>
+                </div>
+            );
+        }
+    }
+
+    useEffect(() => {
+        const fetchSleepGoal = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/sleep/getGoal');
+                const data = await response.json();
+                setSleepGoal(data[data.length - 1]);
+            } catch (error) {
+                console.error("Error fetching sleep goals:", error);
+            }
+        };
+        fetchSleepGoal();
+    }, []);
+
+    useEffect(() => {
+        const fetchSleepTimes = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/sleep/getTimeInputs');
+                const data = await response.json();
+                setSleepInput(data[data.length - 1]);
+            } catch (error) {
+                console.error("Error fetching sleep goals:", error);
+            }
+        };
+        fetchSleepTimes();
+    }, []);
 
     const enableEdit = (event) => {
         setEdit(true);
@@ -126,6 +178,7 @@ export default function SleepTracker() {
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
                             <ManualTimeInputs />
+                            <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>
                 </Row>
@@ -157,7 +210,7 @@ export default function SleepTracker() {
                     <Card className='mb-5'>
                         <Card.Body>
                             <Card.Title>Sleep Goals</Card.Title>
-                            <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
+                            <UserSleepGoal sleepGoal={sleepGoal} />
                             <Card.Text>You've reached it X% of times</Card.Text>
                             <Button variant='warning' className='my-2' onClick={enableEdit}>Edit Goal</Button>
                             <Form onSubmit={handleSubmit}>
