@@ -77,11 +77,12 @@ console.log("water stat schema successful!")
 
 //Sleep Tracker table
 const sleepSchema = new mongoose.Schema({
-    bedTime: String,
-    wakeTime: String,
+    bedTime: Date,
+    wakeTime: Date,
     sleepGoalHour: Number,
     sleepGoalMin: Number,
-    sleepGoalAchievement: Number
+    sleepGoalAchievement: Number,
+    entryType: String
 });
 models.SleepStats = mongoose.model("SleepStats", sleepSchema);
 console.log("sleep stat schema successful!")
