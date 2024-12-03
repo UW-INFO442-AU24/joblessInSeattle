@@ -14,14 +14,13 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 function ManualTimeInputs() {
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
     const handleLog = async () => {
         try {
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/sleep", {
+            await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
                 body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput }
             })
@@ -46,7 +45,7 @@ function ManualTimeInputs() {
 }
 
 export default function SleepTracker() {
-
+    const apiUrl = process.env.REACT_APP_API_URL;
 
     const [hour, setHour] = useState(0);
     const [min, setMin] = useState(0);
@@ -83,7 +82,7 @@ export default function SleepTracker() {
     useEffect(() => {
         const fetchSleepGoal = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/sleep/getGoal');
+                const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
                 const data = await response.json();
                 setSleepGoal(data[data.length - 1]);
             } catch (error) {
@@ -91,12 +90,12 @@ export default function SleepTracker() {
             }
         };
         fetchSleepGoal();
-    }, []);
+    }, [apiUrl]);
 
     useEffect(() => {
         const fetchSleepTimes = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/sleep/getTimeInputs');
+                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
                 const data = await response.json();
                 setSleepInput(data[data.length - 1]);
             } catch (error) {
@@ -104,7 +103,7 @@ export default function SleepTracker() {
             }
         };
         fetchSleepTimes();
-    }, []);
+    }, [apiUrl]);
 
     const enableEdit = (event) => {
         setEdit(true);
@@ -141,8 +140,7 @@ export default function SleepTracker() {
 
     const handleSubmit = async () => {
         try {
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/sleep/goals", {
+            await fetchJSON(`${apiUrl}/api/sleep/goals`, {
                 method: "POST",
                 body: { sleepGoalHour: hour, sleepGoalMin: min }
             })

@@ -197,12 +197,13 @@ function AddNewMedication ({ onClick }) {
 }
 
 export default function MedicationPage() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [medications, setMedications] = useState([]);
 
     useEffect(() => {
         const fetchMedications = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/medication/medications');
+                const response = await fetch(`${apiUrl}/api/medication/medications`);
                 const data = await response.json();
                 setMedications(data);
             } catch (error) {
@@ -214,8 +215,7 @@ export default function MedicationPage() {
 
     const addNewMedication = async (medicationName, medFrequency, medDescription, medTakenCount, lastMedTakenDate) => {
         try {
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/medication", {
+            await fetchJSON(`${apiUrl}/api/medication`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -230,7 +230,7 @@ export default function MedicationPage() {
             })
             
             // fetches the updated data after the adding
-            const response = await fetch('http://localhost:3001/api/medication/medications');
+            const response = await fetch(`${apiUrl}/api/medication/medications`);
             const data = await response.json();
             setMedications(data);  // updates the state with a new list of medications in state
         } catch(err) {

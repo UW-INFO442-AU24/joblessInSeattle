@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MyBuddy from './MyBuddy.js';
+import MyBuddy from './myBuddy.js';
 import { MemoryRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
 
