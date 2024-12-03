@@ -1,9 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MedicationTracker from './MedicationTracker.js';
+import MedicationTracker from './medicationTracker.js';
+import { MemoryRouter } from 'react-router-dom';
+import "@testing-library/jest-dom";
 
-test('renders ResourcesPage without crashing', () => {
-  render(<MedicationTracker />);
-// add your secefic test below
-
+describe("Unit: Medications Page", () => {
+  test("renders medications page without errors", () => {
+    render(
+      <MemoryRouter>
+        <MedicationTracker />
+      </MemoryRouter>
+    );
+    expect(screen.getByText("Medications")).toBeInTheDocument(); //assertion
+  })
 });
