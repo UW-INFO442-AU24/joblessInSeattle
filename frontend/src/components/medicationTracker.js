@@ -211,7 +211,7 @@ export default function MedicationPage() {
             }
         };
         fetchMedications();
-    }, []);  // Empty dependency array means this effect runs once when the component mounts
+    }, [apiUrl]);  // Empty dependency array means this effect runs once when the component mounts
 
     const addNewMedication = async (medicationName, medFrequency, medDescription, medTakenCount, lastMedTakenDate) => {
         try {
@@ -234,7 +234,7 @@ export default function MedicationPage() {
             const data = await response.json();
             setMedications(data);  // updates the state with a new list of medications in state
         } catch(err) {
-            console.err("Error saving medication: ", err);
+            console.error("Error saving medication: ", err);
         }
     }
 
