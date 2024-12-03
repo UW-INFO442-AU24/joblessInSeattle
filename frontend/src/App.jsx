@@ -5,11 +5,11 @@ import { Routes, Route } from 'react-router-dom'
 import Dashboard from "./components/Dashboard"
 import WaterTracker from "./components/WaterTracker"
 import SleepTracker from "./components/sleepTracker"
-import HealthJournal from "./components/HealthJournal";
-import MyBuddy from "./components/MyBuddy";
-import MedicationTracker from "./components/MedicationTracker";
+import HealthJournal from "./components/healthJournal";
+import MyBuddy from "./components/myBuddy";
+import MedicationTracker from "./components/medicationTracker";
 import ResourcesPage from "./components/ResourcesPage";
-import Login from "./components/Login";
+import Login from "./components/login";
 import Signup from "./components/SignUp";
 import ErrorPage from "./components/ErrorPage"
 
