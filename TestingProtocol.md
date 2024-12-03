@@ -35,3 +35,7 @@ npm run test <name.test.js>
 - The first test ensures that the Water Tracker component is rendering properly. This is done by asserting that "Water Tracker" shows up in the testing DOM.
 
 - The rest of the tests ensures that the button ineractions are working as expected. When the user clicks on the `+` button, it should increase the water count by 8 fl oz. When the `-` button is pressed, it should decrease the water count by 8 fl oz. We have a few tests to make sure these interactions work as expected.
+
+**Known Bugs:**
+
+- On smaller screens in the Medications page, there may be an overlap of input box and border. To fix this, move to a bigger screen or website mode instead of phone. In the future, this could be fixed with adding margins or padding.
