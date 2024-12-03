@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Col, Row, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Row, Button, FormControl, Form } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { fetchJSON } from "./utils.js";
@@ -33,7 +33,7 @@ function Counter() {
             <div>
                 <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
                 <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
-                <Button variant='primary' onClick={increment}>+</Button>
+                <Button variant='primary' onClick={increment} disabled={count>=96 ? true : false}>+</Button>
             </div>
                
            <div>
@@ -47,9 +47,29 @@ function Counter() {
 
 export default function WaterTracker() {
 
+    const [edit, setEdit] = useState(false);
+    const [value, setValue] = useState(false);
+    const [valid, setValid] = useState(false);
+     
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
     };
+
+    const enableEdit = () => setEdit(true);
+    const disableEdit = () => setEdit(false);
+
+    const handleChange = (event) => {
+        const value = parseInt(event.target.value);
+        if (value > 0 && value < 100) {
+            setValue(value);
+            setValid(true);
+        }
+        else {
+            setValid(false);
+            //throw new Error("Water Goal is too low or too high!");
+            console.log("water goal is not working!!!")
+        }
+    }
 
     return (   
         <div>
@@ -115,9 +135,27 @@ export default function WaterTracker() {
                     <Card className='mb-5'>
                         <Card.Body>
                             <Card.Title>Water Goals</Card.Title>
-                            <Card.Text>
-                                this is a placeholder for the user to input their water goal for the day/week?
-                            </Card.Text>
+                            <Card.Text>Current Goal: <strong> get user goal from user database </strong> fl oz</Card.Text>
+                            <Card.Text>You've reached <strong>X%</strong> of your goal</Card.Text>
+                                <hr />
+                                <Button variant='warning' className='my-2' onClick={enableEdit}>Edit Goal</Button>
+                                <Form>
+                                    <Row className='my-2'> 
+                                        <Col>
+                                        <FormControl
+                                            type="text"
+                                            placeholder="fl oz"
+                                            aria-label="Disabled input example"
+                                            disabled={!edit}
+                                            onChange={handleChange}
+                                        />
+                                        </Col>
+                                        <Col className="pt-2">
+                                            fl oz
+                                        </Col>
+                                    </Row>
+                                    <Button variant={valid ? 'success' : 'outline-success'} disabled={valid ? false : true } className='my-2' onClick={disableEdit}>Submit</Button>
+                                </Form>
                         </Card.Body>
                     </Card>
                 </Row>
