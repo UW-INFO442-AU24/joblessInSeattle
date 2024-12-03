@@ -1,48 +1,111 @@
 import React, { useEffect, useState } from 'react';
-import { ButtonGroup, Card, Col, Row, Button, Form } from 'react-bootstrap';
+import { Card, Col, Row, Button, Form } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/index.js';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
+import { fetchJSON } from "./utils.js";
 
-// help i need to gitignore the node_modules in frontend
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-function TimeInputs(props) {
+function ManualTimeInputs() {
 
-    const [time, setTime] = useState(dayjs('2024-11-01T15:30'));
-    const label = props.label
+    const [bedTimeInput, setBedTimeInput] = useState(dayjs());
+    const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
+    const handleLog = async () => {
+        try {
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/sleep", {
+                method: "POST",
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput }
+            })
+
+        } catch (error) {
+            console.error("Error saving times:", error);
+        }
+    };
+     
     return (
-        <MobileTimePicker className='my-2' label={label} value={time} onChange={(newTime) => setTime(newTime)}/>
+        <Form onSubmit={handleLog}>
+            <Form.Group className="mb-3" controlId="sleepUserInput">
+                <Form.Label>Manually input sleep</Form.Label>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <MobileTimePicker className='my-2' label='Bed time' value={bedTimeInput} timezone='system' onChange={setBedTimeInput} />
+                    <MobileTimePicker className='my-2' label='Wake-up time' value={wakeTimeInput} timezone='system' onChange={setWakeTimeInput}/>
+                </LocalizationProvider>
+            </Form.Group>
+            <Button variant='primary' type='submit'>Log</Button>
+        </Form>
     );
-
 }
 
 export default function SleepTracker() {
 
-    const [apiResponse, setApiResponse] = useState(null);
-    const [error, setError] = useState(null);
 
-    const [clicked, setClicked] = useState(false);
-    const [value, setValue] = useState(false);
+    const [hour, setHour] = useState(0);
+    const [min, setMin] = useState(0);
+    const [valid, setValid] = useState(false);
     const [edit, setEdit] = useState(false);
+    const [sleepGoal, setSleepGoal] = useState([]);
+    const [sleepInput, setSleepInput] = useState([]);
 
-    const handleClick = (event) =>{
+    function UserSleepGoal({ sleepGoal }) {
+        if (sleepGoal) {
+            let hourGoal = sleepGoal.sleepGoalHour;
+            let minGoal = sleepGoal.sleepGoalMin; 
 
-        const clickTime = new Date();
-        setClicked(true);
-        console.log(clickTime);
-        // send clickTime to DB and then after setClicked(false)
+            return (
+                <Card.Text>Current Goal: {hourGoal} hr {minGoal} min</Card.Text>
+            );
+        }
+    }
+    
+    function UsersSleepInput({ sleepInput }) {
+        if (sleepInput) {
+            let timeBed = sleepInput.bedTime;
+            let timeWake = sleepInput.wakeTime;
+
+            return (
+                <div> 
+                    <Card.Text>Last Bed Time: {timeBed} </Card.Text>
+                    <Card.Text>Last Wake Time: {timeWake} </Card.Text>
+                </div>
+            );
+        }
     }
 
-    // Submit time inputted by user
-    const handleSubmit = (event) => {
+    useEffect(() => {
+        const fetchSleepGoal = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/sleep/getGoal');
+                const data = await response.json();
+                setSleepGoal(data[data.length - 1]);
+            } catch (error) {
+                console.error("Error fetching sleep goals:", error);
+            }
+        };
+        fetchSleepGoal();
+    }, []);
 
-    }
+    useEffect(() => {
+        const fetchSleepTimes = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/sleep/getTimeInputs');
+                const data = await response.json();
+                setSleepInput(data[data.length - 1]);
+            } catch (error) {
+                console.error("Error fetching sleep goals:", error);
+            }
+        };
+        fetchSleepTimes();
+    }, []);
 
     const enableEdit = (event) => {
-
         setEdit(true);
     }
 
@@ -51,35 +114,42 @@ export default function SleepTracker() {
     }
 
     // Check value of inputs to make sure response is within time
-    const handleChange = (event) => {
-        const value = parseInt(event.target.value);
-        console.log(value);
-        if (value < 60 || value > 0) {
-            setValue(value);
+    const handleHourChange = (event) => {
+        const hour = parseInt(event.target.value);
+        if (hour > 0 && hour < 12) {
+            setHour(hour);
+            setValid(true);
         }
         else {
-            throw new Error("Value is not within time");
+            setValid(false);
+            console.log("sleep goal is not working!!!")
         }
-
     }
 
-    // api call and collect data to feed to the backend
-    useEffect(() => {
-        // Make the API call to the backend
-        fetch('http://localhost:3001/api/sleep')
-        .then((response) => {
-            if (!response.ok) {
-            throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            setApiResponse(data); // Update state with the API response
-        })
-        .catch((error) => {
-            setError(error.message); // Handle errors
-        });
-    }, []);
+    const handleMinChange = (event) => {
+        const min = parseInt(event.target.value);
+        if (min > 0 && min < 60) {
+            setMin(min);
+            setValid(true);
+        }
+        else {
+            setValid(false);
+            console.log("sleep goal is not working!!!")
+        }
+    }
+
+    const handleSubmit = async () => {
+        try {
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/sleep/goals", {
+                method: "POST",
+                body: { sleepGoalHour: hour, sleepGoalMin: min }
+            })
+
+        } catch (error) {
+            console.error("Error saving goals:", error);
+        }
+    };
 
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
@@ -107,25 +177,13 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ButtonGroup>
-                                <Button variant='primary' className='me-4 my-2' onClick={handleClick}>Bed time</Button>
-                                <Button variant='success' className='ms-4 my-2' onClick={handleClick}>Awake!</Button>
-                            </ButtonGroup>
-                            <Form>
-                                <Form.Group className="mb-3" controlId="sleepUserInput">
-                                    <Form.Label>Manually input sleep</Form.Label>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimeInputs label='Bed time'/>
-                                        <TimeInputs label='Wake-up time'/>
-                                    </LocalizationProvider>
-                                </Form.Group>
-                                <Button variant='secondary' onClick={handleSubmit}>Log</Button>
-                            </Form>
+                            <ManualTimeInputs />
+                            <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>
                 </Row>
                     
-                {/* Sleep stat with graph - Day, Week, Month, 6 months, Year? */}
+                {/* Sleep stat with graph - Week */}
                 <Row className='m-4'>
                     <Card>
                         <Card.Body>
@@ -147,41 +205,36 @@ export default function SleepTracker() {
                     </Card>
                 </Row>
 
-                {/* Goal setting for sleep hours? */}
+                {/* Goal setting for sleep hours */}
                 <Row className='m-4'>
                     <Card className='mb-5'>
                         <Card.Body>
                             <Card.Title>Sleep Goals</Card.Title>
-                            <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
+                            <UserSleepGoal sleepGoal={sleepGoal} />
                             <Card.Text>You've reached it X% of times</Card.Text>
                             <Button variant='warning' className='my-2' onClick={enableEdit}>Edit Goal</Button>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
                                 <Row className='my-2'>
-                                    <Col>
+                                    <Col className='mx-2'>
                                         <Form.Control
                                             type="text"
                                             placeholder="hr"
-                                            aria-label="Disabled input example"
+                                            aria-label="Input for sleep goal hours"
                                             disabled={!edit}
+                                            onChange={handleHourChange}
                                         />
                                     </Col>
-                                    <Col>
-                                        hrs
-                                    </Col>
-                                    <Col>
+                                    <Col className='mx-2'>
                                         <Form.Control
                                             type="text"
                                             placeholder="min"
-                                            aria-label="Disabled input example"
+                                            aria-label="Input for sleep goal minutes"
                                             disabled={!edit}
-                                            onChange={handleChange}
+                                            onChange={handleMinChange}
                                         />
                                     </Col>
-                                    <Col>
-                                        min
-                                    </Col>
                                 </Row>
-                                <Button variant='success' className='my-2' onClick={disableEdit}>Submit</Button>
+                                <Button type='submit' variant={valid ? 'success' : 'outline-success'} disabled={valid ? false : true } className='my-2' onClick={disableEdit} >Submit</Button>
                             </Form>
                         </Card.Body>
                     </Card>
