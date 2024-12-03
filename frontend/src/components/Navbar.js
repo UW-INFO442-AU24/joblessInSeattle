@@ -19,6 +19,11 @@ export function NavBar(props) {
         alt: "Buddy",
     },
     { 
+      name: "resources", 
+      image: '/assets/resources.png', 
+      alt: "Resources" 
+  },
+    { 
         name: "settings", 
         image: '/assets/icons8-settings-50.png', 
         alt: "Settings" 

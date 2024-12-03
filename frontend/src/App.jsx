@@ -7,7 +7,9 @@ import WaterTracker from "./components/WaterTracker.js"
 import SleepTracker from "./components/sleepTracker.js"
 import HealthJournal from "./components/healthJournal.js";
 import MyBuddy from "./components/myBuddy.js";
-import MedicationTracker from "./components/medicationTracker.js"
+import MedicationTracker from "./components/medicationTracker.js";
+import ResrourcesPage from "./components/ResourcesPage.js"
+
 // import login from "./components/login.js"
 
 const App = () => {
@@ -37,6 +39,7 @@ const App = () => {
                     <Route path="/healthjournal" element={ <HealthJournal/> } />
                     <Route path="/medications" element={ <MedicationTracker/> } />
                     <Route path="/buddy" element={ <MyBuddy/> } />
+                    <Route path="/resources" element={ <ResrourcesPage/> } />
                 </Routes>
                 <div id="errorInfo" style={{opacity: 0, transition: 'opacity 0.5s ease', color: 'red',}}/>
         </div>
