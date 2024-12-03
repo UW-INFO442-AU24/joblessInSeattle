@@ -211,7 +211,6 @@ export default function SleepTracker() {
                         <Card.Body>
                             <Card.Title>Sleep Goals</Card.Title>
                             <UserSleepGoal sleepGoal={sleepGoal} />
-                            <Card.Text>You've reached it X% of times</Card.Text>
                             <Button variant='warning' className='my-2' onClick={enableEdit}>Edit Goal</Button>
                             <Form onSubmit={handleSubmit}>
                                 <Row className='my-2'>
