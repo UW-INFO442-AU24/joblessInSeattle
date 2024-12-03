@@ -70,7 +70,9 @@ console.log("dailystats schema successful!")
 //Water Tracker table
 const waterSchema = new mongoose.Schema({
     date: Date,
-    water: Number
+    water: Number,
+    waterGoal: Number,
+    entryType: String
 });
 models.WaterStats = mongoose.model("WaterStats", waterSchema);
 console.log("water stat schema successful!")
