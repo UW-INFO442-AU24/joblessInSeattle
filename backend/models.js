@@ -32,7 +32,8 @@ console.log("success");
 
 // User table
 const userSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true },
+    fname: { type: String, required: true },
+    lname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, unique: true },
 });
@@ -84,11 +85,7 @@ console.log("health resources schema successful!")
 
 // Health Diary table
 const diarySchema = new mongoose.Schema({
-    user_id: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User',
-        required: true
-    },
+    user_id: { type: String, required: true },
     entry: { type: String, required: true },
     date: Date
 });
