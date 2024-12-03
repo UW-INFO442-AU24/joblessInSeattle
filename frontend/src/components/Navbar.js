@@ -4,7 +4,7 @@ import { Container, Navbar } from 'react-bootstrap';
 export function NavBar(props) {
   const NAV_DATA = [
     { 
-        name: "/",  
+        name: "dashboard",  
         image: '/assets/icons8-home-48.png', 
         alt: "Dashboard Page" 
     },
