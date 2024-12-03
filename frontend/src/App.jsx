@@ -3,13 +3,13 @@ import { Routes, Route } from 'react-router-dom'
 
 //import components
 import Dashboard from "./components/Dashboard.js"
-import WaterTracker from "./components/WaterTracker.js"
+import WaterTracker from "./components/waterTracker.js"
 import SleepTracker from "./components/sleepTracker.js"
-import HealthJournal from "./components/HealthJournal.js";
-import MyBuddy from "./components/MyBuddy.js";
-import MedicationTracker from "./components/MedicationTracker.js";
+import HealthJournal from "./components/healthJournal.js";
+import MyBuddy from "./components/myBuddy.js";
+import MedicationTracker from "./components/medicationTracker.js";
 import ResourcesPage from "./components/ResourcesPage.js";
-import Login from "./components/Login.js";
+import Login from "./components/login.js";
 import Signup from "./components/SignUp.js";
 import ErrorPage from "./components/ErrorPage.js"
 
