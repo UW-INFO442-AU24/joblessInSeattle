@@ -26,22 +26,22 @@ export async function fetchJSON(route, options){
     try{
         responseJson = await response.json();
     }catch(error){
-        try{
-            let responseText = await response.text();
-        }catch(getTextError){
-            displayError()
-            throw new Error(
-                `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}
-                Status: ${response.status}
-                Couldn't get response body
-                error: ${getTextError}`)
-        }
-        displayError()
-        throw new Error(
-            `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}
-            Status: ${response.status}
-            Response wasn't json: ${responseText ? JSON.stringify(responseText) : responseText}
-            error: ${getTextError}`)
+        // try{
+        //     let responseText = await response.text();
+        // }catch(getTextError){
+        //     displayError()
+        //     throw new Error(
+        //         `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}
+        //         Status: ${response.status}
+        //         Couldn't get response body
+        //         error: ${getTextError}`)
+        // }
+        // displayError()
+        // throw new Error(
+        //     `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}
+        //     Status: ${response.status}
+        //     Response wasn't json: ${responseText ? JSON.stringify(responseText) : responseText}
+        //     error: ${getTextError}`)
     }
     if(response.status < 200 || response.status >= 300 || responseJson.status == "error"){
         displayError()

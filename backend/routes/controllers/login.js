@@ -1,17 +1,20 @@
 import express from "express";
-import admin from "firebase-admin";
+import { auth } from '../../firebase.js'; 
 
-var router = express.Router();
+const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { email, password } = req.body;
+    const { idToken } = req.body;
+
+    if (!idToken) {
+        return res.status(400).send({ message: "ID token is missing" });
+    }
 
     try {
-        // Authenticating the user with Firebase by getting their email
-        const userCreds = await admin.auth().getUserByEmail(email);
-        const firebaseUid = userCreds.user.uid;
+        const decodeToken = await auth.verifyIdToken(idToken);
+        const user = decodeToken;
         // correct authentication creds so successful
-        res.status(200).send({ message: "authentication successful", uid: firebaseUid });
+        res.status(200).send({ message: "authentication successful", uid: user.uid, email: user.email });
     } catch(error) {
         // failed to authenticate or smt went wrong, so fail
         res.status(400).send({ message: 'authentication failed', error: error.message });

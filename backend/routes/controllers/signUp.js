@@ -1,24 +1,33 @@
 import express from "express";
-import admin from "firebase-admin";
-import models from "../../models.js"; 
 
 var router = express.Router();
 
-router.post('/', async (req, res) => {
-    const { name, email, password } = req.body;
-
+// GET for /signup
+router.get('/', async (req, res) => {
     try {
-        // this creates the user in firbase
-        const userCreds = await admin.auth().createUser({
-            email,
-            password,
-            displayName: name,
-        });
+        console.log("it connected");
+        res.status(200).json({ message: "Success!!" });
+      }
+      catch(error) {
+        console.log("Error: ", error);
+        res.status(500).json({status: "error", error: error});
+      }
+});
 
-        const newUser = new User({
-            name,
-            email,
-            password,
+
+router.post('/', async (req, res) => {
+    const { fname, lname, email, password } = req.body;
+
+    if (!fname || !lname || !email || !password) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    try {    
+        const newUser = new req.models.User({
+            fname : fname,
+            lname : lname,
+            email : email,
+            password : password
         });
 
         await newUser.save();

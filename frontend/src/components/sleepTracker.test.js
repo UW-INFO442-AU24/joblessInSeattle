@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import SleepTracker from './sleepTracker.js';
+import SleepTracker from './SleepTracker.js';
 
 test('renders ResourcesPage without crashing', () => {
   render(<SleepTracker />);

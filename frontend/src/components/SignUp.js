@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../firebase.js";
 
-const Signup = () => {
+export default function Signup() {
     const navigate = useNavigate();
     const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
-    const [apiResponse, setApiResponse] = useState("");
 
     // setting and saving the user login info for the first time
     const [userInfo, setUserInfo] = useState({
-        name: "",
+        fname: "",
+        lname: "",
         email: "",
         password: "",
     });
@@ -21,8 +21,10 @@ const Signup = () => {
     const handleValidation = (input) => {
         const errors = {};
 
-        if (!input.name) {
-            errors.name = "Name is required";
+        if (!input.fname) {
+            errors.fname = "First name is required";
+        } else if (!input.lname) {
+            errors.lname = "Last name is required";
         }
 
         if (!input.email) {
@@ -62,7 +64,7 @@ const Signup = () => {
         console.log(errors);
 
         if (Object.keys(errors).length > 0) {
-            setErr(errors.name || errors.email || errors.password);
+            setErr(errors.fname || errors.lname || errors.email || errors.password);
             setLoading(false);
             return;
         }
@@ -70,21 +72,22 @@ const Signup = () => {
         try {
             // FIrebase auth
             await createUserWithEmailAndPassword(auth, userInfo.email, userInfo.password);
-
-                // still need to figure out how to connect and save it
-                // to the user model
-                // ???????? HELP ????????????????
-                // dek if i did this right pls work
+            console.log(userInfo.fname)
+            console.log(userInfo.lname)
+            console.log(userInfo.email)
+            console.log(userInfo.password)
 
             // POST request to backend to save the user's data
-            const response = await fetch('/api/signup', {
+            const response = await fetch('http://localhost:3001/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: userInfo.name,
+                    fname: userInfo.fname,
+                    lname: userInfo.lname,
                     email: userInfo.email,
+                    password: userInfo.password
                 }),
             });
 
@@ -92,7 +95,9 @@ const Signup = () => {
                 setLoading(false);
                 navigate('/dashboard');
             } else {
-                setErr("Error saving user data");
+                const errorData = await response.json();
+                console.error(errorData); // Log the error to the console
+                setErr(errorData.message || "Error saving user data");
             }
             
         } catch(err) {
@@ -116,27 +121,89 @@ const Signup = () => {
         }
     }
 
-    useEffect(() => {
-        fetch('http://localhost:3001/api/signup')
-        .then((res) => {
-            if (!res.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return res.json();
-        })
-        .then((data) => {
-            setApiResponse(data);
-        })
-        .catch((error) => {
-            setErr(error.message);
-        })
-    }, []);
-
     return(
-        <div>
-            {/* form set up frontend */}
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            <div>
+                <h2 className="text-2xl font-semibold mb-4 text-center">Sign Up</h2>
+                <form onSubmit={handleSubmit} className="">
+                    {/* first name portion */}
+                    <div className="mb-4">
+                        <label htmlFor="fname" className="block text-sm font-medium">First Name</label>
+                        <input
+                            type="text"
+                            id="fname"
+                            name="fname"
+                            value={userInfo.fname}
+                            onChange={handleSignUpChange}
+                            className=""
+                            placeholder="John"
+                            required
+                        />
+                    </div>
+
+                    {/* last name portion */}
+                    <div className="mb-4">
+                        <label htmlFor="lname" className="block text-sm font-medium">Last Name</label>
+                        <input
+                            type="text"
+                            id="lname"
+                            name="lname"
+                            value={userInfo.lname}
+                            onChange={handleSignUpChange}
+                            className=""
+                            placeholder="Doe"
+                            required
+                        />
+                    </div>
+
+                    {/* email portion */}
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-sm font-medium">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={userInfo.email}
+                            onChange={handleSignUpChange}
+                            className=""
+                            placeholder="mynameisJohn@gmail.com"
+                            required
+                        />
+                    </div>
+                    
+                    {/* password portion */}
+                    <div className="mb-4">
+                        <label htmlFor="password" className="block text-sm font-medium">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={userInfo.password}
+                            onChange={handleSignUpChange}
+                            className=""
+                            placeholder="Enter your password"
+                            required
+                        />
+                    </div>
+
+                    {err && <p className="text-red-500 text-sm">{err}</p>}
+
+                    <div className="mt-6">
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className=""
+                        >
+                            {loading ? "Signing Up..." : "Sign Up"}
+                        </button>
+                    </div>
+                </form>
+
+                {/* login option redirect */}
+                <div className="mt-4 text-center">
+                    <p>Already have an account? <a href="/login" className="text-blue-500 hover:underline">Log In</a></p>
+                </div>
+            </div>
         </div>
     );
 }
-
-export default Signup;
