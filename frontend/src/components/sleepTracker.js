@@ -5,45 +5,53 @@ import { LineChart } from '@mui/x-charts';
 import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs/index.js';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
 import { fetchJSON } from "./utils.js";
 
-// help i need to gitignore the node_modules in frontend
 
-function TimeInputs(props) {
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
-    const [time, setTime] = useState(dayjs('2024-11-01T15:30'));
-    const label = props.label
+function ManualTimeInputs() {
 
+    const [bedTimeInput, setBedTimeInput] = useState(dayjs());
+    const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
+
+    const handleLog = async () => {
+        try {
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/sleep", {
+                method: "POST",
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput }
+            })
+
+        } catch (error) {
+            console.error("Error saving times:", error);
+        }
+    };
+     
     return (
-        <MobileTimePicker className='my-2' label={label} value={time} onChange={(newTime) => setTime(newTime)}/>
+        <Form>
+            <Form.Group className="mb-3" controlId="sleepUserInput">
+                <Form.Label>Manually input sleep</Form.Label>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <MobileTimePicker className='my-2' label='Bed time' value={bedTimeInput} timezone='system' onChange={setBedTimeInput} />
+                    <MobileTimePicker className='my-2' label='Wake-up time' value={wakeTimeInput} timezone='system' onChange={setWakeTimeInput}/>
+                </LocalizationProvider>
+            </Form.Group>
+            <Button variant='primary' onClick={handleLog}>Log</Button>
+        </Form>
     );
-
 }
 
 export default function SleepTracker() {
 
-    const [apiResponse, setApiResponse] = useState(null);
-    const [error, setError] = useState(null);
 
-    const [clicked, setClicked] = useState(false);
     const [value, setValue] = useState(false);
     const [edit, setEdit] = useState(false);
 
-    const handleClick = (event) =>{
-
-        const clickTime = new Date();
-        setClicked(true);
-        console.log(clickTime);
-        // send clickTime to DB and then after setClicked(false)
-    }
-
-    // Submit time inputted by user
-    const handleSubmit = (event) => {
-
-    }
-
     const enableEdit = (event) => {
-
         setEdit(true);
     }
 
@@ -63,24 +71,6 @@ export default function SleepTracker() {
         }
 
     }
-
-    // api call and collect data to feed to the backend
-    useEffect(() => {
-        // Make the API call to the backend
-        fetch('http://localhost:3001/api/sleep')
-        .then((response) => {
-            if (!response.ok) {
-            throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            setApiResponse(data); // Update state with the API response
-        })
-        .catch((error) => {
-            setError(error.message); // Handle errors
-        });
-    }, []);
 
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
@@ -108,25 +98,12 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ButtonGroup>
-                                <Button variant='primary' className='me-4 my-2' onClick={handleClick}>Bed time</Button>
-                                <Button variant='success' className='ms-4 my-2' onClick={handleClick}>Awake!</Button>
-                            </ButtonGroup>
-                            <Form>
-                                <Form.Group className="mb-3" controlId="sleepUserInput">
-                                    <Form.Label>Manually input sleep</Form.Label>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimeInputs label='Bed time'/>
-                                        <TimeInputs label='Wake-up time'/>
-                                    </LocalizationProvider>
-                                </Form.Group>
-                                <Button variant='secondary' onClick={handleSubmit}>Log</Button>
-                            </Form>
+                            <ManualTimeInputs />
                         </Card.Body>
                     </Card>
                 </Row>
                     
-                {/* Sleep stat with graph - Day, Week, Month, 6 months, Year? */}
+                {/* Sleep stat with graph - Week */}
                 <Row className='m-4'>
                     <Card>
                         <Card.Body>
@@ -148,7 +125,7 @@ export default function SleepTracker() {
                     </Card>
                 </Row>
 
-                {/* Goal setting for sleep hours? */}
+                {/* Goal setting for sleep hours */}
                 <Row className='m-4'>
                     <Card className='mb-5'>
                         <Card.Body>

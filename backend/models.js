@@ -75,6 +75,17 @@ const waterSchema = new mongoose.Schema({
 models.WaterStats = mongoose.model("WaterStats", waterSchema);
 console.log("water stat schema successful!")
 
+//Sleep Tracker table
+const sleepSchema = new mongoose.Schema({
+    bedTime: String,
+    wakeTime: String,
+    sleepGoalHour: Number,
+    sleepGoalMin: Number,
+    sleepGoalAchievement: Number
+});
+models.SleepStats = mongoose.model("SleepStats", sleepSchema);
+console.log("sleep stat schema successful!")
+
 // Health Resources table
 const healthResourcesSchema = new mongoose.Schema({
     url: String
