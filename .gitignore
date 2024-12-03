@@ -15,6 +15,9 @@ node_modules
 # cache folder
 .cache/
 
+# .env files
+backend/.env
+
 # misc
 .DS_Store
 .env.local
