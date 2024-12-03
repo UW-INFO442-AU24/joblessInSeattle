@@ -73,7 +73,7 @@ function AddNewMedication () {
     )
 }
 
-export default function WaterTracker() {
+export default function MedicationTracker() {
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
     };
