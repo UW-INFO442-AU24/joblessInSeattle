@@ -122,88 +122,103 @@ export default function Signup() {
     }
 
     return(
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div>
-                <h2 className="text-2xl font-semibold mb-4 text-center">Sign Up</h2>
-                <form onSubmit={handleSubmit} className="">
-                    {/* first name portion */}
-                    <div className="mb-4">
-                        <label htmlFor="fname" className="block text-sm font-medium">First Name</label>
-                        <input
-                            type="text"
-                            id="fname"
-                            name="fname"
-                            value={userInfo.fname}
-                            onChange={handleSignUpChange}
-                            className=""
-                            placeholder="John"
-                            required
-                        />
-                    </div>
+        <div className="w-full max-w-xs">
+            <form onSubmit={handleSubmit} className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <h2 className="text-3xl font-semibold m-4 text-center">Sign Up</h2>
+                
+                {/* first name portion */}
+                <div className="mb-4">
+                    <label htmlFor="fname" className="block text-sm font-medium">First Name</label>
+                    <input
+                        type="text"
+                        id="fname"
+                        name="fname"
+                        value={userInfo.fname}
+                        onChange={handleSignUpChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 
+                        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+                        block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+                        dark:focus:border-blue-500"
+                        placeholder="John"
+                        required
+                    />
+                </div>
 
-                    {/* last name portion */}
-                    <div className="mb-4">
-                        <label htmlFor="lname" className="block text-sm font-medium">Last Name</label>
-                        <input
-                            type="text"
-                            id="lname"
-                            name="lname"
-                            value={userInfo.lname}
-                            onChange={handleSignUpChange}
-                            className=""
-                            placeholder="Doe"
-                            required
-                        />
-                    </div>
+                {/* last name portion */}
+                <div className="mb-4">
+                    <label htmlFor="lname" className="block text-sm font-medium">Last Name</label>
+                    <input
+                        type="text"
+                        id="lname"
+                        name="lname"
+                        value={userInfo.lname}
+                        onChange={handleSignUpChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 
+                        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+                        block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+                        dark:focus:border-blue-500"
+                        placeholder="Doe"
+                        required
+                    />
+                </div>
 
-                    {/* email portion */}
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={userInfo.email}
-                            onChange={handleSignUpChange}
-                            className=""
-                            placeholder="mynameisJohn@gmail.com"
-                            required
-                        />
-                    </div>
-                    
-                    {/* password portion */}
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={userInfo.password}
-                            onChange={handleSignUpChange}
-                            className=""
-                            placeholder="Enter your password"
-                            required
-                        />
-                    </div>
+                {/* email portion */}
+                <div className="mb-4">
+                    <label htmlFor="email" className="block text-sm font-medium">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={userInfo.email}
+                        onChange={handleSignUpChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 
+                        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+                        block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+                        dark:focus:border-blue-500"
+                        placeholder="mynameisJohn@gmail.com"
+                        required
+                    />
+                </div>
+                
+                {/* password portion */}
+                <div className="mb-4">
+                    <label htmlFor="password" className="block text-sm font-medium">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={userInfo.password}
+                        onChange={handleSignUpChange}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 
+                        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
+                        block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
+                        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+                        dark:focus:border-blue-500"
+                        placeholder="Enter your password"
+                        required
+                    />
+                </div>
 
-                    {err && <p className="text-red-500 text-sm">{err}</p>}
+                {err && <p className="text-red-500 text-sm">{err}</p>}
 
-                    <div className="mt-6">
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className=""
-                        >
-                            {loading ? "Signing Up..." : "Sign Up"}
-                        </button>
-                    </div>
-                </form>
+                <div className="mt-6">
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        {loading ? "Signing Up..." : "Sign Up"}
+                    </button>
+                </div>
+            </form>
 
                 {/* login option redirect */}
                 <div className="mt-4 text-center">
                     <p>Already have an account? <a href="/login" className="text-blue-500 hover:underline">Log In</a></p>
                 </div>
-            </div>
         </div>
     );
 }
