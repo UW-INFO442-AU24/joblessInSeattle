@@ -5,10 +5,10 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Dashboard from './Dashboard.js';
 import WaterTracker from "./WaterTracker";
-import SleepTracker from "./sleepTracker.js";
+import SleepTracker from "./SleepTracker.js";
 // import HealthJournal from "./components/healthJournal.js";
 // import MyBuddy from "./components/myBuddy.js";
-import MedicationTracker from "./medicationTracker.js";
+import MedicationTracker from "./MedicationTracker.js";
 // import ResrourcesPage from "./components/ResourcesPage.js"
 
 
