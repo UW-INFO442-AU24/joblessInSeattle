@@ -39,3 +39,5 @@ npm run test <name.test.js>
 **Known Bugs:**
 
 - On smaller screens in the Medications page, there may be an overlap of input box and border. To fix this, move to a bigger screen or website mode instead of phone. In the future, this could be fixed with adding margins or padding.
+
+- For Jest testing, there are some tests that fail, even though on the running application, the interaction works. In Jest, it requires certain modules to be ignored.
