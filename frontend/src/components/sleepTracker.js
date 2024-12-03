@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ButtonGroup, Card, Col, Row, Button, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Col, Row, Button, Form } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { MobileTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
@@ -32,7 +32,7 @@ function ManualTimeInputs() {
     };
      
     return (
-        <Form>
+        <Form onSubmit={handleLog}>
             <Form.Group className="mb-3" controlId="sleepUserInput">
                 <Form.Label>Manually input sleep</Form.Label>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -40,7 +40,7 @@ function ManualTimeInputs() {
                     <MobileTimePicker className='my-2' label='Wake-up time' value={wakeTimeInput} timezone='system' onChange={setWakeTimeInput}/>
                 </LocalizationProvider>
             </Form.Group>
-            <Button variant='primary' onClick={handleLog}>Log</Button>
+            <Button variant='primary' type='submit'>Log</Button>
         </Form>
     );
 }
@@ -48,7 +48,9 @@ function ManualTimeInputs() {
 export default function SleepTracker() {
 
 
-    const [value, setValue] = useState(false);
+    const [hour, setHour] = useState(0);
+    const [min, setMin] = useState(0);
+    const [valid, setValid] = useState(false);
     const [edit, setEdit] = useState(false);
 
     const enableEdit = (event) => {
@@ -60,17 +62,42 @@ export default function SleepTracker() {
     }
 
     // Check value of inputs to make sure response is within time
-    const handleChange = (event) => {
-        const value = parseInt(event.target.value);
-        console.log(value);
-        if (value < 60 || value > 0) {
-            setValue(value);
+    const handleHourChange = (event) => {
+        const hour = parseInt(event.target.value);
+        if (hour > 0 && hour < 12) {
+            setHour(hour);
+            setValid(true);
         }
         else {
-            throw new Error("Value is not within time");
+            setValid(false);
+            console.log("sleep goal is not working!!!")
         }
-
     }
+
+    const handleMinChange = (event) => {
+        const min = parseInt(event.target.value);
+        if (min > 0 && min < 60) {
+            setMin(min);
+            setValid(true);
+        }
+        else {
+            setValid(false);
+            console.log("sleep goal is not working!!!")
+        }
+    }
+
+    const handleSubmit = async () => {
+        try {
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/sleep/goals", {
+                method: "POST",
+                body: { sleepGoalHour: hour, sleepGoalMin: min }
+            })
+
+        } catch (error) {
+            console.error("Error saving goals:", error);
+        }
+    };
 
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
@@ -133,33 +160,28 @@ export default function SleepTracker() {
                             <Card.Text>Current Goal: 8 hr 00 min</Card.Text>
                             <Card.Text>You've reached it X% of times</Card.Text>
                             <Button variant='warning' className='my-2' onClick={enableEdit}>Edit Goal</Button>
-                            <Form>
+                            <Form onSubmit={handleSubmit}>
                                 <Row className='my-2'>
-                                    <Col>
+                                    <Col className='mx-2'>
                                         <Form.Control
                                             type="text"
                                             placeholder="hr"
-                                            aria-label="Disabled input example"
+                                            aria-label="Input for sleep goal hours"
                                             disabled={!edit}
+                                            onChange={handleHourChange}
                                         />
                                     </Col>
-                                    <Col>
-                                        hrs
-                                    </Col>
-                                    <Col>
+                                    <Col className='mx-2'>
                                         <Form.Control
                                             type="text"
                                             placeholder="min"
-                                            aria-label="Disabled input example"
+                                            aria-label="Input for sleep goal minutes"
                                             disabled={!edit}
-                                            onChange={handleChange}
+                                            onChange={handleMinChange}
                                         />
                                     </Col>
-                                    <Col>
-                                        min
-                                    </Col>
                                 </Row>
-                                <Button variant='success' className='my-2' onClick={disableEdit}>Submit</Button>
+                                <Button type='submit' variant={valid ? 'success' : 'outline-success'} disabled={valid ? false : true } className='my-2' onClick={disableEdit} >Submit</Button>
                             </Form>
                         </Card.Body>
                     </Card>
