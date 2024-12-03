@@ -44,9 +44,9 @@ function Counter() {
     //    </div>
 
         <Form onSubmit={saveWaterInfo}>
-            <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
-            <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
-            <Button variant='primary' onClick={increment} disabled={count>=96 ? true : false}>+</Button>
+            <Button data-testid="subtract-button" onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
+            <span data-testid="waterCounter" id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
+            <Button data-testid="addition-button" variant='primary' onClick={increment} disabled={count>=96 ? true : false}>+</Button>
             <div>
                 <Button variant='primary' type='submit' className="mt-3" disabled={count<=0 ? true : false} >Submit</Button>
             </div>
