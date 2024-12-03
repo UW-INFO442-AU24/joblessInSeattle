@@ -199,10 +199,6 @@ function AddNewMedication ({ onClick }) {
 export default function MedicationPage() {
     const [medications, setMedications] = useState([]);
 
-    const goBack = () => {
-        window.history.back(); // Goes back to the previous page
-    };
-
     useEffect(() => {
         const fetchMedications = async () => {
             try {
