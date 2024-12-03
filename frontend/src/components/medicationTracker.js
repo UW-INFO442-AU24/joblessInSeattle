@@ -1,64 +1,91 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
-import { LineChart } from '@mui/x-charts';
+// import { LineChart } from '@mui/x-charts';
 import { fetchJSON } from "./utils.js";
 
-// water tracker
+// list of all medications
 function MedicationList() {
-   const [count, setCount] = useState(0);
-   const increment = () => setCount(count + 8);
-   const decrement = () => setCount(count - 8);
-
-   const reset = () => setCount(0);
+//    const [count, setCount] = useState(0);
+//    const increment = () => setCount(count + 8);
+//    const decrement = () => setCount(count - 8);
+//    const reset = () => setCount(0);
+    const [medications, setMedications] = useState([]);
+    // Fetch medications from API
+    useEffect(() => {
+        const fetchMedications = async () => {
+            try {
+                const response = await fetch('http://localhost:3001/api/medication/medications');
+                const data = await response.json();
+                setMedications(data);  // Store fetched medications in state
+            } catch (error) {
+                console.error("Error fetching medications:", error);
+            }
+        };
+        fetchMedications();
+    }, []);  // Empty dependency array means this effect runs once when the component mounts
 
    
 
     return (
         // return the medication list FULL card
         <div>
-            <MedicationLine />
+            {medications.length > 0 ? (
+                medications.map((medication) => (
+                    <MedicationLine key={medication._id} medication={medication} />
+                ))
+            ) : (
+                <p>Loading medications...</p>
+            )}
         </div>
     );
 }
 
 // function to return the html of what a single line of medication looks like
-function MedicationLine () {
+function MedicationLine ({medication}) {
+    console.log(medication)
+    let medName = medication.medicationName;
+    let medDescription = medication.medDescription;
+    let medFrequency = medication.medFrequency;
+
     return(
-        <div className='d-flex flex-row justify-content-between border-bottom'>
-            <div className='px-2'>
-                {/* left side of card -- NEED TO UPDATE WHEN DB STUFF IS IN */}
-                <div className='d-flex flex-row justify-content-between mt-1'>
-                    <p className='fw-bold mb-0'>Zyrtec</p>
-                    <p className='m-0'>1x</p>
-                </div>
-                <p className='text-black-50'>Allergy Medication RAH IM ADDING MORE TEXT TO THIS</p>
-            </div>
-            <div>
-                <button className="btn btn-primary">Status</button>
-            </div>
+        // <div className='d-flex flex-row justify-content-between border-bottom col-12'>
+        //     <div className='px-2'>
+        //         {/* left side of card -- NEED TO UPDATE WHEN DB STUFF IS IN */}
+        //         <div className='d-flex flex-row justify-content-between mt-1'>
+        //             <p className='fw-bold mb-0'>{ medName }</p>
+        //             <p className='m-0'>{ medFrequency  + "x"}</p>
+        //         </div>
+        //         <p className='text-black-50'>{ medDescription }</p>
+        //     </div>
+        //     <div>
+        //         <button className="btn btn-success">Status</button>
+        //     </div>
+        // </div>
+
+        <div>
+            <Row className='my-2'>
+                <Col className='col-6'>
+                    { medName }
+                </Col>
+                <Col className='col-2'>
+                    { medFrequency  + "x"}
+                </Col>
+                <Col className='col-4'>
+                    <Button variant='success'>Status</Button>
+                </Col>
+            </Row>
+            <Row className='text-black-50 my-2'>
+                <Col>
+                    { medDescription }
+                </Col>
+            </Row>
         </div>
-        
-    )
+                
+    );
 }
 
 function AddNewMedication () {
-
-    const addNewMedication = async () => {
-        let medicationName = document.getElementById('medicationNameInput');
-        let medDescription = document.getElementById('medDescriptionInput');
-        let medFrequency = document.getElementById('medFrequencyInput');
-        try {
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/medication", {
-                method: "POST",
-                body: { water : 3}
-            })
-
-        } catch (error) {
-            console.error("Error saving count:", error);
-        }
-    };
 
     /* FUNCTION to add "add medication" content after pressing add medication button */
     function medInputs() {
@@ -71,39 +98,73 @@ function AddNewMedication () {
     
         medicationDiv.innerHTML = `<div id='medInputForm' class='py-2'>
             <div class='d-flex flex-row justify-content-between py-1'>
-                <label for='medicationNameInput'>Medication Name</label>
-                <input type='text' id='medicationNameInput'/>
+                <label for='medicationNameInput'>Medication Name:</label>
+                <input type='text' id='medicationNameInput' required />
             </div>
 
             <div class='d-flex flex-row justify-content-between py-1'>
-                <label for='medFrequencyInput'>Daily Frequency</label>
-                <input type='number' id='medFrequencyInput' min="0" max="100" step="1"/>
+                <label for='medFrequencyInput'>Daily Frequency:</label>
+                <input type='number' id='medFrequencyInput' min="0" max="100" step="1" required />
             </div>
             
             <div class='d-flex flex-column justify-content-between py-1'>
-                <label for='medDescriptionInput'>Description</label>
+                <label for='medDescriptionInput'>Description:</label>
                 <textarea id='medDescriptionInput' rows="4" cols="50" wrap="soft"></textarea>
             </div>
 
             <div class='d-flex justify-content-left mt-2'>
-                <button id='submitBtn' class="btn btn-success">Submit</button>
+                <button id='submitBtn' class="btn btn-success" disabled>Submit</button>
             </div>
         </div>`;
-        // Attach the submit event handler
+
+        // submit event handler
         var submitBtn = document.getElementById("submitBtn");
         submitBtn.addEventListener("click", submitMedication);
+
+        // listening to make sure the fields are filled
+        document.getElementById('medicationNameInput').addEventListener('input', checkForm);
+        document.getElementById('medFrequencyInput').addEventListener('input', checkForm);
     }
 
-    function submitMedication () {
-        var medicationName = document.getElementById('medicationNameInput');
-        var medDescription = document.getElementById('medDescriptionInput');
-        var medFrequency = document.getElementById('medFrequencyInput');
+    function checkForm() {
+        var medicationName = document.getElementById('medicationNameInput').value;
+        var medFrequency = document.getElementById('medFrequencyInput').value;
+        var submitBtn = document.getElementById('submitBtn');
+    
+        // Enable submit button only if medication name and frequency are filled out
+        if (medicationName.trim() !== "" && medFrequency.trim() !== "") {
+            submitBtn.disabled = false;  // Enable button
+        } else {
+            submitBtn.disabled = true;  // Disable button
+        }
+    }
+
+    async function submitMedication () {
+        var medicationName = document.getElementById('medicationNameInput').value;
+        var medDescription = document.getElementById('medDescriptionInput').value;
+        var medFrequency = document.getElementById('medFrequencyInput').value;
         var medicationDiv = document.getElementById('medication-input');
         var addMedButton = document.getElementById('addMedicationBtn');
 
         medicationDiv.innerHTML = "";
         addMedButton.style.display = 'block';
-        console.log("submitted (not really)")
+
+        // take the input elements and put into db
+
+        try {
+            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
+            await fetchJSON("http://localhost:3001/api/medication", {
+                method: "POST",
+                body: {
+                    name : medicationName,
+                    description : medDescription,
+                    frequency : medFrequency
+                }
+            })
+
+        } catch (error) {
+            console.error("Error saving count:", error);
+        }
     }
     
 

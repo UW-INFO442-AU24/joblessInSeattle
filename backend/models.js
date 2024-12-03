@@ -107,6 +107,20 @@ const buddySchema = new mongoose.Schema({
 models.Buddy = mongoose.model('Buddy', buddySchema);
 console.log("health buddy schema successful!")
 
+// Medications table
+const medicationSchema = new mongoose.Schema({
+    // user_id: { 
+    //     type: mongoose.Schema.Types.ObjectId, 
+    //     ref: 'User',
+    //     required: true
+    // },
+    medicationName: String,
+    medDescription: String,
+    medFrequency: Number
+});
+models.Medications = mongoose.model('Medications', medicationSchema);
+console.log("medications schema successful!")
+
 console.log("All Mongoose models created!")
 
 export default models;
