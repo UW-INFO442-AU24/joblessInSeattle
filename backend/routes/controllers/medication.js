@@ -6,19 +6,18 @@ var router = express.Router();
 router.get('/medications', async (req, res) => {
       try {
           // stuff
-          console.log("it connected");
           // let username = req.query.username; WHEN WE HAVE FIREBASE LOGIN STUFF SET UP
           let allMedications = await req.models.Medications.find() //.find({username: username});
           let medications = await Promise.all(
             allMedications.map(async med => {
             try {
               // NEED TO ADD USER
-              let {medicationName, medDescription, medFrequency} = med;
-              return {medicationName, medDescription, medFrequency};
+              let {medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate} = med;
+              return {medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate};
             }
             catch(error) {
-            console.log("Error: ", error);
-            return {type, error};
+              console.log("Error: ", error);
+              return {type, error};
             }
             })
           );
@@ -38,7 +37,7 @@ router.post('/', async (req, res) => {
         // user: "me",
         medicationName : req.body.name,
         medDescription : req.body.description,
-        medFrequency : req.body.frequency,
+        medFrequency : req.body.frequency
       });
       await newMedication.save()
       res.json({"status" : "success"})
@@ -48,5 +47,25 @@ router.post('/', async (req, res) => {
       res.status(500).json({status: "error", error: error});
     }
 });
+
+// POST to /medication/counter (to update)
+// router.post('/counter', async (req, res) => {
+//   try {
+//     // saves the medication model data
+//     const newMedication = new req.models.Medications({
+//       // user: "me",
+//       medicationName : req.body.name,
+//       medDescription : req.body.description,
+//       medFrequency : req.body.frequency
+//     });
+//     console.log(newMedication)
+//     // await newMedication.save()
+//     res.json({"status" : "success"})
+//   }
+//   catch(error) {
+//     console.log("error: ", error);
+//     res.status(500).json({status: "error", error: error});
+//   }
+// });
   
 export default router;

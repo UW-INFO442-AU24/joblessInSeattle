@@ -116,7 +116,15 @@ const medicationSchema = new mongoose.Schema({
     // },
     medicationName: String,
     medDescription: String,
-    medFrequency: Number
+    medFrequency: Number,
+    medTakenCount: {
+        type: Number,
+        default: 0, // Start with 0 count
+    },
+    lastMedTakenDate: {
+        type: Date,
+        default: Date.now,
+    }
 });
 models.Medications = mongoose.model('Medications', medicationSchema);
 console.log("medications schema successful!")
