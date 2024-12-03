@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Row, Button, FormControl, Form } from 'react-bootstrap';
+import { Link} from "react-router-dom";
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { fetchJSON } from "./utils.js";
@@ -115,10 +116,6 @@ export default function WaterTracker() {
         };
         fetchWaterInput();
     }, []);
-     
-    const goBack = () => {
-        window.history.back(); // Goes back to the previous page
-    };
 
     const enableEdit = () => setEdit(true);
     const disableEdit = () => setEdit(false);
@@ -155,10 +152,11 @@ export default function WaterTracker() {
                 {/* WATER TRACKER TODAY */}
                 <div className='d-flex flex-row'>
                     <div>
-                        <button className="btn border-0" onClick={goBack}>
+                        <button className="btn border-0"><Link to="/dashboard">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
                             </svg>
+                            </Link>
                         </button>
                     </div>
                     <div>
@@ -211,7 +209,7 @@ export default function WaterTracker() {
 
                 {/* WATER GOALS*/}
                 <Row className='m-4'>
-                    <Card className='mb-5'>
+                    <Card>
                         <Card.Body>
                             <Card.Title>Water Goals</Card.Title>
                             <UserWaterGoal waterGoal={waterGoal} />
@@ -236,6 +234,20 @@ export default function WaterTracker() {
                                 </Form>
                         </Card.Body>
                     </Card>
+                </Row>
+
+                <Row className='m-4'>
+                    <Card className='mb-5'>
+                        <Card.Body>
+                            <Card.Title>
+                                Importance of Drinking Water!
+                            </Card.Title>
+                            <iframe width="250" height="250" src="https://www.youtube.com/embed/31F0laJjyy8?si=0yW5SdeYmkYLl-EB" 
+                            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </Card.Body>
+                    </Card>
+
                 </Row>
             </Col>
             <NavBar></NavBar>
