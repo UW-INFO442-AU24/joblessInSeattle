@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MedicationTracker from './medicationTracker.js';
+import MedicationTracker from './MedicationTracker.js';
 import { MemoryRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
 

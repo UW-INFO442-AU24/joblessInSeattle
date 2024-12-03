@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import SleepTracker from './sleepTracker.js';
+import SleepTracker from './SleepTracker.js';
 import { MemoryRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
 

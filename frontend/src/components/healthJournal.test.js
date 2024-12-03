@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import HealthJournal from './healthJournal.js';
+import HealthJournal from './HealthJournal.js';
 import { MemoryRouter } from 'react-router-dom';
 import "@testing-library/jest-dom";
 
