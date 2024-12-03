@@ -144,7 +144,8 @@ function AddNewMedication ({ onClick }) {
                     <div className='d-flex flex-row justify-content-between py-1'>
                         <label htmlFor='medicationNameInput'>Medication Name:</label>
                         <input 
-                            type='text' 
+                            type='text'
+                            class='border'
                             id='medicationNameInput'
                             value={medName}
                             onChange={(e) => setMedname(e.target.value)}
@@ -155,6 +156,7 @@ function AddNewMedication ({ onClick }) {
                     <div className='d-flex flex-row justify-content-between py-1'>
                         <label htmlFor='medFrequencyInput'>Daily Frequency:</label>
                         <input type='number'
+                        class='border'
                         id='medFrequencyInput'
                         min="0"
                         max="100"
@@ -168,6 +170,7 @@ function AddNewMedication ({ onClick }) {
                         <label htmlFor='medDescriptionInput'>Description:</label>
                         <textarea
                             id='medDescriptionInput'
+                            class='border'
                             rows="4"
                             cols="50"
                             wrap="soft"
