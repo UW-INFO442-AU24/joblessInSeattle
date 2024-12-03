@@ -71,7 +71,8 @@ const HealthJournal = () => {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3001/api/diary')
+        // Supposed to be something like this...
+        axios.get(`http://localhost:3001/api/diary?user_id=${userId}`)
         .then((res) => {
             if (res.status === 200) {
                 setApiResponse(res.data);

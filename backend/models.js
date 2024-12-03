@@ -41,35 +41,36 @@ models.User = mongoose.model('User', userSchema);
 console.log("user schema successful!")
 
 // Symptoms table
-const symptomsSchema = new mongoose.Schema({
-    user_id: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User',
-        required: true
-    },
-    date: Date
-    });
-models.Symptoms = mongoose.model('Symptoms', symptomsSchema);
-console.log("symptoms schema successful!")
+// const symptomsSchema = new mongoose.Schema({
+//     user_id: { 
+//         type: mongoose.Schema.Types.ObjectId, 
+//         ref: 'User',
+//         required: true
+//     },
+//     date: Date
+//     });
+// models.Symptoms = mongoose.model('Symptoms', symptomsSchema);
+// console.log("symptoms schema successful!")
 
 // User's Daily Statistics table
-const dailyStatsSchema = new mongoose.Schema({
-    date: { type: Date, required: true },
-    user_id: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User',
-        required: true
-    },
-    water: { type: Number, required: true },
-    sleep: { type: Number, required: true },
-    heart_rate: { type: Number, required: true },
-    meds: { type: String }
-});
-models.DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
-console.log("dailystats schema successful!")
+// const dailyStatsSchema = new mongoose.Schema({
+//     date: { type: Date, required: true },
+//     user_id: { 
+//         type: mongoose.Schema.Types.ObjectId, 
+//         ref: 'User',
+//         required: true
+//     },
+//     water: { type: Number, required: true },
+//     sleep: { type: Number, required: true },
+//     heart_rate: { type: Number, required: true },
+//     meds: { type: String }
+// });
+// models.DailyStats = mongoose.model('DailyStats', dailyStatsSchema);
+// console.log("dailystats schema successful!")
 
 //Water Tracker table
 const waterSchema = new mongoose.Schema({
+    user_id: { type: String, required: true },
     date: Date,
     water: Number,
     waterGoal: Number,
@@ -80,6 +81,7 @@ console.log("water stat schema successful!")
 
 //Sleep Tracker table
 const sleepSchema = new mongoose.Schema({
+    user_id: { type: String, required: true },
     bedTime: Date,
     wakeTime: Date,
     sleepGoalHour: Number,
@@ -125,6 +127,7 @@ const medicationSchema = new mongoose.Schema({
     //     ref: 'User',
     //     required: true
     // },
+    user_id: { type: String, required: true },
     medicationName: String,
     medDescription: String,
     medFrequency: Number,

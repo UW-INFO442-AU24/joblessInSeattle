@@ -9,7 +9,7 @@ import HealthJournal from "./components/HealthJournal.js";
 import MyBuddy from "./components/MyBuddy.js";
 import MedicationTracker from "./components/MedicationTracker.js";
 import ResourcesPage from "./components/ResourcesPage.js";
-import Login from "./components/login.js";
+import Login from "./components/Login.js";
 import Signup from "./components/SignUp.js";
 import ErrorPage from "./components/ErrorPage.js"
 
