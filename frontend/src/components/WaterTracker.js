@@ -31,9 +31,9 @@ function Counter() {
    return (
        <div>
             <div>
-                <Button onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
-                <span id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
-                <Button variant='primary' onClick={increment} disabled={count>=96 ? true : false}>+</Button>
+                <Button data-testid="subtract-button" onClick={decrement} disabled={count<=0 ? true : false}>-</Button>
+                <span data-testid="waterCounter" id="waterCounter" class="mx-3 pt-2">{count} fl oz</span>
+                <Button data-testid="addition-button" variant='primary' onClick={increment} disabled={count>=96 ? true : false}>+</Button>
             </div>
                
            <div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../firebase';
+import { TextEncoder, TextDecoder } from 'util';
 
 
 const Login = () => {

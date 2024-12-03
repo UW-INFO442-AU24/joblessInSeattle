@@ -64,22 +64,22 @@ export default function SleepTracker() {
     }
 
     // api call and collect data to feed to the backend
-    useEffect(() => {
-        // Make the API call to the backend
-        fetch('http://localhost:3001/api/sleep')
-        .then((response) => {
-            if (!response.ok) {
-            throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then((data) => {
-            setApiResponse(data); // Update state with the API response
-        })
-        .catch((error) => {
-            setError(error.message); // Handle errors
-        });
-    }, []);
+    // useEffect(() => {
+    //     // Make the API call to the backend
+    //     fetch('http://localhost:3001/api/sleep')
+    //     .then((response) => {
+    //         if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //         }
+    //         return response.json();
+    //     })
+    //     .then((data) => {
+    //         setApiResponse(data); // Update state with the API response
+    //     })
+    //     .catch((error) => {
+    //         setError(error.message); // Handle errors
+    //     });
+    // }, []);
 
     const goBack = () => {
         window.history.back(); // Goes back to the previous page
