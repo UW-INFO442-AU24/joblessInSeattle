@@ -88,5 +88,24 @@ router.post('/goals', async (req, res) => {
       res.status(500).json({status: "error", error: error});
     }
 });
+
+// POST to /sleep
+// router.post('/bedTime', async (req, res) => {
+//     try {
+//       const newSleep = new req.models.SleepStats({
+//         date: Date.now(),
+//         bedTime: req.body.bedTime,
+//       });
+//       console.log("this is before the save");
+//       await newSleep.save()
+//       console.log(req.body.bedTime)
+//       console.log("this is after the save")
+//       res.json({"status" : "success"})
+//     }
+//     catch(error) {
+//       console.log("error: ", error);
+//       res.status(500).json({status: "error", error: error});
+//     }
+// });
   
 export default router;
