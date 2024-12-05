@@ -72,7 +72,7 @@ export default function Dashboard() {
                                 <div>
                                     <Card.Title>Water</Card.Title>
                                     <Card.Text className='text-sm'>
-                                        16/64 fl oz.
+                                        {waterInput} fl. oz
                                     </Card.Text>
                                 </div>
                             <div className="pt-8">
