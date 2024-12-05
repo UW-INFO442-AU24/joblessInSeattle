@@ -32,7 +32,7 @@ export function NavBar(props) {
   const navArray = NAV_DATA.map((navObj) => {
     const navElem = (
       <Container key={navObj.name}>
-        <a href={"/"+navObj.name}>
+        <a href={navObj.name}>
           <Navbar.Brand key={navObj.name}>
               <img
                   src={navObj.image}
