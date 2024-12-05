@@ -21,7 +21,7 @@ const app = express();
 // This will allow all domains to access the API
 // Use CORS middleware
 app.use(cors({
-  origin: 'https://joblessinseattlefe.onrender.com/', // Allow requests from all
+  origin: 'https://joblessinseattle.onrender.com/', // Allow requests from all
   methods: ['GET', 'POST'], // Specify allowed methods
 }));
 
