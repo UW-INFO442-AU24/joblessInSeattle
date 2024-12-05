@@ -28,7 +28,7 @@ export default function MyBuddy() {
                     <Card.Body>
                         <Card.Title>Lil Buddy Max</Card.Title>
                         <Card.Text>Keep up the good work! He's happy you're happy!</Card.Text>
-                        <img src="../../assets/daymax-happy.PNG" />
+                        <img src="../../assets/daymax-happy.PNG" alt="Happy Buddy" />
                     </Card.Body>
                 </Card>
             </Row>
@@ -36,7 +36,7 @@ export default function MyBuddy() {
                 <Card>
                     <Card.Body>
                         <Card.Text>if you're doing alright with your health but not perfect then your buddy will look like:</Card.Text>
-                        <img src="../../assets/daymax-neutral.PNG" />
+                        <img src="../../assets/daymax-neutral.PNG" alt="Neutral Buddy" />
                     </Card.Body>
                 </Card>
             </Row>
@@ -44,7 +44,7 @@ export default function MyBuddy() {
                 <Card>
                     <Card.Body>
                         <Card.Text>if you're not taking the best care of yourself your buddy will look like:</Card.Text>
-                        <img src="../../assets/daymax-meh.PNG" />
+                        <img src="../../assets/daymax-meh.PNG" alt="Meh Buddy" />
                     </Card.Body>
                 </Card>
             </Row>
@@ -52,7 +52,7 @@ export default function MyBuddy() {
                 <Card>
                     <Card.Body>
                         <Card.Text>but if you don't keep up the good work, Max is gonna look like this:</Card.Text>
-                        <img src="../../assets/daymax-PLS-DRINK.PNG" />
+                        <img src="../../assets/daymax-PLS-DRINK.PNG" alt="PLEASE DRINK SOME WATER Buddy" />
                     </Card.Body>
                 </Card>
             </Row>
