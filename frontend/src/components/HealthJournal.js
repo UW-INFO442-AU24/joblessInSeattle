@@ -72,8 +72,7 @@ export default function HealthJournal() {
     };
 
     useEffect(() => {
-        // Supposed to be something like this...
-        axios.get(`${apiUrl}/api/diary?user_id=${userId}`)
+        axios.get(`${apiUrl}/api/diary`)
         .then((res) => {
             if (res.status === 200) {
                 setApiResponse(res.data);
