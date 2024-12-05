@@ -102,7 +102,7 @@ export default function Dashboard() {
 
     return (
         <div className='bg-rose-100 w-full min-h-screen overflow-auto'>
-            <h3 className='mt-14 mb-6 mx-4'>Good morning, Leo</h3>
+            <h3 className='mt-14 mb-6 mx-4'>Hi, {user.fname}!</h3>
             <div className='mb-20'>
                 <Row className='!mx-4'>
                     {/* WATER TRACKER */}
