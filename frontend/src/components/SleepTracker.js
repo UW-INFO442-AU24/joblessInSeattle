@@ -103,14 +103,14 @@ export default function SleepTracker() {
         }
     }
 
-    function goalFilter(goal) {
-        if (goal.user_id === userId && goal.entryType === 'setGoal') {
-            return true;
-        }
-        return false;
-    }
-
     useEffect(() => {
+        function goalFilter(goal) {
+            if (goal.user_id === userId && goal.entryType === 'setGoal') {
+                return true;
+            }
+            return false;
+        }
+
         const fetchSleepGoal = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
@@ -126,14 +126,14 @@ export default function SleepTracker() {
         }
     }, [userId, apiUrl]);
 
-    function timeFilter(time) {
-        if (time.user_id === userId && time.entryType === 'recordTime') {
-            return true;
-        }
-        return false;
-    }
-
     useEffect(() => {
+        function timeFilter(time) {
+            if (time.user_id === userId && time.entryType === 'recordTime') {
+                return true;
+            }
+            return false;
+        }
+
         const fetchSleepTimes = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
