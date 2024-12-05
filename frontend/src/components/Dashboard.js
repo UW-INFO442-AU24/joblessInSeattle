@@ -11,6 +11,8 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const [waterInput, setWaterInput] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,6 +27,31 @@ export default function Dashboard() {
 
         return () => checkLoginStatus();
     }, [navigate]);
+
+    // useEffect to fetch water input
+    useEffect(() => {
+        const fetchWaterInput = async (user) => {
+            try {
+                let totalWater = 0;
+                const response = await fetch(`${apiUrl}/api/water/getWaterIntake`);
+                const data = await response.json(); // data is an array of objects
+                // filters for only inputs of the user
+                let userWaterInput = data.filter((inputs) => inputs.user_id === user.uid)
+                // go through data, get water input attribute, add them all together
+                userWaterInput.forEach(input => {
+                    totalWater += input.water                  
+                });
+                // console.log("This is the total water count for today: " + totalWater);
+                // setWaterInput as the sum
+                if (user) { // Check if userId is defined
+                    setWaterInput(totalWater);
+                }
+            } catch (error) {
+                console.error("Error fetching water input:", error);
+            }
+        };
+        fetchWaterInput(user);
+    }, [user, apiUrl]);
 
     if (!user) {
         return null;
