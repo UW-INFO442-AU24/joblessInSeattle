@@ -9,11 +9,15 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { fetchJSON } from "./utils.js";
+import { auth } from '../firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-function ManualTimeInputs() {
+function ManualTimeInputs(props) {
+
+    const user_id = props.user_id
 
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
@@ -23,7 +27,7 @@ function ManualTimeInputs() {
             // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
             await fetchJSON("http://localhost:3001/api/sleep", {
                 method: "POST",
-                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput }
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
             })
 
         } catch (error) {
@@ -54,6 +58,18 @@ export default function SleepTracker() {
     const [edit, setEdit] = useState(false);
     const [sleepGoal, setSleepGoal] = useState([]);
     const [sleepInput, setSleepInput] = useState([]);
+    const [userId, setUserId] = useState("");
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     function UserSleepGoal({ sleepGoal }) {
         if (sleepGoal) {
@@ -144,7 +160,7 @@ export default function SleepTracker() {
             // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
             await fetchJSON("http://localhost:3001/api/sleep/goals", {
                 method: "POST",
-                body: { sleepGoalHour: hour, sleepGoalMin: min }
+                body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
             })
 
         } catch (error) {
@@ -175,7 +191,7 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ManualTimeInputs />
+                            <ManualTimeInputs user_id={userId}/>
                             <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>

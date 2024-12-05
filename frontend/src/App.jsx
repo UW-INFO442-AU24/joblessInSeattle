@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 //import components
 import Dashboard from "./components/Dashboard"
 import WaterTracker from "./components/WaterTracker"
-import SleepTracker from "./components/sleepTracker"
+import SleepTracker from "./components/SleepTracker"
 import HealthJournal from "./components/HealthJournal";
 import MyBuddy from "./components/MyBuddy";
 import MedicationTracker from "./components/MedicationTracker";
