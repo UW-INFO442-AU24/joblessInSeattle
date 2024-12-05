@@ -5,7 +5,7 @@ import { NavBar } from "./Navbar.js";
 import { auth } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
-const HealthJournal = () => {
+export default function HealthJournal() {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [apiResponse, setApiResponse] = useState(null);
     const [error, setError] = useState("");
@@ -84,7 +84,7 @@ const HealthJournal = () => {
             console.log(error.message);
             setError(error.message);
         });
-    }, [apiUrl, userId]);
+    }, [apiUrl, userId, apiResponse]);
 
     return (
         <div>
@@ -126,4 +126,3 @@ const HealthJournal = () => {
     );
 }
 
-export default HealthJournal;

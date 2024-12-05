@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { NavBar } from "./Navbar.js";
 
-const ResourcesPage = () => {
+export default function ResourcesPage() {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -75,5 +75,3 @@ const ResourcesPage = () => {
       );
     
 };
-
-export default ResourcesPage;
