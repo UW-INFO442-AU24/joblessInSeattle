@@ -208,11 +208,12 @@ export default function MedicationPage() {
     const [medications, setMedications] = useState([]);
     const [userId, setUserId] = useState("");
 
+    // reads who the user ID is for reference across the page
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserId(user.uid);
-                console.log("User ID set: ", user.uid);
+                // console.log("User ID set: ", user.uid);
             } else {
                 console.error("User not logged in");
             }
@@ -232,10 +233,7 @@ export default function MedicationPage() {
                 const response = await fetch(`${apiUrl}/api/medication/medications`);
                 const data = await response.json();
                 // filters for only meds of the user
-                console.log(data)
-                console.log(user)
                 let userMeds = data.filter((meds) => meds.user_id === user)
-                console.log(userMeds)
                 setMedications(userMeds);
             } catch (error) {
                 console.error("Error fetching medications:", error);

@@ -12,8 +12,8 @@ router.get('/getGoal', async (req, res) => {
       let waterGoal = await Promise.all(
         userWaterGoals.map(async goal => {
         try {
-          let {date, waterGoal, entryType} = goal;
-          return {date, waterGoal, entryType};
+          let {user_id, date, waterGoal, entryType} = goal;
+          return {user_id, date, waterGoal, entryType};
         }
         catch(error) {
           console.log("Error: ", error);
@@ -40,8 +40,8 @@ try {
     let waterIntake = await Promise.all(
       userWaterIntakes.map(async intake => {
       try {
-        let {date, water, entryType} = intake;
-        return {date, water, entryType};
+        let {user_id, date, water, entryType} = intake;
+        return {user_id, date, water, entryType};
       }
       catch(error) {
         console.log("Error: ", error);
@@ -64,14 +64,12 @@ router.post('/', async (req, res) => {
 
     try {
       const newWater = new req.models.WaterStats({
+        user_id: req.body.user,
         date: dateWithoutTime,
         water : req.body.water,
         entryType: 'intake'
       });
-      console.log("this is before the save");
       await newWater.save()
-      console.log(req.body.water)
-      console.log("this is after the save")
       res.json({"status" : "success"})
     }
     catch(error) {
@@ -83,13 +81,12 @@ router.post('/', async (req, res) => {
 router.post('/goals', async (req, res) => {
   try {
     const newWater = new req.models.WaterStats({
+      user_id: req.body.user,
       date: Date.now(),
       waterGoal: req.body.waterGoal,
       entryType: 'setGoal'
     });
-    console.log("this is before the goal is saved");
     await newWater.save()
-    console.log("this is after the goal is saved")
     res.json({"status" : "success"})
   }
   catch(error) {

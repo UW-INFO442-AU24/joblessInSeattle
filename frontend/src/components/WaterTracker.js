@@ -4,9 +4,11 @@ import { Link} from "react-router-dom";
 import { NavBar } from "./Navbar.js";
 import { LineChart } from '@mui/x-charts';
 import { fetchJSON } from "./utils.js";
+import { auth } from '../firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // water tracker
-function Counter() {
+function Counter({user, waterInput, setWaterInput}) {
     const apiUrl = process.env.REACT_APP_API_URL;
    const [count, setCount] = useState(0);
    const increment = () => setCount(count + 8);
@@ -14,14 +16,27 @@ function Counter() {
 
    const reset = () => setCount(0);
 
-   const saveWaterInfo = async () => {
-        let waterIntake = {count}.count;
+    // FOR LOCAL TESTING SWITCH TO
+    // http://localhost:3001/api/water
+
+    // FOR DEPLOYMENT USE
+    // ${apiUrl}/api/water
+
+   const saveWaterInfo = async (event) => {
+        event.preventDefault(); //stops page from reloading
+        // let waterIntake = {count}.count;
         try {
-            console.log(waterIntake)
             await fetchJSON(`${apiUrl}/api/water`, {
                 method: "POST",
-                body: { water: count }
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: {
+                    user: user,
+                    water: count
+                }
             })
+            setWaterInput(waterInput+count)
             reset();
 
         } catch (error) {
@@ -64,10 +79,24 @@ export default function WaterTracker() {
     const [valid, setValid] = useState(false);
     const [waterGoal, setWaterGoal] = useState([]);
     const [waterInput, setWaterInput] = useState([]);
+    const [userId, setUserId] = useState("");
+
+    // reads who the user ID is for reference across the page
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+                // console.log("User ID set: ", user.uid);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     function UserWaterGoal({ waterGoal }) {
         if (waterGoal) {
-            let goal = waterGoal.waterGoal;
+            let goal = waterGoal;
 
             return (
                 <Card.Text>Current Goal: {goal} fl. oz</Card.Text>
@@ -85,37 +114,43 @@ export default function WaterTracker() {
     }
 
     useEffect(() => {
-        const fetchWaterGoal = async () => {
+        const fetchWaterGoal = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/water/getGoal`);
                 const data = await response.json();
-                setWaterGoal(data[data.length - 1]);
+                // filters for only inputs of the user
+                let userWaterGoals = data.filter((goals) => goals.user_id === userId)
+                setWaterGoal(userWaterGoals[userWaterGoals.length-1].waterGoal);  // updates the state with a new list of medications in state
             } catch (error) {
                 console.error("Error fetching water goals:", error);
             }
         };
-        fetchWaterGoal();
-    }, [apiUrl]);
+        fetchWaterGoal(userId);
+    }, [userId, apiUrl]);
 
     useEffect(() => {
-        const fetchWaterInput = async () => {
+        const fetchWaterInput = async (user) => {
             try {
                 let totalWater = 0;
                 const response = await fetch(`${apiUrl}/api/water/getWaterIntake`);
                 const data = await response.json(); // data is an array of objects
+                // filters for only inputs of the user
+                let userWaterInput = data.filter((inputs) => inputs.user_id === user)
                 // go through data, get water input attribute, add them all together
-                data.forEach(input => {
+                userWaterInput.forEach(input => {
                     totalWater += input.water                  
                 });
-                console.log("This is the total water count for today: " + totalWater);
+                // console.log("This is the total water count for today: " + totalWater);
                 // setWaterInput as the sum
-                setWaterInput(totalWater);
+                if (userId) { // Check if userId is defined
+                    setWaterInput(totalWater);
+                }
             } catch (error) {
                 console.error("Error fetching water input:", error);
             }
         };
-        fetchWaterInput();
-    }, [apiUrl]);
+        fetchWaterInput(userId);
+    }, [userId, apiUrl]);
 
     const enableEdit = () => setEdit(true);
     const disableEdit = () => setEdit(false);
@@ -133,12 +168,22 @@ export default function WaterTracker() {
         }
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault(); //stops page from reloading
         try {
             await fetchJSON(`${apiUrl}/api/water/goals`, {
                 method: "POST",
-                body: { waterGoal: value }
+                body: {
+                    user: userId,
+                    waterGoal: value
+                }
             })
+            // fetches the updated data after the adding
+            const response = await fetch(`${apiUrl}/api/water/getGoal`);
+            const data = await response.json();
+            // filters for only meds of the user
+            let userWaterGoals = data.filter((goals) => goals.user_id === userId)
+            setWaterGoal(userWaterGoals[userWaterGoals.length-1].waterGoal);  // updates the state with a new list of medications in state
 
         } catch (error) {
             console.error("Error saving goals:", error);
@@ -168,7 +213,7 @@ export default function WaterTracker() {
                         <Card.Body>
                         {/* <Card.Body class="text-center"> */}
                             <Card.Title>Water Intake Input</Card.Title>
-                            <Counter />
+                            <Counter user={userId} waterInput={waterInput} setWaterInput={setWaterInput}/>
                         </Card.Body>
                     </Card>
                 </Row>
