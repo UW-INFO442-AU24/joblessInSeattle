@@ -43,7 +43,7 @@ export async function fetchJSON(route, options){
         //     Response wasn't json: ${responseText ? JSON.stringify(responseText) : responseText}
         //     error: ${getTextError}`)
     }
-    if(response.status < 200 || response.status >= 300 || responseJson.status == "error"){
+    if(response.status < 200 || response.status >= 300 || responseJson.status === "error"){
         displayError()
         throw new Error(
             `Error fetching ${route} with options: ${options ? JSON.stringify(options) : options}
