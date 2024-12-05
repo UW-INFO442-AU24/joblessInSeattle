@@ -19,7 +19,12 @@ const app = express();
 
 // Enable CORS for all origins
 // This will allow all domains to access the API
-app.use(cors());
+// Use CORS middleware
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from localhost:3000
+  methods: ['GET', 'POST'], // Specify allowed methods
+  allowedHeaders: ['Content-Type'] // Specify allowed headers
+}));
 
 // Middleware setup
 app.use(logger('dev'));
