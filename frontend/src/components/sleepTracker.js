@@ -24,6 +24,9 @@ function ManualTimeInputs(props) {
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
     const handleLog = async () => {
+        if (!user_id) {
+            console.error("no user id")
+        }
         try {
             await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
@@ -64,6 +67,7 @@ export default function SleepTracker() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUserId(user.uid);
+                console.log("User ID set: ", user.uid);
             } else {
                 console.error("User not logged in");
             }
@@ -124,11 +128,11 @@ export default function SleepTracker() {
         fetchSleepTimes();
     }, [apiUrl]);
 
-    const enableEdit = (event) => {
+    const enableEdit = () => {
         setEdit(true);
     }
 
-    const disableEdit = (event) => {
+    const disableEdit = () => {
         setEdit(false);
     }
 

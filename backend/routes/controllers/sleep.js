@@ -1,32 +1,44 @@
 import express from 'express';
+// moved this above the router; import auth because that's what's in the firebase.js
+import { auth } from '../../firebase.js';
+
 var router = express.Router();
-import { getAuth } from '../firebase.js';
 
 // GET goals
 router.get('/getGoal', async (req, res) => {
     try {
-        const auth = getAuth();
-        const user = auth.currentUser;
-        if (user) {
-          let userSleepGoals = await req.models.SleepStats.find({user_id: user.uid, entryType: 'setGoal'}) //find({username: username});
-          let sleepGoal = await Promise.all(
-            userSleepGoals.map(async goal => {
-            try {
-              let {sleepGoalHour, sleepGoalMin, entryType, user_id} = goal;
-              return {sleepGoalHour, sleepGoalMin, entryType, user_id};
-            }
-            catch(error) {
-              console.log("Error: ", error);
-              return(type, error);
-            }
-          }));
-          res.send(sleepGoal);
+        // not needed now bc its not client side
+        // const auth = getAuth();
+        // const user = auth.currentUser;
+
+        // have to get the user id through firebase admin SDK and not client side SDK
+        const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
+        
+        if (!idToken) {
+            return res.status(401).json({ error: 'No token provided' });
         }
-      }
-      catch(error) {
+
+        const verifiedToken = await auth.verifyIdToken(idToken);
+        const userId = verifiedToken.uid;
+
+        // if (userId) {
+        let userSleepGoals = await req.models.SleepStats.find({ user_id: userId, entryType: 'setGoal' }) //find({username: username});
+        let sleepGoal = await Promise.all(
+            userSleepGoals.map(async goal => {
+                try {
+                    let { sleepGoalHour, sleepGoalMin, entryType, user_id } = goal;
+                    return { sleepGoalHour, sleepGoalMin, entryType, user_id };
+                } catch(error) {
+                    console.log("Error: ", error);
+                }
+            })
+        );
+
+        res.send(sleepGoal);
+    } catch(error) {
         console.log("Error: ", error);
-        res.status(500).json({status: "error", error: error});
-      }
+        res.status(500).json({ status: "error", error: error });
+    }
 });
 
 // GET inputted time
@@ -44,7 +56,7 @@ router.get('/getTimeInputs', async (req, res) => {
           }
           catch(error) {
             console.log("Error: ", error);
-            return(type, error);
+            // return(type, error);
           }
         }));
         res.send(sleepTime); 
