@@ -28,7 +28,7 @@ function ManualTimeInputs({user, sleepInput, setSleepInput}) {
             console.error("no user id")
         }
         try {
-            await fetchJSON(`http://localhost:3001/api/sleep`, {
+            await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
                 body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user }
             });
@@ -114,7 +114,7 @@ export default function SleepTracker() {
 
         const fetchSleepGoal = async (user) => {
             try {
-                const response = await fetch(`http://localhost:3001/api/sleep/getGoal`);
+                const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
                 const data = await response.json();
                 let userGoals = data.filter((goalFilter));
                 setSleepGoal(userGoals.slice(-1)[0]);
@@ -138,7 +138,7 @@ export default function SleepTracker() {
 
         const fetchSleepTimes = async (user) => {
             try {
-                const response = await fetch(`http://localhost:3001/api/sleep/getTimeInputs`);
+                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
                 setSleepInput(userTimes.slice(-1)[0]);
@@ -195,13 +195,13 @@ export default function SleepTracker() {
         }
 
         try {
-            await fetchJSON(`http://localhost:3001/api/sleep/goals`, {
+            await fetchJSON(`${apiUrl}/api/sleep/goals`, {
                 method: "POST",
                 body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
             });
             console.log('posted goals');
             // fetches the updated data after the adding
-            const response = await fetch(`http://localhost:3001/api/sleep/getGoal`);
+            const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
             const data = await response.json();
             // filters for only meds of the user
             let userGoals = data.filter((goalFilter))
