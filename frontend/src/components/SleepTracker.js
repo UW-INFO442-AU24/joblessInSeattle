@@ -9,21 +9,30 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import { fetchJSON } from "./utils.js";
+import { auth } from '../firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault('America/Los_Angeles');
 
-function ManualTimeInputs() {
+function ManualTimeInputs(props) {
     const apiUrl = process.env.REACT_APP_API_URL;
+    const user_id = props.user_id
+
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
     const handleLog = async () => {
+        if (!user_id) {
+            console.error("no user id")
+        }
         try {
             await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
-                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput }
-            })
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
+            });
+            console.log('This is the userid in post at handlelog ' + user_id)
 
         } catch (error) {
             console.error("Error saving times:", error);
@@ -39,7 +48,7 @@ function ManualTimeInputs() {
                     <MobileTimePicker className='my-2' label='Wake-up time' value={wakeTimeInput} timezone='system' onChange={setWakeTimeInput}/>
                 </LocalizationProvider>
             </Form.Group>
-            <Button variant='primary' type='submit'>Log</Button>
+            <Button className='mb-2' variant='primary' type='submit'>Log</Button>
         </Form>
     );
 }
@@ -53,6 +62,19 @@ export default function SleepTracker() {
     const [edit, setEdit] = useState(false);
     const [sleepGoal, setSleepGoal] = useState([]);
     const [sleepInput, setSleepInput] = useState([]);
+    const [userId, setUserId] = useState("");
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+                console.log("User ID set: ", user.uid);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     function UserSleepGoal({ sleepGoal }) {
         if (sleepGoal) {
@@ -67,13 +89,15 @@ export default function SleepTracker() {
     
     function UsersSleepInput({ sleepInput }) {
         if (sleepInput) {
-            let timeBed = sleepInput.bedTime;
-            let timeWake = sleepInput.wakeTime;
+            let timeBed = new Date(sleepInput.bedTime);
+            let timeWake = new Date(sleepInput.wakeTime);
+            let convertedTimeBed = timeBed.toLocaleTimeString("en-US", {timeStyle: "short",});
+            let convertedTimeWake = timeWake.toLocaleTimeString("en-US", {timeStyle: "short",});
 
             return (
                 <div> 
-                    <Card.Text>Last Bed Time: {timeBed} </Card.Text>
-                    <Card.Text>Last Wake Time: {timeWake} </Card.Text>
+                    <Card.Text>Last Bed Time: {convertedTimeBed} </Card.Text>
+                    <Card.Text>Last Wake Time: {convertedTimeWake} </Card.Text>
                 </div>
             );
         }
@@ -105,11 +129,11 @@ export default function SleepTracker() {
         fetchSleepTimes();
     }, [apiUrl]);
 
-    const enableEdit = (event) => {
+    const enableEdit = () => {
         setEdit(true);
     }
 
-    const disableEdit = (event) => {
+    const disableEdit = () => {
         setEdit(false);
     }
 
@@ -142,8 +166,9 @@ export default function SleepTracker() {
         try {
             await fetchJSON(`${apiUrl}/api/sleep/goals`, {
                 method: "POST",
-                body: { sleepGoalHour: hour, sleepGoalMin: min }
-            })
+                body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
+            });
+            console.log('posted goals');
 
         } catch (error) {
             console.error("Error saving goals:", error);
@@ -173,7 +198,7 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ManualTimeInputs />
+                            <ManualTimeInputs user_id={userId}/>
                             <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>

@@ -22,16 +22,21 @@ router.post('/', async (req, res) => {
         return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    try {    
-        const newUser = new req.models.User({
-            fname : fname,
-            lname : lname,
-            email : email,
-            password : password
-        });
-
-        await newUser.save();
-        res.status(201).json({ status: 'success', message: "User created", user: newUser })
+    try {
+        const auth = getAuth();
+        const user = auth.currentUser;
+        if (user) {
+            const newUser = new req.models.User({
+                fname : fname,
+                lname : lname,
+                email : email,
+                password : password,
+                user_id : user.uid
+            });
+    
+            await newUser.save();
+            res.status(201).json({ status: 'success', message: "User created", user: newUser })
+        }   
     } catch(error) {
         // failed to create or save the new user or smt went wrong, so fail
         res.status(400).send({ message: 'Error during sign up', error: error.message });

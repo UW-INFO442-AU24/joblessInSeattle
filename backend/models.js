@@ -45,7 +45,7 @@ console.log("user schema successful!")
 
 //Water Tracker table
 const waterSchema = new mongoose.Schema({
-    // user_id: { type: String, required: true },
+    user_id: { type: String, required: true },
     date: Date,
     water: Number,
     waterGoal: Number,
@@ -56,7 +56,7 @@ console.log("water stat schema successful!")
 
 //Sleep Tracker table
 const sleepSchema = new mongoose.Schema({
-    // user_id: { type: String, required: true },
+    user_id: { type: String, required: true },
     bedTime: Date,
     wakeTime: Date,
     sleepGoalHour: Number,
