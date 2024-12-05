@@ -31,7 +31,8 @@ function ManualTimeInputs(props) {
             await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
                 body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
-            })
+            });
+            console.log('This is the userid in post at handlelog ' + user_id)
 
         } catch (error) {
             console.error("Error saving times:", error);
@@ -166,7 +167,8 @@ export default function SleepTracker() {
             await fetchJSON(`${apiUrl}/api/sleep/goals`, {
                 method: "POST",
                 body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
-            })
+            });
+            console.log('posted goals');
 
         } catch (error) {
             console.error("Error saving goals:", error);
