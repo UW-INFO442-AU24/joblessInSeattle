@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 
 export default function Signup() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
     const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);
@@ -78,7 +79,7 @@ export default function Signup() {
             console.log(userInfo.password)
 
             // POST request to backend to save the user's data
-            const response = await fetch('http://localhost:3001/api/signup', {
+            const response = await fetch(`${apiUrl}/api/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

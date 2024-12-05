@@ -5,6 +5,7 @@ import { auth } from '../firebase.js';
 
 
 export default function Login() {
+    const apiUrl = process.env.REACT_APP_API_URL;
     // naviagtes users to dashboard after login
     const navigate = useNavigate();
     // setting and saving error msgs to display to users
@@ -75,7 +76,7 @@ export default function Login() {
             const idToken = await user.getIdToken();
             
             // POST request to backend to save the user's data
-            const response = await fetch('http://localhost:3001/api/login', {
+            const response = await fetch(`${apiUrl}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

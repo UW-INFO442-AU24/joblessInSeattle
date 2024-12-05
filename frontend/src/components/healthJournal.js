@@ -6,6 +6,7 @@ import { auth } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
 const HealthJournal = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [apiResponse, setApiResponse] = useState(null);
     const [error, setError] = useState("");
 
@@ -51,7 +52,7 @@ const HealthJournal = () => {
         };
 
         try {
-            await axios.post("http://localhost:3001/api/diary", newEntry, {
+            await axios.post(`${apiUrl}/api/diary`, newEntry, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -72,7 +73,7 @@ const HealthJournal = () => {
 
     useEffect(() => {
         // Supposed to be something like this...
-        axios.get(`http://localhost:3001/api/diary?user_id=${userId}`)
+        axios.get(`${apiUrl}/api/diary?user_id=${userId}`)
         .then((res) => {
             if (res.status === 200) {
                 setApiResponse(res.data);
@@ -83,7 +84,7 @@ const HealthJournal = () => {
             console.log(error.message);
             setError(error.message);
         });
-    }, []);
+    }, [apiUrl, userId]);
 
     return (
         <div>

@@ -7,6 +7,7 @@ import { fetchJSON } from "./utils.js";
 
 // water tracker
 function Counter() {
+    const apiUrl = process.env.REACT_APP_API_URL;
    const [count, setCount] = useState(0);
    const increment = () => setCount(count + 8);
    const decrement = () => setCount(count - 8);
@@ -17,8 +18,7 @@ function Counter() {
         let waterIntake = {count}.count;
         try {
             console.log(waterIntake)
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/water", {
+            await fetchJSON(`${apiUrl}/api/water`, {
                 method: "POST",
                 body: { water: count }
             })
@@ -58,7 +58,7 @@ function Counter() {
 }
 
 export default function WaterTracker() {
-
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [edit, setEdit] = useState(false);
     const [value, setValue] = useState(false);
     const [valid, setValid] = useState(false);
@@ -87,7 +87,7 @@ export default function WaterTracker() {
     useEffect(() => {
         const fetchWaterGoal = async () => {
             try {
-                const response = await fetch('http://localhost:3001/api/water/getGoal');
+                const response = await fetch(`${apiUrl}/api/water/getGoal`);
                 const data = await response.json();
                 setWaterGoal(data[data.length - 1]);
             } catch (error) {
@@ -95,13 +95,13 @@ export default function WaterTracker() {
             }
         };
         fetchWaterGoal();
-    }, []);
+    }, [apiUrl]);
 
     useEffect(() => {
         const fetchWaterInput = async () => {
             try {
                 let totalWater = 0;
-                const response = await fetch('http://localhost:3001/api/water/getWaterIntake');
+                const response = await fetch(`${apiUrl}/api/water/getWaterIntake`);
                 const data = await response.json(); // data is an array of objects
                 // go through data, get water input attribute, add them all together
                 data.forEach(input => {
@@ -115,7 +115,7 @@ export default function WaterTracker() {
             }
         };
         fetchWaterInput();
-    }, []);
+    }, [apiUrl]);
 
     const enableEdit = () => setEdit(true);
     const disableEdit = () => setEdit(false);
@@ -135,8 +135,7 @@ export default function WaterTracker() {
 
     const handleSubmit = async () => {
         try {
-            // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-            await fetchJSON("http://localhost:3001/api/water/goals", {
+            await fetchJSON(`${apiUrl}/api/water/goals`, {
                 method: "POST",
                 body: { waterGoal: value }
             })

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Row } from 'react-bootstrap';
 import axios from 'axios';
 import { NavBar } from "./Navbar.js";
 
 const ResourcesPage = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const ResourcesPage = () => {
     useEffect(() => {
         const fetchHealthNews = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/api/resources/health");
+                const response = await axios.get(`${apiUrl}/api/resources/health`);
                 const filteredArticles = response.data.articles.filter(
                     (article) => article.title.trim().toLowerCase() !== "[removed]"
                 );
@@ -24,7 +24,7 @@ const ResourcesPage = () => {
         };
 
         fetchHealthNews();
-    }, []);
+    }, [apiUrl]);
 
     if (loading) return <p>Loading news...</p>;
     if (error) return <p>{error}</p>;
