@@ -16,24 +16,25 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault('America/Los_Angeles');
 
-function ManualTimeInputs(props) {
+function ManualTimeInputs({user, sleepInput, setSleepInput}) {
     const apiUrl = process.env.REACT_APP_API_URL;
-    const user_id = props.user_id
 
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
-    const handleLog = async () => {
-        if (!user_id) {
+    const handleLog = async (event) => {
+        event.preventDefault(); //stops page from reloading
+        if (!user) {
             console.error("no user id")
         }
         try {
-            await fetchJSON(`${apiUrl}/api/sleep`, {
+            await fetchJSON(`http://localhost:3001/api/sleep`, {
                 method: "POST",
-                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user }
             });
-            console.log('This is the userid in post at handlelog ' + user_id)
-
+            console.log('This is the userid in post at handlelog ' + user)
+            //set the sleep input to be the sleep input
+            setSleepInput({bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user, entryType: "recordTime"})
         } catch (error) {
             console.error("Error saving times:", error);
         }
@@ -113,10 +114,11 @@ export default function SleepTracker() {
 
         const fetchSleepGoal = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
+                const response = await fetch(`http://localhost:3001/api/sleep/getGoal`);
                 const data = await response.json();
                 let userGoals = data.filter((goalFilter));
                 setSleepGoal(userGoals.slice(-1)[0]);
+                console.log(sleepGoal)
             } catch (error) {
                 console.error("Error fetching sleep goals:", error);
             }
@@ -136,7 +138,7 @@ export default function SleepTracker() {
 
         const fetchSleepTimes = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
+                const response = await fetch(`http://localhost:3001/api/sleep/getTimeInputs`);
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
                 setSleepInput(userTimes.slice(-1)[0]);
@@ -182,13 +184,30 @@ export default function SleepTracker() {
         }
     }
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault(); //stops page from reloading
+
+        function goalFilter(goal) {
+            if (goal.user_id === userId && goal.entryType === 'setGoal') {
+                return true;
+            }
+            return false;
+        }
+
         try {
-            await fetchJSON(`${apiUrl}/api/sleep/goals`, {
+            await fetchJSON(`http://localhost:3001/api/sleep/goals`, {
                 method: "POST",
                 body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
             });
             console.log('posted goals');
+            // fetches the updated data after the adding
+            const response = await fetch(`http://localhost:3001/api/sleep/getGoal`);
+            const data = await response.json();
+            // filters for only meds of the user
+            let userGoals = data.filter((goalFilter))
+            setSleepGoal(userGoals.slice(-1)[0]);
+            console.log(sleepGoal)
+
 
         } catch (error) {
             console.error("Error saving goals:", error);
@@ -218,7 +237,7 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ManualTimeInputs user_id={userId}/>
+                            <ManualTimeInputs user={userId} sleepInput={sleepInput} setSleepInput={setSleepInput}/>
                             <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>

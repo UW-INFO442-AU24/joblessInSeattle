@@ -20,13 +20,13 @@ function Counter({user, waterInput, setWaterInput}) {
     // http://localhost:3001/api/water
 
     // FOR DEPLOYMENT USE
-    // ${apiUrl}/api/water
+    // http://localhost:3001/api/water
 
    const saveWaterInfo = async (event) => {
         event.preventDefault(); //stops page from reloading
         // let waterIntake = {count}.count;
         try {
-            await fetchJSON(`${apiUrl}/api/water`, {
+            await fetchJSON(`http://localhost:3001/api/water`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export default function WaterTracker() {
     useEffect(() => {
         const fetchWaterGoal = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/water/getGoal`);
+                const response = await fetch(`http://localhost:3001/api/water/getGoal`);
                 const data = await response.json();
                 // filters for only inputs of the user
                 let userWaterGoals = data.filter((goals) => goals.user_id === userId)
@@ -132,7 +132,7 @@ export default function WaterTracker() {
         const fetchWaterInput = async (user) => {
             try {
                 let totalWater = 0;
-                const response = await fetch(`${apiUrl}/api/water/getWaterIntake`);
+                const response = await fetch(`http://localhost:3001/api/water/getWaterIntake`);
                 const data = await response.json(); // data is an array of objects
                 // filters for only inputs of the user
                 let userWaterInput = data.filter((inputs) => inputs.user_id === user)
@@ -171,7 +171,7 @@ export default function WaterTracker() {
     const handleSubmit = async (event) => {
         event.preventDefault(); //stops page from reloading
         try {
-            await fetchJSON(`${apiUrl}/api/water/goals`, {
+            await fetchJSON(`http://localhost:3001/api/water/goals`, {
                 method: "POST",
                 body: {
                     user: userId,
@@ -179,7 +179,7 @@ export default function WaterTracker() {
                 }
             })
             // fetches the updated data after the adding
-            const response = await fetch(`${apiUrl}/api/water/getGoal`);
+            const response = await fetch(`http://localhost:3001/api/water/getGoal`);
             const data = await response.json();
             // filters for only meds of the user
             let userWaterGoals = data.filter((goals) => goals.user_id === userId)

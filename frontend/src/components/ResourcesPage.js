@@ -11,7 +11,7 @@ export default function ResourcesPage() {
     useEffect(() => {
         const fetchHealthNews = async () => {
             try {
-                const response = await axios.get(`${apiUrl}/api/resources/health`);
+                const response = await axios.get(`http://localhost:3001/api/resources/health`);
                 const filteredArticles = response.data.articles.filter(
                     (article) => article.title.trim().toLowerCase() !== "[removed]"
                 );

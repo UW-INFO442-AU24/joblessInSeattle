@@ -225,12 +225,12 @@ export default function MedicationPage() {
     // http://localhost:3001/api/medication/
 
     // FOR DEPLOYMENT USE
-    // ${apiUrl}/api/medication/
+    // http://localhost:3001/api/medication/
 
     useEffect(() => {
         const fetchMedications = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/medication/medications`);
+                const response = await fetch(`http://localhost:3001/api/medication/medications`);
                 const data = await response.json();
                 // filters for only meds of the user
                 let userMeds = data.filter((meds) => meds.user_id === user)
@@ -246,7 +246,7 @@ export default function MedicationPage() {
 
     const addNewMedication = async (userId, medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate) => {
         try {
-            await fetchJSON(`${apiUrl}/api/medication`, {
+            await fetchJSON(`http://localhost:3001/api/medication`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -262,7 +262,7 @@ export default function MedicationPage() {
             })
             
             // fetches the updated data after the adding
-            const response = await fetch(`${apiUrl}/api/medication/medications`);
+            const response = await fetch(`http://localhost:3001/api/medication/medications`);
             const data = await response.json();
             // filters for only meds of the user
             let userMeds = data.filter((meds) => meds.user_id === userId)

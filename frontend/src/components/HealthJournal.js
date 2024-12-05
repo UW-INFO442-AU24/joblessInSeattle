@@ -52,7 +52,7 @@ export default function HealthJournal() {
         };
 
         try {
-            await axios.post(`${apiUrl}/api/diary`, newEntry, {
+            await axios.post(`http://localhost:3001/api/diary`, newEntry, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -72,7 +72,7 @@ export default function HealthJournal() {
     };
 
     useEffect(() => {
-        axios.get(`${apiUrl}/api/diary`)
+        axios.get(`http://localhost:3001/api/diary`)
         .then((res) => {
             if (res.status === 200) {
                 setApiResponse(res.data);
