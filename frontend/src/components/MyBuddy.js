@@ -26,8 +26,33 @@ export default function MyBuddy() {
             <Row className='m-4'>
                 <Card>
                     <Card.Body>
-                        <Card.Title>Buddy's Name here</Card.Title>
-                        <Card.Text>Buddy will go here</Card.Text>
+                        <Card.Title>Lil Buddy Max</Card.Title>
+                        <Card.Text>Keep up the good work! He's happy you're happy!</Card.Text>
+                        <img src="../../assets/daymax-happy.PNG" />
+                    </Card.Body>
+                </Card>
+            </Row>
+            <Row className='m-4'>
+                <Card>
+                    <Card.Body>
+                        <Card.Text>if you're doing alright with your health but not perfect then your buddy will look like:</Card.Text>
+                        <img src="../../assets/daymax-neutral.PNG" />
+                    </Card.Body>
+                </Card>
+            </Row>
+            <Row className='m-4'>
+                <Card>
+                    <Card.Body>
+                        <Card.Text>if you're not taking the best care of yourself your buddy will look like:</Card.Text>
+                        <img src="../../assets/daymax-meh.PNG" />
+                    </Card.Body>
+                </Card>
+            </Row>
+            <Row className='m-4'>
+                <Card>
+                    <Card.Body>
+                        <Card.Text>but if you don't keep up the good work, Max is gonna look like this:</Card.Text>
+                        <img src="../../assets/daymax-PLS-DRINK.PNG" />
                     </Card.Body>
                 </Card>
             </Row>
