@@ -204,7 +204,7 @@ function AddNewMedication ({ uID, onClick }) {
 }
 
 export default function MedicationPage() {
-    const apiUrl = "https://joblessinseattle.onrender.com";
+    const apiUrl = "https://joblessinseattlefe.onrender.com";
     const [medications, setMedications] = useState([]);
     const [userId, setUserId] = useState("");
 

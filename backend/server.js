@@ -16,13 +16,25 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);  // This will give you the current directory
 
 const app = express();
-
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://joblessinseattlefe.onrender.com/', 
+  'https://joblessinseattle.onrender.com/'
+]
 // Enable CORS for all origins
 // This will allow all domains to access the API
 // Use CORS middleware
-app.use(cors({
-  origin: 'https://joblessinseattle.onrender.com/', // Allow requests from all
+app.use(cors({ 
+  origin: function(origin, callback) {
+    console.log('Request Origin:', origin);  // Log the origin for debugging
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true); // Proceed with the request
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }, // Allow requests from all
   methods: ['GET', 'POST'], // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Middleware setup
