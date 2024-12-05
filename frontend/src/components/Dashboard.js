@@ -11,7 +11,7 @@ import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export default function Dashboard() {
     const [user, setUser] = useState("");
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const [waterInput, setWaterInput] = useState([]);
     const [sleepInput, setSleepInput] = useState([]);
     const [sleepTime, setSleepTime] = useState();
@@ -35,7 +35,7 @@ export default function Dashboard() {
         const fetchWaterInput = async (user) => {
             try {
                 let totalWater = 0;
-                const response = await fetch(`${apiUrl}/api/water/getWaterIntake`);
+                const response = await fetch("https://joblessinseattle.onrender.com/api/water/getWaterIntake");
                 const data = await response.json(); // data is an array of objects
                 // filters for only inputs of the user
                 let userWaterInput = data.filter((inputs) => inputs.user_id === user.uid)
@@ -70,7 +70,7 @@ export default function Dashboard() {
         // finds and updates the sleep time in the dashboard
         const fetchSleepTimes = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
+                const response = await fetch("https://joblessinseattle.onrender.com/api/sleep/getTimeInputs");
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
                 setSleepInput(userTimes.slice(-1)[0]);

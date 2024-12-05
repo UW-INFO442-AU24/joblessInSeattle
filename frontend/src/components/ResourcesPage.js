@@ -3,7 +3,7 @@ import axios from 'axios';
 import { NavBar } from "./Navbar.js";
 
 export default function ResourcesPage() {
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const [articles, setArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

@@ -5,7 +5,7 @@ import { auth } from '../firebase.js';
 
 
 export default function Login() {
-    const apiUrl = process.env.REACT_APP_API_URL;
+    const apiUrl = "https://joblessinseattle.onrender.com";
     // naviagtes users to dashboard after login
     const navigate = useNavigate();
     // setting and saving error msgs to display to users
@@ -76,7 +76,7 @@ export default function Login() {
             const idToken = await user.getIdToken();
             
             // POST request to backend to save the user's data
-            const response = await fetch("https://joblessinseattlefe.onrender.com/api/login", {
+            const response = await fetch("https://joblessinseattle.onrender.com/api/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
