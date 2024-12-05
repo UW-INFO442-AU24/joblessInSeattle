@@ -291,7 +291,7 @@ export default function MedicationPage() {
                 </div>
                 
                 <Row className='m-4'>
-                    <Card>
+                    <Card className='mb-5'>
                         <Card.Body>
                         {/* <Card.Body class="text-center"> */}
                             <Card.Title>Medication List</Card.Title>
