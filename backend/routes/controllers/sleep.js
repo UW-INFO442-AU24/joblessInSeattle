@@ -22,7 +22,7 @@ router.get('/getGoal', async (req, res) => {
         const userId = verifiedToken.uid;
 
         // if (userId) {
-        let userSleepGoals = await req.models.SleepStats.find({ user_id: userId, entryType: 'setGoal' }) //find({username: username});
+        let userSleepGoals = await req.models.SleepStats.find({ user_id: userId, entryType: 'setGoal' });
         let sleepGoal = await Promise.all(
             userSleepGoals.map(async goal => {
                 try {
@@ -44,23 +44,27 @@ router.get('/getGoal', async (req, res) => {
 // GET inputted time
 router.get('/getTimeInputs', async (req, res) => {
   try {
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (user) {
-        let userSleepTimes = await req.models.SleepStats.find({user_id: user.uid, entryType: 'recordTime'})
-        let sleepTime = await Promise.all(
-          userSleepTimes.map(async time => {
-          try {
-            let {bedTime, wakeTime, entryType, user_id} = time;
-            return {bedTime, wakeTime, entryType, user_id};
-          }
-          catch(error) {
-            console.log("Error: ", error);
-            // return(type, error);
-          }
-        }));
-        res.send(sleepTime); 
-      }
+      const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
+        
+      if (!idToken) {
+        return res.status(401).json({ error: 'No token provided' });
+      } 
+
+      const verifiedToken = await auth.verifyIdToken(idToken);
+      const userId = verifiedToken.uid;
+      let userSleepTimes = await req.models.SleepStats.find({user_id: userId, entryType: 'recordTime'});
+      let sleepTime = await Promise.all(
+        userSleepTimes.map(async time => {
+        try {
+          let {bedTime, wakeTime, entryType, user_id} = time;
+          return {bedTime, wakeTime, entryType, user_id};
+        }
+        catch(error) {
+          console.log("Error: ", error);
+          // return(type, error);
+        }
+      }));
+      res.send(sleepTime); 
     }
     catch(error) {
       console.log("Error: ", error);

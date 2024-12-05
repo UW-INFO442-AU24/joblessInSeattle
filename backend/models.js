@@ -32,7 +32,6 @@ console.log("success");
 
 // User table
 const userSchema = new mongoose.Schema({
-    user_id: { type: String, required: true },
     fname: { type: String, required: true },
     lname: { type: String, required: true },
     email: { type: String, required: true, unique: true },

@@ -47,7 +47,7 @@ function ManualTimeInputs(props) {
                     <MobileTimePicker className='my-2' label='Wake-up time' value={wakeTimeInput} timezone='system' onChange={setWakeTimeInput}/>
                 </LocalizationProvider>
             </Form.Group>
-            <Button variant='primary' type='submit'>Log</Button>
+            <Button className='mb-2' variant='primary' type='submit'>Log</Button>
         </Form>
     );
 }
@@ -90,8 +90,8 @@ export default function SleepTracker() {
         if (sleepInput) {
             let timeBed = new Date(sleepInput.bedTime);
             let timeWake = new Date(sleepInput.wakeTime);
-            let convertedTimeBed = timeBed.toLocaleTimeString();
-            let convertedTimeWake = timeWake.toLocaleTimeString();
+            let convertedTimeBed = timeBed.toLocaleTimeString("en-US", {timeStyle: "short",});
+            let convertedTimeWake = timeWake.toLocaleTimeString("en-US", {timeStyle: "short",});
 
             return (
                 <div> 
