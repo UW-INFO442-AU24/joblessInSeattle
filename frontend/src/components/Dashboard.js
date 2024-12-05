@@ -10,9 +10,11 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export default function Dashboard() {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState("");
     const apiUrl = process.env.REACT_APP_API_URL;
     const [waterInput, setWaterInput] = useState([]);
+    const [sleepInput, setSleepInput] = useState([]);
+    const [sleepTime, setSleepTime] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,6 +54,47 @@ export default function Dashboard() {
         };
         fetchWaterInput(user);
     }, [user, apiUrl]);
+
+    
+
+    // useEffect to fetch sleep times
+    useEffect(() => {
+        // filter used in fetchSleepTimes to find sleep times recorded by user
+        function timeFilter(time) {
+            if (time.user_id === user.uid && time.entryType === 'recordTime') {
+                return true;
+            }
+            return false;
+        }
+
+        // finds and updates the sleep time in the dashboard
+        const fetchSleepTimes = async (user) => {
+            try {
+                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
+                const data = await response.json();
+                let userTimes = data.filter((timeFilter));
+                setSleepInput(userTimes.slice(-1)[0]);
+
+                let timeBed = new Date(sleepInput.bedTime);
+                let timeWake = new Date(sleepInput.wakeTime);
+                let bedMath = timeBed.getTime();
+                // console.log(bedMath);
+                let wakeMath = timeWake.getTime();
+                // console.log(wakeMath);
+                
+                // calculate hour and min difference
+                // Convert from miliseconds to seconds to minutes to hours
+                let sleep = (((wakeMath - bedMath) / 1000) / 60) / 60;
+                // console.log(sleep);
+                setSleepTime(sleep);
+            } catch (error) {
+                console.error("Error fetching sleep goals:", error);
+            }
+        };
+        if (user) {
+            fetchSleepTimes(user);
+        }
+    }, [user, apiUrl, sleepInput.bedTime, sleepInput.wakeTime]);
 
     if (!user) {
         return null;
@@ -94,8 +137,8 @@ export default function Dashboard() {
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <Card.Title>Sleep</Card.Title>
-                                    <Card.Text className='text-sm'>
-                                        8 hours :0
+                                    <Card.Text className='text-sm' >
+                                        {sleepTime} hours
                                     </Card.Text>
                                 </div>
                                 <div className="pt-9">
