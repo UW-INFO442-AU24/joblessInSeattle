@@ -21,9 +21,8 @@ const app = express();
 // This will allow all domains to access the API
 // Use CORS middleware
 app.use(cors({
-  origin: '*', // Allow requests from all origins
+  origin: '*', // Allow requests from all
   methods: ['GET', 'POST'], // Specify allowed methods
-  allowedHeaders: ['Content-Type'] // Specify allowed headers
 }));
 
 // Middleware setup
