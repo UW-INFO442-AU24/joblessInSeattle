@@ -14,6 +14,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault('America/Los_Angeles');
 
 function ManualTimeInputs(props) {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -83,13 +84,15 @@ export default function SleepTracker() {
     
     function UsersSleepInput({ sleepInput }) {
         if (sleepInput) {
-            let timeBed = sleepInput.bedTime;
-            let timeWake = sleepInput.wakeTime;
+            let timeBed = new Date(sleepInput.bedTime);
+            let timeWake = new Date(sleepInput.wakeTime);
+            let convertedTimeBed = timeBed.toLocaleTimeString();
+            let convertedTimeWake = timeWake.toLocaleTimeString();
 
             return (
                 <div> 
-                    <Card.Text>Last Bed Time: {timeBed} </Card.Text>
-                    <Card.Text>Last Wake Time: {timeWake} </Card.Text>
+                    <Card.Text>Last Bed Time: {convertedTimeBed} </Card.Text>
+                    <Card.Text>Last Wake Time: {convertedTimeWake} </Card.Text>
                 </div>
             );
         }

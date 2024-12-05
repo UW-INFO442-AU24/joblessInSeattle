@@ -12,8 +12,8 @@ router.get('/getGoal', async (req, res) => {
           let sleepGoal = await Promise.all(
             userSleepGoals.map(async goal => {
             try {
-              let {sleepGoalHour, sleepGoalMin, entryType} = goal;
-              return {sleepGoalHour, sleepGoalMin, entryType};
+              let {sleepGoalHour, sleepGoalMin, entryType, user_id} = goal;
+              return {sleepGoalHour, sleepGoalMin, entryType, user_id};
             }
             catch(error) {
               console.log("Error: ", error);
@@ -35,12 +35,12 @@ router.get('/getTimeInputs', async (req, res) => {
       const auth = getAuth();
       const user = auth.currentUser;
       if (user) {
-        let userSleepTimes = await req.models.SleepStats.find({user_id: user.uid, entryType: 'recordTime'}) //find({username: username});
+        let userSleepTimes = await req.models.SleepStats.find({user_id: user.uid, entryType: 'recordTime'})
         let sleepTime = await Promise.all(
           userSleepTimes.map(async time => {
           try {
-            let {bedTime, wakeTime, entryType} = time;
-            return {bedTime, wakeTime, entryType};
+            let {bedTime, wakeTime, entryType, user_id} = time;
+            return {bedTime, wakeTime, entryType, user_id};
           }
           catch(error) {
             console.log("Error: ", error);
