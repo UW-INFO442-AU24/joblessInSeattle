@@ -5,15 +5,13 @@ var router = express.Router();
 // GET for /medication
 router.get('/medications', async (req, res) => {
       try {
-          // stuff
-          // let username = req.query.username; WHEN WE HAVE FIREBASE LOGIN STUFF SET UP
           let allMedications = await req.models.Medications.find() //.find({username: username});
           let medications = await Promise.all(
             allMedications.map(async med => {
             try {
-              // NEED TO ADD USER
-              let {medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate} = med;
-              return {medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate};
+              // reads mongodb and returns all instances
+              let {user_id, medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate} = med;
+              return {user_id, medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate};
             }
             catch(error) {
               console.log("Error: ", error);
@@ -34,7 +32,7 @@ router.post('/', async (req, res) => {
     try {
       // saves the medication model data
       const newMedication = new req.models.Medications({
-        // user: "me",
+        user_id: req.body.user,
         medicationName : req.body.name,
         medDescription : req.body.description,
         medFrequency : req.body.frequency

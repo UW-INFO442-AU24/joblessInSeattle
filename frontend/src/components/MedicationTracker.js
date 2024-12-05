@@ -3,19 +3,26 @@ import { Card, Col, Row, Button } from 'react-bootstrap';
 import { NavBar } from "./Navbar.js";
 import { fetchJSON } from "./utils.js";
 import { Link} from "react-router-dom";
+import { auth } from '../firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 // list of all medications
-function MedicationList({ meds }) {
+function MedicationList({ meds, user }) {
     return (
         // return the medication list FULL card
         <div id='medicationList'>
-            {meds.length > 0 ? (
-                meds.map((meds) => (
-                    <MedicationLine key={meds._id} medication={meds} />
-                ))
+            {meds.length === 0 ? (
+                <p>No Medications</p>
             ) : (
-                <p>Loading medications...</p>
+                meds.length > 0 ? (
+                    meds.map((meds) => (
+                        <MedicationLine key={meds._id} medication={meds} user={user} />
+                    ))
+                ) : (
+                    <p>Loading medications...</p>
+                )
             )}
+            
         </div>
     );
 }
@@ -114,14 +121,14 @@ function MedicationLine ({ medication }) {
     );
 }
 
-function AddNewMedication ({ onClick }) {
+function AddNewMedication ({ uID, onClick }) {
     const [medName, setMedname] = useState("");
     const [medFrequency, setMedFrequency] = useState("");
     const [medDescription, setMedDescription] = useState("");
     const [showForm, setShowForm] = useState(false);
 
     const handleSubmit = async () => {
-        await onClick(medName, medFrequency, medDescription);
+        await onClick(uID, medName, medDescription, medFrequency);
         setMedname('');
         setMedFrequency('');
         setMedDescription('');
@@ -199,21 +206,47 @@ function AddNewMedication ({ onClick }) {
 export default function MedicationPage() {
     const apiUrl = process.env.REACT_APP_API_URL;
     const [medications, setMedications] = useState([]);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
-        const fetchMedications = async () => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserId(user.uid);
+                console.log("User ID set: ", user.uid);
+            } else {
+                console.error("User not logged in");
+            }
+        });
+        return () => unsubscribe();
+    }, []);
+
+    // FOR LOCAL TESTING SWITCH TO
+    // http://localhost:3001/api/medication/
+
+    // FOR DEPLOYMENT USE
+    // ${apiUrl}/api/medication/
+
+    useEffect(() => {
+        const fetchMedications = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/medication/medications`);
                 const data = await response.json();
-                setMedications(data);
+                // filters for only meds of the user
+                console.log(data)
+                console.log(user)
+                let userMeds = data.filter((meds) => meds.user_id === user)
+                console.log(userMeds)
+                setMedications(userMeds);
             } catch (error) {
                 console.error("Error fetching medications:", error);
             }
         };
-        fetchMedications();
-    }, [apiUrl]);  // Empty dependency array means this effect runs once when the component mounts
+        if (userId) { // Check if userId is defined
+            fetchMedications(userId);
+        }
+    }, [userId]);  // Empty dependency array means this effect runs once when the component mounts
 
-    const addNewMedication = async (medicationName, medFrequency, medDescription, medTakenCount, lastMedTakenDate) => {
+    const addNewMedication = async (userId, medicationName, medDescription, medFrequency, medTakenCount, lastMedTakenDate) => {
         try {
             await fetchJSON(`${apiUrl}/api/medication`, {
                 method: "POST",
@@ -221,6 +254,7 @@ export default function MedicationPage() {
                     "Content-Type": "application/json",
                 },
                 body: {
+                    user: userId,
                     name : medicationName,
                     description : medDescription,
                     frequency : medFrequency,
@@ -232,7 +266,9 @@ export default function MedicationPage() {
             // fetches the updated data after the adding
             const response = await fetch(`${apiUrl}/api/medication/medications`);
             const data = await response.json();
-            setMedications(data);  // updates the state with a new list of medications in state
+            // filters for only meds of the user
+            let userMeds = data.filter((meds) => meds.user_id === userId)
+            setMedications(userMeds);;  // updates the state with a new list of medications in state
         } catch(err) {
             console.error("Error saving medication: ", err);
         }
@@ -261,22 +297,11 @@ export default function MedicationPage() {
                         <Card.Body>
                         {/* <Card.Body class="text-center"> */}
                             <Card.Title>Medication List</Card.Title>
-                            <MedicationList meds={medications}/>
-                            <AddNewMedication onClick={addNewMedication} />
+                            <MedicationList meds={medications} user={userId}/>
+                            <AddNewMedication uID={userId} onClick={addNewMedication} />
                         </Card.Body>
                     </Card>
                 </Row>
-
-                <Row className='m-4'>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Some other Card</Card.Title>
-                            {/* call funciton to load card info? */}
-                        </Card.Body>
-                    </Card>
-                </Row>
-
-                    
                 
             </Col>
             <NavBar />
