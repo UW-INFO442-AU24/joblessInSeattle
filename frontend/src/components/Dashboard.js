@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { NavBar } from "./Navbar.js";
 import { auth } from "../firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
-import WaterDropIcon from '@mui/icons-material/WaterDrop';
+// import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import BedtimeIcon from '@mui/icons-material/Bedtime';
 import MedicationIcon from '@mui/icons-material/Medication';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
@@ -38,7 +38,7 @@ export default function Dashboard() {
                     {/* WATER TRACKER */}
                     <Col className='my-1 mr-2 p-0'>
                         <Card className='bg-primary border-primary text-white !rounded-2xl'>
-                        <WaterDropIcon className='m-3' fontSize='large'/>
+                        {/* <WaterDropIcon className='m-3' fontSize='large'/> */}
                         <Card.Body>
                             <Link to="/watertracker" className="stretched-link " data-testid='watertracker-box'/>
                             <div className='d-flex justify-content-between'>
