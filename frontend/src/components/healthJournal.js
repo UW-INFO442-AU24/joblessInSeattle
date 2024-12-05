@@ -90,7 +90,7 @@ const HealthJournal = () => {
         <div>
             <Col className='m-4'>
                 <h1>Health Journal</h1>
-                {/* add error display and loading display */}
+                {error && <p style={{ color: 'red' }}>Error: {error}</p>}
                 <Form onSubmit={handleSubmit} className="my-2">
                     <Form.Label htmlFor="entry">How are you doing today? Write a journal entry to document how you feel emotionally, mentally, and/or physically</Form.Label>
                     <Form.Control
