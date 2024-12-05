@@ -107,10 +107,12 @@ npm run test <name.test.js>
 
 - The rest of the tests ensures that the button ineractions are working as expected. When the user clicks on the `+` button, it should increase the water count by 8 fl oz. When the `-` button is pressed, it should decrease the water count by 8 fl oz. We have a few tests to make sure these interactions work as expected.
 
-**Known Bugs:**
+**NOTE:** For Jest testing, there are some tests that fail, even though on the running application, the interaction works. In Jest, it requires certain modules to be ignored that we could not figure out how to install. There was a ReferenceError to TextEncoder that is related to Firebase. 
+
+<h2>Known Bugs/Notes:</h2>
 
 - On smaller screens in the Medications page, there may be an overlap of input box and border. To fix this, move to a bigger screen or website mode instead of phone. In the future, this could be fixed with adding margins or padding.
 
-- For Jest testing, there are some tests that fail, even though on the running application, the interaction works. In Jest, it requires certain modules to be ignored.
+- If you get the error about no access control allow origin header, you need to do an `npm install cors` in your terminal in the root joblessInSeattle folder. 
 
-- If you get the error about no access control allow origin header, you need to do an `npm install CORS` in your terminal in the root joblessInSeattle folder. 
+- MyBuddy page is static and does not currently update with the user health stats. We created sample buddies and displayed them, but they will not change or move. This was also a part of our P1s. 
