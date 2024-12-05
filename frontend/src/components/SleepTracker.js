@@ -28,7 +28,7 @@ function ManualTimeInputs(props) {
             console.error("no user id")
         }
         try {
-            await fetchJSON(`${apiUrl}/api/sleep`, {
+            await fetchJSON(`http://localhost:3001/api/sleep`, {
                 method: "POST",
                 body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
             });
@@ -113,7 +113,7 @@ export default function SleepTracker() {
 
         const fetchSleepGoal = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
+                const response = await fetch(`http://localhost:3001/api/sleep/getGoal`);
                 const data = await response.json();
                 let userGoals = data.filter((goalFilter));
                 setSleepGoal(userGoals.slice(-1)[0]);
@@ -136,7 +136,7 @@ export default function SleepTracker() {
 
         const fetchSleepTimes = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
+                const response = await fetch(`http://localhost:3001/api/sleep/getTimeInputs`);
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
                 setSleepInput(userTimes.slice(-1)[0]);
@@ -184,7 +184,7 @@ export default function SleepTracker() {
 
     const handleSubmit = async () => {
         try {
-            await fetchJSON(`${apiUrl}/api/sleep/goals`, {
+            await fetchJSON(`http://localhost:3001/api/sleep/goals`, {
                 method: "POST",
                 body: { sleepGoalHour: hour, sleepGoalMin: min, user_id: userId }
             });

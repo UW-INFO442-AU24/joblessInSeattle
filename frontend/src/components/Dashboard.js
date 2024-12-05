@@ -71,7 +71,7 @@ export default function Dashboard() {
         // finds and updates the sleep time in the dashboard
         const fetchSleepTimes = async (user) => {
             try {
-                const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
+                const response = await fetch(`http://localhost:3001/api/sleep/getTimeInputs`);
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
                 setSleepInput(userTimes.slice(-1)[0]);
