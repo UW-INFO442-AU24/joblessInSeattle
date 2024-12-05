@@ -103,31 +103,51 @@ export default function SleepTracker() {
         }
     }
 
+    function goalFilter(goal) {
+        if (goal.user_id === userId && goal.entryType === 'setGoal') {
+            return true;
+        }
+        return false;
+    }
+
     useEffect(() => {
-        const fetchSleepGoal = async () => {
+        const fetchSleepGoal = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/sleep/getGoal`);
                 const data = await response.json();
-                setSleepGoal(data[data.length - 1]);
+                let userGoals = data.filter((goalFilter));
+                setSleepGoal(userGoals.slice(-1)[0]);
             } catch (error) {
                 console.error("Error fetching sleep goals:", error);
             }
         };
-        fetchSleepGoal();
-    }, [apiUrl]);
+        if (userId) {
+            fetchSleepGoal(userId);
+        }
+    }, [userId, apiUrl]);
+
+    function timeFilter(time) {
+        if (time.user_id === userId && time.entryType === 'recordTime') {
+            return true;
+        }
+        return false;
+    }
 
     useEffect(() => {
-        const fetchSleepTimes = async () => {
+        const fetchSleepTimes = async (user) => {
             try {
                 const response = await fetch(`${apiUrl}/api/sleep/getTimeInputs`);
                 const data = await response.json();
-                setSleepInput(data[data.length - 1]);
+                let userTimes = data.filter((timeFilter));
+                setSleepInput(userTimes.slice(-1)[0]);
             } catch (error) {
                 console.error("Error fetching sleep goals:", error);
             }
         };
-        fetchSleepTimes();
-    }, [apiUrl]);
+        if (userId) {
+            fetchSleepTimes(userId);
+        }
+    }, [userId, apiUrl]);
 
     const enableEdit = () => {
         setEdit(true);

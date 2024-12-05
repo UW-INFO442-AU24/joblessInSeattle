@@ -12,17 +12,17 @@ router.get('/getGoal', async (req, res) => {
         // const user = auth.currentUser;
 
         // have to get the user id through firebase admin SDK and not client side SDK
-        const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
+        // const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
         
-        if (!idToken) {
-            return res.status(401).json({ error: 'No token provided' });
-        }
+        // if (!idToken) {
+        //     return res.status(401).json({ error: 'No token provided' });
+        // }
 
-        const verifiedToken = await auth.verifyIdToken(idToken);
-        const userId = verifiedToken.uid;
+        // const verifiedToken = await auth.verifyIdToken(idToken);
+        // const userId = verifiedToken.uid;
 
         // if (userId) {
-        let userSleepGoals = await req.models.SleepStats.find({ user_id: userId, entryType: 'setGoal' });
+        let userSleepGoals = await req.models.SleepStats.find();
         let sleepGoal = await Promise.all(
             userSleepGoals.map(async goal => {
                 try {
@@ -44,15 +44,15 @@ router.get('/getGoal', async (req, res) => {
 // GET inputted time
 router.get('/getTimeInputs', async (req, res) => {
   try {
-      const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
+      // const idToken = req.headers.authorization?.split('Bearer ')[1]; // fully just googled how?
         
-      if (!idToken) {
-        return res.status(401).json({ error: 'No token provided' });
-      } 
+      // if (!idToken) {
+      //   return res.status(401).json({ error: 'No token provided' });
+      // } 
 
-      const verifiedToken = await auth.verifyIdToken(idToken);
-      const userId = verifiedToken.uid;
-      let userSleepTimes = await req.models.SleepStats.find({user_id: userId, entryType: 'recordTime'});
+      // const verifiedToken = await auth.verifyIdToken(idToken);
+      // const userId = verifiedToken.uid;
+      let userSleepTimes = await req.models.SleepStats.find();
       let sleepTime = await Promise.all(
         userSleepTimes.map(async time => {
         try {
