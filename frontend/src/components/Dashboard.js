@@ -4,10 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { NavBar } from "./Navbar.js";
 import { auth } from "../firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
-import WaterDropIcon from '@mui/icons-material/WaterDrop.js';
-import BedtimeIcon from '@mui/icons-material/Bedtime.js';
-import MedicationIcon from '@mui/icons-material/Medication.js';
-import SmartToyIcon from '@mui/icons-material/SmartToy.js';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import BedtimeIcon from '@mui/icons-material/Bedtime';
+import MedicationIcon from '@mui/icons-material/Medication';
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
