@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import cors from 'cors';
+// import cors from 'cors';
 import bodyParser from 'body-parser';
 
 // import sessions from 'express-session';
@@ -16,26 +16,47 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);  // This will give you the current directory
 
 const app = express();
-const allowedOrigins = [
-  'http://localhost:3000',
-  'https://joblessinseattlefe.onrender.com/', 
-  'https://joblessinseattle.onrender.com/'
-]
-// Enable CORS for all origins
-// This will allow all domains to access the API
-// Use CORS middleware
-app.use(cors({ 
-  origin: function(origin, callback) {
-    console.log('Request Origin:', origin);  // Log the origin for debugging
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true); // Proceed with the request
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }, // Allow requests from all
-  methods: ['GET', 'POST'], // Specify allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+// const allowedOrigins = [
+//   'http://localhost:3000',
+//   'https://joblessinseattlefe.onrender.com/', 
+//   'https://joblessinseattle.onrender.com/'
+// ]
+
+// // Enable CORS for specifc origins
+// // This will allow all domains to access the API
+// // Use CORS middleware
+// app.use(cors({ 
+//   origin: function(origin, callback) {
+//     console.log('Request Origin:', origin);  // Log the origin for debugging
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true); // Proceed with the request
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   }, // Allow requests from all
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Specify allowed methods
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   preflightContinue: false,
+// }));
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "*"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS,CONNECT,TRACE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, X-Content-Type-Options, Accept, X-Requested-With, Origin, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Private-Network", true);
+  res.setHeader("Access-Control-Max-Age", 7200);
+  next();
+});
 
 // Middleware setup
 app.use(logger('dev'));

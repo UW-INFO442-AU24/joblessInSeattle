@@ -18,24 +18,25 @@ dayjs.tz.setDefault('America/Los_Angeles');
 
 function ManualTimeInputs(props) {
     const apiUrl = "https://joblessinseattlefe.onrender.com";
-    const user_id = props.user_id
+    const user_id = props.user_id;
+    const setSleepInput = props.setSleepInput;
 
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
     const [wakeTimeInput, setWakeTimeInput] = useState(dayjs());
 
     const handleLog = async (event) => {
         event.preventDefault(); //stops page from reloading
-        if (!user) {
+        if (!user_id) {
             console.error("no user id")
         }
         try {
             await fetchJSON(`${apiUrl}/api/sleep`, {
                 method: "POST",
-                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user }
+                body: { bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id }
             });
-            console.log('This is the userid in post at handlelog ' + user)
+            console.log('This is the userid in post at handlelog ' + user_id)
             //set the sleep input to be the sleep input
-            setSleepInput({bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user, entryType: "recordTime"})
+            setSleepInput({bedTime: bedTimeInput, wakeTime: wakeTimeInput, user_id: user_id, entryType: "recordTime"})
         } catch (error) {
             console.error("Error saving times:", error);
         }
@@ -127,7 +128,7 @@ export default function SleepTracker() {
         if (userId) {
             fetchSleepGoal(userId);
         }
-    }, [userId, apiUrl]);
+    }, [userId, apiUrl, sleepGoal]);
 
     useEffect(() => {
         function timeFilter(time) {

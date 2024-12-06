@@ -76,7 +76,7 @@ export default function Login() {
             const idToken = await user.getIdToken();
             
             // POST request to backend to save the user's data
-            const response = await fetch("https://joblessinseattle.onrender.com/api/login", {
+            const response = await fetch(`${apiUrl}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
