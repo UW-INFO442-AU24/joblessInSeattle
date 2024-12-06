@@ -57,7 +57,7 @@ function MedicationLine ({ medication }) {
     //     try {
     //         console.log(medCounter)
     //         // CHANGE LATER -- NEEDS TO NOT BE ABSOLUTE URL PATH
-    //         await fetchJSON("http://localhost:3001/api/medication/counter", {
+    //         await fetchJSON("${apiUrl}/api/medication/counter", {
     //             method: "POST",
     //             body: { medCount: medCounter, medTime: lastMedTakenDate }
     //         })
