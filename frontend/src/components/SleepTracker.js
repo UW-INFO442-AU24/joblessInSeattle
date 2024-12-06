@@ -239,7 +239,8 @@ export default function SleepTracker() {
                     <Card>
                         <Card.Body>
                             <Card.Title>Going to Bed?</Card.Title>
-                            <ManualTimeInputs user={userId} sleepInput={sleepInput} setSleepInput={setSleepInput}/>
+                            {/* verify that there's an authenticated user first before rendering */}
+                            {userId && <ManualTimeInputs user={userId} sleepInput={sleepInput} setSleepInput={setSleepInput}/>}
                             <UsersSleepInput sleepInput={sleepInput} />
                         </Card.Body>
                     </Card>
