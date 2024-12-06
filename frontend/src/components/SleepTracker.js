@@ -17,7 +17,7 @@ dayjs.extend(timezone);
 dayjs.tz.setDefault('America/Los_Angeles');
 
 function ManualTimeInputs(props) {
-    const apiUrl = "https://joblessinseattlefe.onrender.com";
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const user_id = props.user_id;
     const setSleepInput = props.setSleepInput;
 

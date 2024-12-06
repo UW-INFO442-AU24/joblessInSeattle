@@ -73,7 +73,7 @@ function Counter({user, waterInput, setWaterInput}) {
 }
 
 export default function WaterTracker() {
-    const apiUrl = "https://joblessinseattlefe.onrender.com";
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const [edit, setEdit] = useState(false);
     const [value, setValue] = useState(false);
     const [valid, setValid] = useState(false);

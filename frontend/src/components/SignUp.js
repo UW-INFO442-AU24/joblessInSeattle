@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 
 export default function Signup() {
-    const apiUrl = "https://joblessinseattlefe.onrender.com";
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const navigate = useNavigate();
     const [err, setErr] = useState("");
     const [loading, setLoading] = useState(false);

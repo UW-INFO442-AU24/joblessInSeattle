@@ -6,7 +6,7 @@ import { auth } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export default function HealthJournal() {
-    const apiUrl = "https://joblessinseattlefe.onrender.com";
+    const apiUrl = "https://joblessinseattle.onrender.com";
     const [apiResponse, setApiResponse] = useState(null);
     const [error, setError] = useState("");
 
