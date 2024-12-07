@@ -65,7 +65,7 @@ export default function SleepTracker() {
     const [edit, setEdit] = useState(false);
     const [sleepGoal, setSleepGoal] = useState([]);
     const [sleepInput, setSleepInput] = useState([]);
-    const [userId, setUserId] = useState("");
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
