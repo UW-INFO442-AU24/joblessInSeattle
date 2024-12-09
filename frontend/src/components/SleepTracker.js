@@ -18,7 +18,7 @@ dayjs.tz.setDefault('America/Los_Angeles');
 
 function ManualTimeInputs(props) {
     const apiUrl = "https://joblessinseattle.onrender.com";
-    const user_id = props.user_id;
+    const user_id = props.user;
     const setSleepInput = props.setSleepInput;
 
     const [bedTimeInput, setBedTimeInput] = useState(dayjs());
