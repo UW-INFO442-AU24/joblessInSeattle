@@ -94,7 +94,7 @@ export default function Dashboard() {
         if (user) {
             fetchSleepTimes(user);
         }
-    }, [user, apiUrl]);
+    }, [user, apiUrl, sleepInput.bedTime, sleepInput.wakeTime]);
 
     if (!user) {
         return null;
