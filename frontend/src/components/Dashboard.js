@@ -73,20 +73,23 @@ export default function Dashboard() {
                 const response = await fetch("https://joblessinseattle.onrender.com/api/sleep/getTimeInputs");
                 const data = await response.json();
                 let userTimes = data.filter((timeFilter));
-                setSleepInput(userTimes.slice(-1)[0]);
+                const latestSleep = userTimes.slice(-1)[0];
+                setSleepInput(latestSleep);
 
-                let timeBed = new Date(sleepInput.bedTime);
-                let timeWake = new Date(sleepInput.wakeTime);
-                let bedMath = timeBed.getTime();
-                // console.log(bedMath);
-                let wakeMath = timeWake.getTime();
-                // console.log(wakeMath);
-                
-                // calculate hour and min difference
-                // Convert from miliseconds to seconds to minutes to hours
-                let sleep = (((wakeMath - bedMath) / 1000) / 60) / 60;
-                // console.log(sleep);
-                setSleepTime(sleep);
+                if (latestSleep && latestSleep.bedTime && latestSleep.wakeTime) {
+                    let timeBed = new Date(latestSleep.bedTime);
+                    let timeWake = new Date(latestSleep.wakeTime);
+                    // If wake time is less than or equal to bed time, assume wake time is the next day
+                    if (timeWake <= timeBed) {
+                        timeWake.setDate(timeWake.getDate() + 1);
+                    }
+                    let bedMath = timeBed.getTime();
+                    let wakeMath = timeWake.getTime();
+                    let sleep = (((wakeMath - bedMath) / 1000) / 60) / 60;
+                    setSleepTime(Math.round(sleep * 100) / 100); // round to 2 decimal places
+                } else {
+                    setSleepTime(0); // or null, or show a message
+                }
             } catch (error) {
                 console.error("Error fetching sleep goals:", error);
             }
@@ -94,7 +97,7 @@ export default function Dashboard() {
         if (user) {
             fetchSleepTimes(user);
         }
-    }, [user, apiUrl, sleepInput.bedTime, sleepInput.wakeTime]);
+    }, [user, apiUrl]);
 
     if (!user) {
         return null;
